@@ -20,10 +20,17 @@ interface TrailModelProps {
   onClose: () => void;
 }
 
+interface Customizations {
+  skinTone: 'light' | 'medium' | 'dark';
+  hairStyle: 'straight' | 'curly';
+  bodyShape: 'slim' | 'average' | 'athletic';
+  height: 'short' | 'medium' | 'tall';
+}
+
 const TrailModel = ({ product, isOpen, onClose }: TrailModelProps) => {
   const [isRotating, setIsRotating] = useState(true);
   const [rotation, setRotation] = useState(0);
-  const [customizations, setCustomizations] = useState({
+  const [customizations, setCustomizations] = useState<Customizations>({
     skinTone: 'medium',
     hairStyle: 'straight',
     bodyShape: 'average',
@@ -53,13 +60,15 @@ const TrailModel = ({ product, isOpen, onClose }: TrailModelProps) => {
     const deltaY = e.clientY - centerY;
     
     // Calculate rotation based on mouse position
-    const newRotationX = (deltaY / rect.height) * 180;
     const newRotationY = (deltaX / rect.width) * 180;
     
     setRotation(prev => (prev + newRotationY * 0.1) % 360);
   };
 
-  const handleCustomizationChange = (key: string, value: string) => {
+  const handleCustomizationChange = <K extends keyof Customizations>(
+    key: K, 
+    value: Customizations[K]
+  ) => {
     setCustomizations(prev => ({
       ...prev,
       [key]: value
@@ -121,17 +130,17 @@ const TrailModel = ({ product, isOpen, onClose }: TrailModelProps) => {
                       backgroundColor: 
                         customizations.skinTone === 'light' ? '#f8d3b8' :
                         customizations.skinTone === 'medium' ? '#d2a679' :
-                        customizations.skinTone === 'dark' ? '#8d5524' : '#d2a679',
+                        '#8d5524', // dark
                       transform: `
                         scale(${
                           customizations.bodyShape === 'slim' ? 0.9 :
                           customizations.bodyShape === 'average' ? 1 :
-                          customizations.bodyShape === 'athletic' ? 1.1 : 1
+                          1.1 // athletic
                         })
                         scaleY(${
                           customizations.height === 'short' ? 0.9 :
                           customizations.height === 'medium' ? 1 :
-                          customizations.height === 'tall' ? 1.1 : 1
+                          1.1 // tall
                         })
                       `
                     }}
@@ -153,9 +162,7 @@ const TrailModel = ({ product, isOpen, onClose }: TrailModelProps) => {
                       clipPath: 
                         customizations.hairStyle === 'straight' ? 
                           'polygon(0% 0%, 100% 0%, 100% 60%, 0% 60%)' :
-                        customizations.hairStyle === 'curly' ?
-                          'path("M0,0 Q20,10 40,5 Q60,0 80,8 Q100,5 120,0 Q140,10 160,0 L160,60 L0,60 Z")' :
-                          'polygon(0% 0%, 100% 0%, 100% 60%, 0% 60%)'
+                          'path("M0,0 Q20,10 40,5 Q60,0 80,8 Q100,5 120,0 Q140,10 160,0 L160,60 L0,60 Z")' // curly
                     }}
                   />
                 </div>
@@ -198,7 +205,7 @@ const TrailModel = ({ product, isOpen, onClose }: TrailModelProps) => {
                   Skin Tone
                 </label>
                 <div className="grid grid-cols-3 gap-2">
-                  {['light', 'medium', 'dark'].map(tone => (
+                  {(['light', 'medium', 'dark'] as const).map(tone => (
                     <button
                       key={tone}
                       onClick={() => handleCustomizationChange('skinTone', tone)}
@@ -220,7 +227,7 @@ const TrailModel = ({ product, isOpen, onClose }: TrailModelProps) => {
                   Hair Style
                 </label>
                 <div className="grid grid-cols-2 gap-2">
-                  {['straight', 'curly'].map(style => (
+                  {(['straight', 'curly'] as const).map(style => (
                     <button
                       key={style}
                       onClick={() => handleCustomizationChange('hairStyle', style)}
@@ -242,7 +249,7 @@ const TrailModel = ({ product, isOpen, onClose }: TrailModelProps) => {
                   Body Shape
                 </label>
                 <div className="grid grid-cols-3 gap-2">
-                  {['slim', 'average', 'athletic'].map(shape => (
+                  {(['slim', 'average', 'athletic'] as const).map(shape => (
                     <button
                       key={shape}
                       onClick={() => handleCustomizationChange('bodyShape', shape)}
@@ -264,7 +271,7 @@ const TrailModel = ({ product, isOpen, onClose }: TrailModelProps) => {
                   Height
                 </label>
                 <div className="grid grid-cols-3 gap-2">
-                  {['short', 'medium', 'tall'].map(height => (
+                  {(['short', 'medium', 'tall'] as const).map(height => (
                     <button
                       key={height}
                       onClick={() => handleCustomizationChange('height', height)}

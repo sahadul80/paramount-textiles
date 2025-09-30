@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo, lazy, Suspense, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiX, FiArrowRight, FiSearch, FiFilter, FiGrid, FiList, FiCheck, FiChevronDown, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import Image from 'next/image';
 
 // Lazy load the TrailModel component
 const TrailModel = lazy(() => import('./TrailModel'));
@@ -17,12 +18,6 @@ interface Product {
   image: string;
 }
 
-interface Category {
-  id: string;
-  name: string;
-  products: Product[];
-}
-
 interface FilterState {
   category: string[];
   fabric: string[];
@@ -30,19 +25,21 @@ interface FilterState {
   priceRange: string[];
 }
 
-// Enhanced Lazy Image Component
+// Fixed Lazy Image Component
 const LazyImage = ({ 
   src, 
   alt, 
   className,
   onLoad,
-  onError
+  onError,
+  objectFit = 'cover'
 }: { 
   src: string; 
   alt: string; 
   className: string;
   onLoad?: () => void;
   onError?: () => void;
+  objectFit?: 'cover' | 'contain';
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
@@ -59,7 +56,7 @@ const LazyImage = ({
   };
 
   return (
-    <div className="relative w-full h-full overflow-hidden" role="img" aria-label={alt}>
+    <div className={`relative w-full h-full overflow-hidden ${className}`} role="img" aria-label={alt}>
       {!isLoaded && !hasError && (
         <div className="absolute inset-0 bg-gradient-to-r from-gray-200 to-gray-300 animate-pulse rounded-lg" />
       )}
@@ -71,22 +68,27 @@ const LazyImage = ({
           </div>
         </div>
       )}
-      <img
-        src={src}
-        alt={alt}
-        className={`${className} transition-all duration-700 ease-in-out ${
-          isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
-        }`}
-        onLoad={handleLoad}
-        onError={handleError}
-        loading="lazy"
-        decoding="async"
-      />
+      <div className={`w-full h-full relative ${isLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`}>
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          className={`transition-all duration-700 ease-in-out ${
+            isLoaded ? 'scale-100' : 'scale-105'
+          }`}
+          style={{ objectFit }}
+          onLoad={handleLoad}
+          onError={handleError}
+          loading="lazy"
+          decoding="async"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        />
+      </div>
     </div>
   );
 };
 
-// Modern Filter Dropdown Component with Search - Fixed nested buttons
+// FilterDropdown component remains the same...
 const FilterDropdown = ({
   label,
   options,
@@ -135,7 +137,6 @@ const FilterDropdown = ({
     ? selectedValues[0]
     : `${selectedValues.length} ${label}s selected`;
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -186,9 +187,8 @@ const FilterDropdown = ({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="absolute top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-2xl z-[100] max-h-60 overflow-y-auto" // Increased z-index to 100
+            className="absolute top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-2xl z-[100] max-h-60 overflow-y-auto"
           >
-            {/* Search Input inside Dropdown */}
             <div className="p-2 border-b border-slate-200">
               <div className="relative">
                 <FiSearch className="absolute left-2 top-1/2 transform -translate-y-1/2 text-slate-400 text-sm" />
@@ -244,7 +244,6 @@ const FilterDropdown = ({
 };
 
 const CategoryProducts = () => {
-  const [categories, setCategories] = useState<Category[]>([]);
   const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [currentCategoryProducts, setCurrentCategoryProducts] = useState<Product[]>([]);
@@ -276,12 +275,10 @@ const CategoryProducts = () => {
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         
         const data = await response.json();
-        setCategories(data.categories || []);
-        const allProds = (data.categories || []).flatMap((category: Category) => category.products || []);
+        const allProds = (data.categories || []).flatMap((category: { products: Product[] }) => category.products || []);
         setAllProducts(allProds);
       } catch (error) {
         console.error('Error fetching products:', error);
-        setCategories([]);
         setAllProducts([]);
       } finally {
         setIsLoading(false);
@@ -295,7 +292,6 @@ const CategoryProducts = () => {
   const getAvailableFilterOptions = useCallback(() => {
     let filtered = allProducts;
 
-    // Apply search filter first
     if (searchTerm) {
       filtered = filtered.filter(product =>
         product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -306,37 +302,32 @@ const CategoryProducts = () => {
       );
     }
 
-    // Apply current filters to get available options
-    let tempFiltered = [...filtered];
+    const tempFiltered = [...filtered];
 
-    // Filter by selected categories if any
     if (filters.category.length > 0) {
-      tempFiltered = tempFiltered.filter(product => 
+      tempFiltered.filter(product => 
         filters.category.includes(product.category)
       );
     }
 
-    // Filter by selected fabrics if any
     if (filters.fabric.length > 0) {
-      tempFiltered = tempFiltered.filter(product => 
+      tempFiltered.filter(product => 
         filters.fabric.some(fabric => 
           product.attributes.Fabric?.toLowerCase().includes(fabric.toLowerCase())
         )
       );
     }
 
-    // Filter by selected sizes if any
     if (filters.size.length > 0) {
-      tempFiltered = tempFiltered.filter(product => 
+      tempFiltered.filter(product => 
         filters.size.some(size => 
           product.attributes.Size?.toLowerCase().includes(size.toLowerCase())
         )
       );
     }
 
-    // Filter by selected price ranges if any
     if (filters.priceRange.length > 0) {
-      tempFiltered = tempFiltered.filter(product => {
+      tempFiltered.filter(product => {
         const priceMatch = product.attributes.Price?.match(/\$([\d.]+)/);
         const price = priceMatch ? parseFloat(priceMatch[1]) : 0;
         return filters.priceRange.some(range => {
@@ -351,20 +342,14 @@ const CategoryProducts = () => {
       });
     }
 
-    // Get available categories from current filtered set
     const availableCategories = [...new Set(tempFiltered.map(p => p.category))];
-
-    // Get available fabrics based on current selection
-    let fabricFiltered = tempFiltered;
+    const fabricFiltered = tempFiltered;
     const availableFabrics = [...new Set(fabricFiltered.map(p => p.attributes.Fabric).filter(Boolean))];
-
-    // Get available sizes based on current selection
-    let sizeFiltered = fabricFiltered;
+    const sizeFiltered = fabricFiltered;
     const availableSizes = [...new Set(sizeFiltered.flatMap(p => 
       p.attributes.Size?.split(', ').map(s => s.trim()) || []
     ).filter(Boolean))];
 
-    // Get available price ranges
     const availablePriceRanges = ['under25', '25-50', '50-100', 'over100'].filter(range => {
       return tempFiltered.some(product => {
         const priceMatch = product.attributes.Price?.match(/\$([\d.]+)/);
@@ -588,19 +573,10 @@ const CategoryProducts = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50/30">
+    <div className="max-h-[80vh] bg-gradient-to-br from-slate-50 to-blue-50/30">
       {/* Enhanced Sticky Header */}
       <div className="sticky top-0 z-40 bg-white/90 backdrop-blur-xl border-b border-slate-200/80 shadow-sm">
         <div className="container mx-auto px-3 py-2">
-          <motion.h1 
-            className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-black text-center mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-          >
-            Trending Now
-          </motion.h1>
-
           {/* Enhanced Search and Filter Section */}
           <div className="space-y-2">
             {/* Top Row - 5 Column Grid */}
@@ -678,7 +654,7 @@ const CategoryProducts = () => {
                   animate={{ opacity: 1, height: 'auto', scale: 1 }}
                   exit={{ opacity: 0, height: 0, scale: 0.95 }}
                   transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="bg-white/80 backdrop-blur-sm rounded-lg border border-slate-300 shadow-2xl overflow-flex"
+                  className="bg-white/80 backdrop-blur-sm rounded-lg border border-slate-300 shadow-2xl overflow-hidden"
                 >
                   <div className="p-3">
                     {/* Modern Filter Grid */}
@@ -757,8 +733,8 @@ const CategoryProducts = () => {
         </div>
       </div>
 
-      {/* Products Grid with 30% Larger Card Height */}
-      <div className="container mx-auto px-2 py-3">
+      {/* Products Grid */}
+      <div className="container mx-auto px-2 py-3 max-h-[80vh] flex flex-col overflow-auto">
         {Object.entries(groupedProducts).map(([category, products], categoryIndex) => (
           <motion.section
             key={category}
@@ -797,7 +773,7 @@ const CategoryProducts = () => {
                     <LazyImage
                       src={product.image}
                       alt={product.name}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
+                      className="w-full h-full"
                       onLoad={handleImageLoad}
                     />
                   </div>
@@ -845,164 +821,173 @@ const CategoryProducts = () => {
         )}
       </div>
 
-    {/* Enhanced Responsive Modal with Swipe Navigation */}
-    <AnimatePresence>
-    {isModalOpen && selectedProduct && (
-        <motion.div
-        className="fixed inset-0 bg-black/60 backdrop-blur-lg z-50 flex items-center justify-center p-0 sm:p-4"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.3, ease: "easeInOut" }}
-        onClick={closeModal}
-        >
-        <motion.div
-            className="bg-white w-full h-full sm:w-full sm:h-auto sm:max-w-4xl sm:max-h-[90vh] sm:rounded-2xl shadow-2xl flex flex-col sm:mx-2"
-            initial={{ scale: 0.9, opacity: 0, y: 20 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.9, opacity: 0, y: 20 }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            onClick={(e) => e.stopPropagation()}
-        >
-            {/* Header */}
-            <div className="flex justify-between items-center p-4 border-b border-slate-200 flex-shrink-0">
-            <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-slate-800 truncate pr-2">
-                {selectedProduct.name}
-            </h2>
-            <button
-                onClick={closeModal}
-                className="p-2 hover:bg-slate-100 rounded-lg transition-all duration-300 text-slate-600 hover:text-slate-800 flex-shrink-0"
-            >
-                <FiX size={20} />
-            </button>
-            </div>
-
-            {/* Content - Mobile: 2/3 image, 1/3 details. Desktop: Side by side */}
-            <div className="flex-1 flex flex-col sm:flex-row overflow-hidden">
-            {/* Image Section - 2/3 height on mobile, 1/2 width on desktop */}
-            <div 
-                className="w-full h-3/5 lg:h-full lg:w-1/2 flex flex-col border-b lg:border-b-0 lg:border-r border-slate-200 relative"
-                onTouchStart={handleTouchStart}
-                onTouchMove={handleTouchMove}
-                onTouchEnd={handleTouchEnd}
-            >
-                
-                {/* Navigation Indicator */}
-                {currentCategoryProducts.length > 1 && (
-                <div className="absolute top-2 right-2 bg-black/60 text-white px-2 py-1 rounded-full text-xs z-10">
-                    {currentProductIndex + 1} / {currentCategoryProducts.length}
-                </div>
-                )}
-                <div className="flex-1 relative bg-slate-50 overflow-hidden flex items-center justify-center">
-                {imageLoading && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-slate-200 to-slate-300 animate-pulse flex items-center justify-center">
-                    <div className="text-slate-400 text-sm">Loading image...</div>
-                    </div>
-                )}
-                <LazyImage
-                    src={selectedProduct.image}
-                    alt={selectedProduct.name}
-                    className="w-full h-full object-contain"
-                    onLoad={handleImageLoad}
-                />
-                </div>
-            </div>
-
-            {/* Product Details Section - 1/3 height on mobile, 1/2 width on desktop */}
-            <div className="w-full h-2/5 sm:h-full sm:w-1/2 bg-gradient-to-b from-blue-50 to-purple-50 flex flex-col overflow-hidden">
-                <div className="flex-1 overflow-y-auto p-4">
-                <h3 className="text-base sm:text-lg lg:text-xl font-bold text-slate-800 mb-3">
-                    Product Details
-                </h3>
-                
-                <div className="space-y-2">
-                    {Object.entries(selectedProduct.attributes).map(([key, value]) => (
-                    <motion.div 
-                        key={key} 
-                        className="flex justify-between items-start py-2 border-b border-slate-200/60"
-                        initial={{ opacity: 0, x: 10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.1 }}
-                    >
-                        <span className="font-semibold text-slate-700 capitalize flex-shrink-0 mr-3 text-sm lg:text-base">
-                        {key}:
-                        </span>
-                        <span className="text-slate-600 text-right text-xs lg:text-sm leading-relaxed flex-1 break-words">
-                        {value}
-                        </span>
-                    </motion.div>
-                    ))}
-                </div>
+      {/* Fixed Enhanced Responsive Modal */}
+      <AnimatePresence>
+        {isModalOpen && selectedProduct && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              className="fixed inset-0 bg-black/60 backdrop-blur-lg z-[100]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              onClick={closeModal}
+            />
+            
+            {/* Modal Content */}
+            <div className="fixed inset-0 z-[101] flex items-center justify-center p-2 sm:p-4">
+              <motion.div
+                className="bg-white w-full h-full sm:w-full sm:max-h-[90vh] sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+                initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Header */}
+                <div className="flex justify-between items-center p-4 border-b border-slate-200 flex-shrink-0">
+                  <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-slate-800 truncate pr-2">
+                    {selectedProduct.name}
+                  </h2>
+                  <button
+                    onClick={closeModal}
+                    className="p-2 hover:bg-slate-100 rounded-lg transition-all duration-300 text-slate-600 hover:text-slate-800 flex-shrink-0"
+                  >
+                    <FiX size={20} />
+                  </button>
                 </div>
 
-                {/* Action Buttons - Fixed at bottom on mobile, normal flow on desktop */}
-                <div className="p-4 border-t border-slate-200/60 bg-gradient-to-b from-blue-50 to-purple-50 lg:bg-transparent">
-                <div className="space-y-2">
-                    <button 
-                    onClick={() => handleAction('order')}
-                    className="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white py-3 px-4 rounded-lg font-bold hover:from-green-600 hover:to-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 text-sm lg:text-base"
-                    >
-                    Order Now
-                    <FiArrowRight size={16} />
-                    </button>
-                    <button 
-                    onClick={() => handleAction('trial')}
-                    className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-3 px-4 rounded-lg font-bold hover:from-blue-600 hover:to-purple-600 transition-all duration-300 shadow-lg hover:shadow-xl text-sm lg:text-base"
-                    >
-                    Try in Virtual Model
-                    </button>
-                </div>
-                </div>
-            </div>
-            {/* Navigation Arrows - Desktop Only */}
-                <div className="hidden sm:flex absolute justify-center bottom-0 left-1/2 right-1/2 gap-4 transform -translate-y-1/2 z-10 justify-between">
-                <button
-                    onClick={(e) => {
-                    e.stopPropagation();
-                    navigateToProduct('prev');
-                    }}
-                    className="p-2 bg-white/80 backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition-all duration-300 hover:scale-110"
-                >
-                    <FiChevronLeft size={20} className="text-slate-700" />
-                </button>
-                <button
-                    onClick={(e) => {
-                    e.stopPropagation();
-                    navigateToProduct('next');
-                    }}
-                    className="p-2 bg-white/80 backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition-all duration-300 hover:scale-110"
-                >
-                    <FiChevronRight size={20} className="text-slate-700" />
-                </button>
-                </div>
-            {/* Mobile Navigation Dots */}
-                {currentCategoryProducts.length > 1 && (
-                <div className="flex justify-center py-3 lg:hidden">
-                    <div className="flex space-x-2">
-                    {currentCategoryProducts.map((_, index) => (
-                        <button
-                        key={index}
+                {/* Content */}
+                <div className="flex-1 flex flex-col sm:flex-row overflow-hidden">
+                  {/* Image Section */}
+                  <div 
+                    className="w-full h-1/2 sm:h-full sm:w-1/2 flex flex-col border-b sm:border-b-0 sm:border-r border-slate-200 relative"
+                    onTouchStart={handleTouchStart}
+                    onTouchMove={handleTouchMove}
+                    onTouchEnd={handleTouchEnd}
+                  >
+                    {/* Navigation Arrows - Desktop Only */}
+                    <div className="hidden sm:flex absolute top-1/2 left-2 right-2 transform -translate-y-1/2 z-10 justify-between">
+                      <button
                         onClick={(e) => {
-                            e.stopPropagation();
-                            setCurrentProductIndex(index);
-                            setSelectedProduct(currentCategoryProducts[index]);
-                            setImageLoading(true);
+                          e.stopPropagation();
+                          navigateToProduct('prev');
                         }}
-                        className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                            index === currentProductIndex 
-                            ? 'bg-blue-500 scale-125' 
-                            : 'bg-slate-300'
-                        }`}
-                        />
-                    ))}
+                        className="p-2 bg-white/80 backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition-all duration-300 hover:scale-110"
+                      >
+                        <FiChevronLeft size={20} className="text-slate-700" />
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigateToProduct('next');
+                        }}
+                        className="p-2 bg-white/80 backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition-all duration-300 hover:scale-110"
+                      >
+                        <FiChevronRight size={20} className="text-slate-700" />
+                      </button>
                     </div>
+
+                    {/* Navigation Indicator */}
+                    {currentCategoryProducts.length > 1 && (
+                      <div className="absolute top-2 right-2 bg-black/60 text-white px-2 py-1 rounded-full text-xs z-10">
+                        {currentProductIndex + 1} / {currentCategoryProducts.length}
+                      </div>
+                    )}
+
+                    <div className="flex-1 relative bg-slate-50 overflow-hidden flex items-center justify-center">
+                      {imageLoading && (
+                        <div className="absolute inset-0 bg-gradient-to-r from-slate-200 to-slate-300 animate-pulse flex items-center justify-center z-10">
+                          <div className="text-slate-400 text-sm">Loading image...</div>
+                        </div>
+                      )}
+                      <LazyImage
+                        src={selectedProduct.image}
+                        alt={selectedProduct.name}
+                        className="w-full h-full"
+                        onLoad={handleImageLoad}
+                        objectFit="contain"
+                      />
+                    </div>
+
+                    {/* Mobile Navigation Dots */}
+                    {currentCategoryProducts.length > 1 && (
+                      <div className="flex justify-center py-3 sm:hidden">
+                        <div className="flex space-x-2">
+                          {currentCategoryProducts.map((_, index) => (
+                            <button
+                              key={index}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setCurrentProductIndex(index);
+                                setSelectedProduct(currentCategoryProducts[index]);
+                                setImageLoading(true);
+                              }}
+                              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                                index === currentProductIndex 
+                                  ? 'bg-blue-500 scale-125' 
+                                  : 'bg-slate-300'
+                              }`}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Product Details Section */}
+                  <div className="w-full h-1/2 sm:h-full sm:w-1/2 bg-gradient-to-b from-blue-50 to-purple-50 flex flex-col overflow-hidden">
+                    <div className="flex-1 overflow-y-auto p-4">
+                      <h3 className="text-base sm:text-lg lg:text-xl font-bold text-slate-800 mb-3">
+                        Product Details
+                      </h3>
+                      
+                      <div className="space-y-2">
+                        {Object.entries(selectedProduct.attributes).map(([key, value]) => (
+                          <motion.div 
+                            key={key} 
+                            className="flex justify-between items-start py-2 border-b border-slate-200/60"
+                            initial={{ opacity: 0, x: 10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.1 }}
+                          >
+                            <span className="font-semibold text-slate-700 capitalize flex-shrink-0 mr-3 text-sm lg:text-base">
+                              {key}:
+                            </span>
+                            <span className="text-slate-600 text-right text-xs lg:text-sm leading-relaxed flex-1 break-words">
+                              {value}
+                            </span>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="p-4 border-t border-slate-200/60 bg-gradient-to-b from-blue-50 to-purple-50 sm:bg-transparent">
+                      <div className="space-y-2">
+                        <button 
+                          onClick={() => handleAction('order')}
+                          className="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white py-3 px-4 rounded-lg font-bold hover:from-green-600 hover:to-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 text-sm lg:text-base"
+                        >
+                          Order Now
+                          <FiArrowRight size={16} />
+                        </button>
+                        <button 
+                          onClick={() => handleAction('trial')}
+                          className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-3 px-4 rounded-lg font-bold hover:from-blue-600 hover:to-purple-600 transition-all duration-300 shadow-lg hover:shadow-xl text-sm lg:text-base"
+                        >
+                          Try in Virtual Model
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                )}
+              </motion.div>
             </div>
-        </motion.div>
-        </motion.div>
-    )}
-    </AnimatePresence>
+          </>
+        )}
+      </AnimatePresence>
 
       {/* Trail Model Modal */}
       <Suspense fallback={
