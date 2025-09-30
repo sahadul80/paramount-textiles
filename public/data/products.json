@@ -1,0 +1,1100 @@
+{
+  "categories": [
+    {
+      "id": "mens-formal",
+      "name": "Men's Formal Wear",
+      "products": [
+        {
+          "id": "mf-1",
+          "name": "Men's Formal Shirt",
+          "category": "Men's Formal Wear",
+          "attributes": {
+            "Fabric": "Cotton Blend",
+            "Fit": "Slim Fit",
+            "Color": "White, Blue, Black",
+            "Size": "S, M, L, XL, XXL",
+            "Care": "Machine Wash",
+            "Price": "$49.99 - $79.99",
+            "Brand": "Premium Formal",
+            "Collection": "Spring 2024"
+          },
+          "image": "/images/mens-formal-shirt.png"
+        },
+        {
+          "id": "mf-2",
+          "name": "Men's Formal Pant",
+          "category": "Men's Formal Wear",
+          "attributes": {
+            "Fabric": "Wool Blend",
+            "Fit": "Regular Fit",
+            "Color": "Navy Blue, Black, Charcoal",
+            "Size": "28-42",
+            "Care": "Dry Clean Only",
+            "Price": "$79.99 - $129.99",
+            "Brand": "Premium Formal",
+            "Collection": "Spring 2024"
+          },
+          "image": "/images/mens-formal-pant.png"
+        },
+        {
+          "id": "mf-3",
+          "name": "Men's Blazer",
+          "category": "Men's Formal Wear",
+          "attributes": {
+            "Fabric": "Wool Blend",
+            "Fit": "Tailored Fit",
+            "Color": "Navy, Black, Grey",
+            "Size": "S, M, L, XL",
+            "Care": "Dry Clean Only",
+            "Price": "$199.99 - $299.99",
+            "Brand": "Premium Formal",
+            "Collection": "Spring 2024"
+          },
+          "image": "/images/mens-blazer.png"
+        },
+        {
+          "id": "mf-4",
+          "name": "Men's Short Pant",
+          "category": "Men's Formal Wear",
+          "attributes": {
+            "Fabric": "Linen Blend",
+            "Fit": "Slim Fit",
+            "Color": "Beige, Navy, White",
+            "Size": "S, M, L, XL",
+            "Care": "Machine Wash",
+            "Price": "$59.99 - $89.99",
+            "Brand": "Premium Formal",
+            "Collection": "Summer 2024"
+          },
+          "image": "/images/mens-short-pant.png"
+        },
+        {
+          "id": "mf-5",
+          "name": "Men's Short Sleeve Shirt",
+          "category": "Men's Formal Wear",
+          "attributes": {
+            "Fabric": "Cotton Poplin",
+            "Fit": "Regular Fit",
+            "Color": "Various",
+            "Size": "S, M, L, XL",
+            "Care": "Machine Wash",
+            "Price": "$39.99 - $69.99",
+            "Brand": "Premium Formal",
+            "Collection": "Summer 2024"
+          },
+          "image": "/images/mens-short-sleeve-shirt.png"
+        }
+      ]
+    },
+    {
+      "id": "mens-casual",
+      "name": "Men's Casual Wear",
+      "products": [
+        {
+          "id": "mc-1",
+          "name": "Men's Casual Shirt",
+          "category": "Men's Casual Wear",
+          "attributes": {
+            "Fabric": "Cotton",
+            "Fit": "Relaxed Fit",
+            "Color": "Various Patterns",
+            "Size": "S, M, L, XL, XXL",
+            "Care": "Machine Wash",
+            "Price": "$29.99 - $49.99",
+            "Brand": "Urban Casual",
+            "Collection": "Everyday Wear"
+          },
+          "image": "/images/mens-casual-shirt.png"
+        },
+        {
+          "id": "mc-2",
+          "name": "Men's Casual Pant",
+          "category": "Men's Casual Wear",
+          "attributes": {
+            "Fabric": "Cotton Twill",
+            "Fit": "Regular Fit",
+            "Color": "Khaki, Navy, Black",
+            "Size": "30-42",
+            "Care": "Machine Wash",
+            "Price": "$39.99 - $69.99",
+            "Brand": "Urban Casual",
+            "Collection": "Everyday Wear"
+          },
+          "image": "/images/mens-casual-pant.png"
+        },
+        {
+          "id": "mc-3",
+          "name": "Men's Casual Blazer",
+          "category": "Men's Casual Wear",
+          "attributes": {
+            "Fabric": "Linen Cotton Blend",
+            "Fit": "Unstructured Fit",
+            "Color": "Beige, Navy, Olive",
+            "Size": "S, M, L, XL",
+            "Care": "Dry Clean",
+            "Price": "$129.99 - $189.99",
+            "Brand": "Urban Casual",
+            "Collection": "Weekend Collection"
+          },
+          "image": "/images/mens-casual-blazer.png"
+        },
+        {
+          "id": "mc-4",
+          "name": "Men's Cargo Short Pant",
+          "category": "Men's Casual Wear",
+          "attributes": {
+            "Fabric": "Cotton Canvas",
+            "Fit": "Relaxed Fit",
+            "Color": "Khaki, Black, Olive",
+            "Size": "S, M, L, XL",
+            "Care": "Machine Wash",
+            "Price": "$34.99 - $54.99",
+            "Brand": "Urban Casual",
+            "Collection": "Adventure Wear"
+          },
+          "image": "/images/mens-cargo-short.png"
+        },
+        {
+          "id": "mc-5",
+          "name": "Men's Casual Short Sleeve Shirt",
+          "category": "Men's Casual Wear",
+          "attributes": {
+            "Fabric": "Cotton Jersey",
+            "Fit": "Regular Fit",
+            "Color": "Various Colors",
+            "Size": "S, M, L, XL",
+            "Care": "Machine Wash",
+            "Price": "$24.99 - $39.99",
+            "Brand": "Urban Casual",
+            "Collection": "Summer Essential"
+          },
+          "image": "/images/mens-casual-short-sleeve.png"
+        }
+      ]
+    },
+    {
+      "id": "mens-other",
+      "name": "Men's Wear",
+      "products": [
+        {
+          "id": "mo-1",
+          "name": "Men's Overshirt",
+          "category": "Men's Wear",
+          "attributes": {
+            "Fabric": "Brushed Cotton",
+            "Fit": "Oversized Fit",
+            "Color": "Cream, Navy, Olive",
+            "Size": "S, M, L, XL",
+            "Care": "Machine Wash",
+            "Price": "$89.99 - $129.99",
+            "Brand": "Contemporary",
+            "Collection": "Layering Pieces"
+          },
+          "image": "/images/mens-overshirt.png"
+        },
+        {
+          "id": "mo-2",
+          "name": "Men's Trench Coat",
+          "category": "Men's Wear",
+          "attributes": {
+            "Fabric": "Cotton Gabardine",
+            "Fit": "Regular Fit",
+            "Color": "Beige, Navy, Black",
+            "Size": "S, M, L, XL",
+            "Care": "Dry Clean Only",
+            "Price": "$299.99 - $399.99",
+            "Brand": "Heritage",
+            "Collection": "Classic Outerwear"
+          },
+          "image": "/images/mens-trench-coat.png"
+        },
+        {
+          "id": "mo-3",
+          "name": "Men's Jumpsuits",
+          "category": "Men's Wear",
+          "attributes": {
+            "Fabric": "Cotton Canvas",
+            "Fit": "Regular Fit",
+            "Color": "Black, Navy, Olive",
+            "Size": "S, M, L, XL",
+            "Care": "Machine Wash",
+            "Price": "$79.99 - $119.99",
+            "Brand": "Utility",
+            "Collection": "Workwear Inspired"
+          },
+          "image": "/images/mens-jumpsuit.png"
+        },
+        {
+          "id": "mo-4",
+          "name": "Men's Cargo Pant",
+          "category": "Men's Wear",
+          "attributes": {
+            "Fabric": "Cotton Ripstop",
+            "Fit": "Relaxed Fit",
+            "Color": "Khaki, Black, Olive",
+            "Size": "30-42",
+            "Care": "Machine Wash",
+            "Price": "$49.99 - $79.99",
+            "Brand": "Utility",
+            "Collection": "Tactical Wear"
+          },
+          "image": "/images/mens-cargo-pant.png"
+        },
+        {
+          "id": "mo-5",
+          "name": "Men's Bermuda Shorts Pant",
+          "category": "Men's Wear",
+          "attributes": {
+            "Fabric": "Cotton Blend",
+            "Fit": "Regular Fit",
+            "Color": "Navy, Beige, Grey",
+            "Size": "S, M, L, XL",
+            "Care": "Machine Wash",
+            "Price": "$44.99 - $69.99",
+            "Brand": "Resort Wear",
+            "Collection": "Vacation Collection"
+          },
+          "image": "/images/mens-bermuda-shorts.png"
+        }
+      ]
+    },
+    {
+      "id": "mens-workwear",
+      "name": "Men's Workwear",
+      "products": [
+        {
+          "id": "mw-1",
+          "name": "Chef Uniform",
+          "category": "Men's Workwear",
+          "attributes": {
+            "Fabric": "Poly Cotton",
+            "Fit": "Regular Fit",
+            "Color": "White, Black",
+            "Size": "S, M, L, XL, XXL",
+            "Care": "Industrial Wash",
+            "Price": "$49.99 - $89.99",
+            "Brand": "Professional Chef",
+            "Collection": "Hospitality Wear"
+          },
+          "image": "/images/chef-uniform.png"
+        },
+        {
+          "id": "mw-2",
+          "name": "Kitchen Apron",
+          "category": "Men's Workwear",
+          "attributes": {
+            "Fabric": "Heavy Cotton",
+            "Fit": "Adjustable",
+            "Color": "White, Black, Stripes",
+            "Size": "One Size",
+            "Care": "Machine Wash",
+            "Price": "$19.99 - $34.99",
+            "Brand": "Professional Chef",
+            "Collection": "Accessories"
+          },
+          "image": "/images/kitchen-apron.png"
+        },
+        {
+          "id": "mw-3",
+          "name": "Doctor Apron",
+          "category": "Men's Workwear",
+          "attributes": {
+            "Fabric": "Poly Cotton Blend",
+            "Fit": "Regular Fit",
+            "Color": "White, Blue, Green",
+            "Size": "S, M, L, XL",
+            "Care": "Sterilizable",
+            "Price": "$39.99 - $69.99",
+            "Brand": "Medical Professional",
+            "Collection": "Healthcare"
+          },
+          "image": "/images/doctor-apron.png"
+        },
+        {
+          "id": "mw-4",
+          "name": "Civil Workwear",
+          "category": "Men's Workwear",
+          "attributes": {
+            "Fabric": "Heavy Duty Cotton",
+            "Fit": "Relaxed Fit",
+            "Color": "Orange, Yellow, Blue",
+            "Size": "S, M, L, XL, XXL",
+            "Care": "Industrial Wash",
+            "Price": "$29.99 - $59.99",
+            "Brand": "Industrial",
+            "Collection": "Safety Wear"
+          },
+          "image": "/images/civil-workwear.png"
+        },
+        {
+          "id": "mw-5",
+          "name": "Military Uniform",
+          "category": "Men's Workwear",
+          "attributes": {
+            "Fabric": "Ripstop Cotton",
+            "Fit": "Regular Fit",
+            "Color": "Camo, Olive, Black",
+            "Size": "S, M, L, XL",
+            "Care": "Military Spec Wash",
+            "Price": "$79.99 - $149.99",
+            "Brand": "Tactical",
+            "Collection": "Official Wear"
+          },
+          "image": "/images/military-uniform.png"
+        }
+      ]
+    },
+    {
+      "id": "womens-formal",
+      "name": "Women's Formal Wear",
+      "products": [
+        {
+          "id": "wf-1",
+          "name": "Women's Formal Shirt",
+          "category": "Women's Formal Wear",
+          "attributes": {
+            "Fabric": "Silk Cotton Blend",
+            "Fit": "Tailored Fit",
+            "Color": "White, Blue, Black",
+            "Size": "XS, S, M, L, XL",
+            "Care": "Dry Clean",
+            "Price": "$59.99 - $89.99",
+            "Brand": "Elegant Women",
+            "Collection": "Office Wear"
+          },
+          "image": "/images/womens-formal-shirt.png"
+        },
+        {
+          "id": "wf-2",
+          "name": "Women's Formal Pant",
+          "category": "Women's Formal Wear",
+          "attributes": {
+            "Fabric": "Wool Blend",
+            "Fit": "Straight Leg",
+            "Color": "Black, Navy, Grey",
+            "Size": "4-16",
+            "Care": "Dry Clean Only",
+            "Price": "$79.99 - $119.99",
+            "Brand": "Elegant Women",
+            "Collection": "Office Wear"
+          },
+          "image": "/images/womens-formal-pant.png"
+        },
+        {
+          "id": "wf-3",
+          "name": "Women's Blazer",
+          "category": "Women's Formal Wear",
+          "attributes": {
+            "Fabric": "Wool Blend",
+            "Fit": "Structured Fit",
+            "Color": "Black, Navy, Cream",
+            "Size": "XS, S, M, L, XL",
+            "Care": "Dry Clean Only",
+            "Price": "$149.99 - $229.99",
+            "Brand": "Elegant Women",
+            "Collection": "Power Dressing"
+          },
+          "image": "/images/womens-blazer.png"
+        },
+        {
+          "id": "wf-4",
+          "name": "Women's Pencil Skirt",
+          "category": "Women's Formal Wear",
+          "attributes": {
+            "Fabric": "Polyester Blend",
+            "Fit": "Pencil Fit",
+            "Color": "Black, Navy, Grey",
+            "Size": "4-16",
+            "Care": "Dry Clean",
+            "Price": "$49.99 - $79.99",
+            "Brand": "Elegant Women",
+            "Collection": "Office Essentials"
+          },
+          "image": "/images/womens-pencil-skirt.png"
+        },
+        {
+          "id": "wf-5",
+          "name": "Women's Short Sleeve Shirt",
+          "category": "Women's Formal Wear",
+          "attributes": {
+            "Fabric": "Cotton Poplin",
+            "Fit": "Regular Fit",
+            "Color": "Various Pastels",
+            "Size": "XS, S, M, L, XL",
+            "Care": "Machine Wash",
+            "Price": "$39.99 - $69.99",
+            "Brand": "Elegant Women",
+            "Collection": "Summer Formal"
+          },
+          "image": "/images/womens-short-sleeve-shirt.png"
+        }
+      ]
+    },
+    {
+      "id": "womens-casual",
+      "name": "Women's Casual Wear",
+      "products": [
+        {
+          "id": "wc-1",
+          "name": "Women's Casual Full Sleeve Shirt",
+          "category": "Women's Casual Wear",
+          "attributes": {
+            "Fabric": "Soft Cotton",
+            "Fit": "Relaxed Fit",
+            "Color": "Various Patterns",
+            "Size": "XS, S, M, L, XL",
+            "Care": "Machine Wash",
+            "Price": "$34.99 - $54.99",
+            "Brand": "Casual Comfort",
+            "Collection": "Everyday Wear"
+          },
+          "image": "/images/womens-casual-full-sleeve.png"
+        },
+        {
+          "id": "wc-2",
+          "name": "Women's Casual Pant",
+          "category": "Women's Casual Wear",
+          "attributes": {
+            "Fabric": "Cotton Jersey",
+            "Fit": "Comfort Fit",
+            "Color": "Black, Navy, Olive",
+            "Size": "XS, S, M, L, XL",
+            "Care": "Machine Wash",
+            "Price": "$44.99 - $69.99",
+            "Brand": "Casual Comfort",
+            "Collection": "Loungewear"
+          },
+          "image": "/images/womens-casual-pant.png"
+        },
+        {
+          "id": "wc-3",
+          "name": "Women's Cropped Blazer",
+          "category": "Women's Casual Wear",
+          "attributes": {
+            "Fabric": "Linen Blend",
+            "Fit": "Cropped Fit",
+            "Color": "Beige, White, Pink",
+            "Size": "XS, S, M, L",
+            "Care": "Dry Clean",
+            "Price": "$99.99 - $149.99",
+            "Brand": "Casual Comfort",
+            "Collection": "Weekend Chic"
+          },
+          "image": "/images/womens-cropped-blazer.png"
+        },
+        {
+          "id": "wc-4",
+          "name": "Women's Short Pant",
+          "category": "Women's Casual Wear",
+          "attributes": {
+            "Fabric": "Cotton Blend",
+            "Fit": "Regular Fit",
+            "Color": "Denim, Black, White",
+            "Size": "XS, S, M, L, XL",
+            "Care": "Machine Wash",
+            "Price": "$29.99 - $49.99",
+            "Brand": "Casual Comfort",
+            "Collection": "Summer Casual"
+          },
+          "image": "/images/womens-short-pant.png"
+        },
+        {
+          "id": "wc-5",
+          "name": "Women's Cuban Short Sleeve Shirt",
+          "category": "Women's Casual Wear",
+          "attributes": {
+            "Fabric": "Lightweight Cotton",
+            "Fit": "Boxy Fit",
+            "Color": "Bright Colors",
+            "Size": "XS, S, M, L, XL",
+            "Care": "Machine Wash",
+            "Price": "$39.99 - $59.99",
+            "Brand": "Casual Comfort",
+            "Collection": "Vacation Wear"
+          },
+          "image": "/images/womens-cuban-shirt.png"
+        }
+      ]
+    },
+    {
+      "id": "womens-other",
+      "name": "Women's Wear",
+      "products": [
+        {
+          "id": "wo-1",
+          "name": "Women's Overshirt",
+          "category": "Women's Wear",
+          "attributes": {
+            "Fabric": "Brushed Cotton",
+            "Fit": "Oversized Fit",
+            "Color": "Cream, Olive, Terracotta",
+            "Size": "XS, S, M, L, XL",
+            "Care": "Machine Wash",
+            "Price": "$89.99 - $129.99",
+            "Brand": "Contemporary",
+            "Collection": "Layering Pieces"
+          },
+          "image": "/images/womens-overshirt.png"
+        },
+        {
+          "id": "wo-2",
+          "name": "Women's Trench Coat",
+          "category": "Women's Wear",
+          "attributes": {
+            "Fabric": "Cotton Gabardine",
+            "Fit": "Belted Fit",
+            "Color": "Beige, Black, Navy",
+            "Size": "XS, S, M, L, XL",
+            "Care": "Dry Clean Only",
+            "Price": "$199.99 - $299.99",
+            "Brand": "Classic",
+            "Collection": "Timeless Outerwear"
+          },
+          "image": "/images/womens-trench-coat.png"
+        },
+        {
+          "id": "wo-3",
+          "name": "Women's Long Shirt",
+          "category": "Women's Wear",
+          "attributes": {
+            "Fabric": "Rayon Blend",
+            "Fit": "Longline Fit",
+            "Color": "Various Colors",
+            "Size": "XS, S, M, L, XL",
+            "Care": "Machine Wash",
+            "Price": "$49.99 - $79.99",
+            "Brand": "Contemporary",
+            "Collection": "Modern Silhouettes"
+          },
+          "image": "/images/womens-long-shirt.png"
+        },
+        {
+          "id": "wo-4",
+          "name": "Women's Cargo Pant",
+          "category": "Women's Wear",
+          "attributes": {
+            "Fabric": "Cotton Canvas",
+            "Fit": "Relaxed Fit",
+            "Color": "Khaki, Black, Olive",
+            "Size": "XS, S, M, L, XL",
+            "Care": "Machine Wash",
+            "Price": "$59.99 - $89.99",
+            "Brand": "Utility",
+            "Collection": "Streetwear"
+          },
+          "image": "/images/womens-cargo-pant.png"
+        },
+        {
+          "id": "wo-5",
+          "name": "Women's Bermuda Shorts Pant",
+          "category": "Women's Wear",
+          "attributes": {
+            "Fabric": "Cotton Blend",
+            "Fit": "Regular Fit",
+            "Color": "White, Navy, Beige",
+            "Size": "XS, S, M, L, XL",
+            "Care": "Machine Wash",
+            "Price": "$39.99 - $59.99",
+            "Brand": "Resort Wear",
+            "Collection": "Summer Collection"
+          },
+          "image": "/images/womens-bermuda-shorts.png"
+        }
+      ]
+    },
+    {
+      "id": "womens-workwear",
+      "name": "Women's Workwear",
+      "products": [
+        {
+          "id": "ww-1",
+          "name": "Chef Uniform",
+          "category": "Women's Workwear",
+          "attributes": {
+            "Fabric": "Poly Cotton",
+            "Fit": "Regular Fit",
+            "Color": "White, Black",
+            "Size": "XS, S, M, L, XL",
+            "Care": "Industrial Wash",
+            "Price": "$49.99 - $89.99",
+            "Brand": "Professional Chef",
+            "Collection": "Hospitality Wear"
+          },
+          "image": "/images/womens-chef-uniform.png"
+        },
+        {
+          "id": "ww-2",
+          "name": "Kitchen Apron",
+          "category": "Women's Workwear",
+          "attributes": {
+            "Fabric": "Heavy Cotton",
+            "Fit": "Adjustable",
+            "Color": "Various Colors",
+            "Size": "One Size",
+            "Care": "Machine Wash",
+            "Price": "$19.99 - $34.99",
+            "Brand": "Professional Chef",
+            "Collection": "Accessories"
+          },
+          "image": "/images/womens-kitchen-apron.png"
+        },
+        {
+          "id": "ww-3",
+          "name": "Doctor Apron",
+          "category": "Women's Workwear",
+          "attributes": {
+            "Fabric": "Poly Cotton Blend",
+            "Fit": "Regular Fit",
+            "Color": "White, Blue, Pink",
+            "Size": "XS, S, M, L, XL",
+            "Care": "Sterilizable",
+            "Price": "$39.99 - $69.99",
+            "Brand": "Medical Professional",
+            "Collection": "Healthcare"
+          },
+          "image": "/images/womens-doctor-apron.png"
+        },
+        {
+          "id": "ww-4",
+          "name": "Air Hostess Uniform",
+          "category": "Women's Workwear",
+          "attributes": {
+            "Fabric": "Poly Wool Blend",
+            "Fit": "Tailored Fit",
+            "Color": "Navy, Red, Blue",
+            "Size": "XS, S, M, L, XL",
+            "Care": "Dry Clean Only",
+            "Price": "$129.99 - $199.99",
+            "Brand": "Aviation",
+            "Collection": "Airline Uniform"
+          },
+          "image": "/images/air-hostess-uniform.png"
+        },
+        {
+          "id": "ww-5",
+          "name": "Military Uniform",
+          "category": "Women's Workwear",
+          "attributes": {
+            "Fabric": "Ripstop Cotton",
+            "Fit": "Regular Fit",
+            "Color": "Camo, Olive, Black",
+            "Size": "XS, S, M, L, XL",
+            "Care": "Military Spec Wash",
+            "Price": "$79.99 - $149.99",
+            "Brand": "Tactical",
+            "Collection": "Official Wear"
+          },
+          "image": "/images/womens-military-uniform.png"
+        }
+      ]
+    },
+    {
+      "id": "kids-boy-formal",
+      "name": "Kid's Boy Formal Wear",
+      "products": [
+        {
+          "id": "kbf-1",
+          "name": "Kid's Formal Shirt",
+          "category": "Kid's Boy Formal Wear",
+          "attributes": {
+            "Fabric": "Cotton Blend",
+            "Fit": "Regular Fit",
+            "Color": "White, Blue",
+            "Size": "4-12 Years",
+            "Care": "Machine Wash",
+            "Price": "$24.99 - $39.99",
+            "Brand": "Kids Formal",
+            "Collection": "School & Events"
+          },
+          "image": "/images/kids-boy-formal-shirt.png"
+        },
+        {
+          "id": "kbf-2",
+          "name": "Kid's Formal Pant",
+          "category": "Kid's Boy Formal Wear",
+          "attributes": {
+            "Fabric": "Poly Wool Blend",
+            "Fit": "Regular Fit",
+            "Color": "Black, Navy, Grey",
+            "Size": "4-12 Years",
+            "Care": "Machine Wash",
+            "Price": "$29.99 - $49.99",
+            "Brand": "Kids Formal",
+            "Collection": "School & Events"
+          },
+          "image": "/images/kids-boy-formal-pant.png"
+        },
+        {
+          "id": "kbf-3",
+          "name": "Kid's Blazer",
+          "category": "Kid's Boy Formal Wear",
+          "attributes": {
+            "Fabric": "Wool Blend",
+            "Fit": "Regular Fit",
+            "Color": "Navy, Black, Burgundy",
+            "Size": "4-12 Years",
+            "Care": "Dry Clean",
+            "Price": "$49.99 - $79.99",
+            "Brand": "Kids Formal",
+            "Collection": "Special Occasions"
+          },
+          "image": "/images/kids-boy-blazer.png"
+        },
+        {
+          "id": "kbf-4",
+          "name": "Kid's Shorts Pant",
+          "category": "Kid's Boy Formal Wear",
+          "attributes": {
+            "Fabric": "Cotton Blend",
+            "Fit": "Regular Fit",
+            "Color": "Navy, Beige, Grey",
+            "Size": "4-12 Years",
+            "Care": "Machine Wash",
+            "Price": "$19.99 - $34.99",
+            "Brand": "Kids Formal",
+            "Collection": "Summer Formal"
+          },
+          "image": "/images/kids-boy-shorts.png"
+        },
+        {
+          "id": "kbf-5",
+          "name": "Kid's Formal Short Sleeve Shirt",
+          "category": "Kid's Boy Formal Wear",
+          "attributes": {
+            "Fabric": "Cotton Poplin",
+            "Fit": "Regular Fit",
+            "Color": "White, Blue, Pink",
+            "Size": "4-12 Years",
+            "Care": "Machine Wash",
+            "Price": "$22.99 - $36.99",
+            "Brand": "Kids Formal",
+            "Collection": "Summer Events"
+          },
+          "image": "/images/kids-boy-short-sleeve.png"
+        }
+      ]
+    },
+    {
+      "id": "kids-boy-casual",
+      "name": "Kid's Boy Casual Wear",
+      "products": [
+        {
+          "id": "kbc-1",
+          "name": "Kid's Casual Full Sleeve Shirt",
+          "category": "Kid's Boy Casual Wear",
+          "attributes": {
+            "Fabric": "Soft Cotton",
+            "Fit": "Comfort Fit",
+            "Color": "Various Colors",
+            "Size": "4-12 Years",
+            "Care": "Machine Wash",
+            "Price": "$19.99 - $32.99",
+            "Brand": "Kids Comfort",
+            "Collection": "Everyday Wear"
+          },
+          "image": "/images/kids-boy-casual-shirt.png"
+        },
+        {
+          "id": "kbc-2",
+          "name": "Kid's Casual Pant",
+          "category": "Kid's Boy Casual Wear",
+          "attributes": {
+            "Fabric": "Cotton Jersey",
+            "Fit": "Comfort Fit",
+            "Color": "Navy, Black, Grey",
+            "Size": "4-12 Years",
+            "Care": "Machine Wash",
+            "Price": "$24.99 - $39.99",
+            "Brand": "Kids Comfort",
+            "Collection": "Playwear"
+          },
+          "image": "/images/kids-boy-casual-pant.png"
+        },
+        {
+          "id": "kbc-3",
+          "name": "Kid's Dungaree",
+          "category": "Kid's Boy Casual Wear",
+          "attributes": {
+            "Fabric": "Heavy Cotton",
+            "Fit": "Adjustable Fit",
+            "Color": "Denim, Corduroy",
+            "Size": "4-12 Years",
+            "Care": "Machine Wash",
+            "Price": "$34.99 - $54.99",
+            "Brand": "Kids Comfort",
+            "Collection": "Playwear"
+          },
+          "image": "/images/kids-boy-dungaree.png"
+        },
+        {
+          "id": "kbc-4",
+          "name": "Kid's Casual Short Pant",
+          "category": "Kid's Boy Casual Wear",
+          "attributes": {
+            "Fabric": "Cotton Blend",
+            "Fit": "Regular Fit",
+            "Color": "Various Colors",
+            "Size": "4-12 Years",
+            "Care": "Machine Wash",
+            "Price": "$16.99 - $28.99",
+            "Brand": "Kids Comfort",
+            "Collection": "Summer Wear"
+          },
+          "image": "/images/kids-boy-casual-shorts.png"
+        },
+        {
+          "id": "kbc-5",
+          "name": "Kid's Casual Short Sleeve Shirt",
+          "category": "Kid's Boy Casual Wear",
+          "attributes": {
+            "Fabric": "Cotton Jersey",
+            "Fit": "Regular Fit",
+            "Color": "Fun Prints & Colors",
+            "Size": "4-12 Years",
+            "Care": "Machine Wash",
+            "Price": "$14.99 - $26.99",
+            "Brand": "Kids Comfort",
+            "Collection": "Summer Essential"
+          },
+          "image": "/images/kids-boy-casual-tshirt.png"
+        }
+      ]
+    },
+    {
+      "id": "kids-girls-casual",
+      "name": "Kid's Girls Casual Wear",
+      "products": [
+        {
+          "id": "kgc-1",
+          "name": "Kid's Tops",
+          "category": "Kid's Girls Casual Wear",
+          "attributes": {
+            "Fabric": "Soft Cotton",
+            "Fit": "Comfort Fit",
+            "Color": "Various Colors & Prints",
+            "Size": "4-12 Years",
+            "Care": "Machine Wash",
+            "Price": "$17.99 - $29.99",
+            "Brand": "Girls Fun",
+            "Collection": "Everyday Wear"
+          },
+          "image": "/images/kids-girls-tops.png"
+        },
+        {
+          "id": "kgc-2",
+          "name": "Kid's Set",
+          "category": "Kid's Girls Casual Wear",
+          "attributes": {
+            "Fabric": "Cotton Blend",
+            "Fit": "Coordinated Set",
+            "Color": "Matching Sets",
+            "Size": "4-12 Years",
+            "Care": "Machine Wash",
+            "Price": "$34.99 - $54.99",
+            "Brand": "Girls Fun",
+            "Collection": "Outfit Sets"
+          },
+          "image": "/images/kids-girls-set.png"
+        },
+        {
+          "id": "kgc-3",
+          "name": "Kid's Dress",
+          "category": "Kid's Girls Casual Wear",
+          "attributes": {
+            "Fabric": "Cotton Blend",
+            "Fit": "Various Styles",
+            "Color": "Various Colors",
+            "Size": "4-12 Years",
+            "Care": "Machine Wash",
+            "Price": "$29.99 - $49.99",
+            "Brand": "Girls Fun",
+            "Collection": "Party & Play"
+          },
+          "image": "/images/kids-girls-dress.png"
+        },
+        {
+          "id": "kgc-4",
+          "name": "Kid's Dungaree",
+          "category": "Kid's Girls Casual Wear",
+          "attributes": {
+            "Fabric": "Denim & Corduroy",
+            "Fit": "Adjustable Fit",
+            "Color": "Various Colors",
+            "Size": "4-12 Years",
+            "Care": "Machine Wash",
+            "Price": "$32.99 - $52.99",
+            "Brand": "Girls Fun",
+            "Collection": "Playwear"
+          },
+          "image": "/images/kids-girls-dungaree.png"
+        },
+        {
+          "id": "kgc-5",
+          "name": "Kid's Bottom",
+          "category": "Kid's Girls Casual Wear",
+          "attributes": {
+            "Fabric": "Cotton Jersey",
+            "Fit": "Comfort Fit",
+            "Color": "Various Colors",
+            "Size": "4-12 Years",
+            "Care": "Machine Wash",
+            "Price": "$19.99 - $34.99",
+            "Brand": "Girls Fun",
+            "Collection": "Bottoms"
+          },
+          "image": "/images/kids-girls-bottom.png"
+        },
+        {
+          "id": "kgc-6",
+          "name": "Kid's Skirt",
+          "category": "Kid's Girls Casual Wear",
+          "attributes": {
+            "Fabric": "Cotton Blend",
+            "Fit": "Various Styles",
+            "Color": "Various Colors & Prints",
+            "Size": "4-12 Years",
+            "Care": "Machine Wash",
+            "Price": "$22.99 - $38.99",
+            "Brand": "Girls Fun",
+            "Collection": "Skirts"
+          },
+          "image": "/images/kids-girls-skirt.png"
+        },
+        {
+          "id": "kgc-7",
+          "name": "Kid's Romper",
+          "category": "Kid's Girls Casual Wear",
+          "attributes": {
+            "Fabric": "Soft Cotton",
+            "Fit": "One Piece",
+            "Color": "Fun Prints",
+            "Size": "4-12 Years",
+            "Care": "Machine Wash",
+            "Price": "$26.99 - $44.99",
+            "Brand": "Girls Fun",
+            "Collection": "Summer Wear"
+          },
+          "image": "/images/kids-girls-romper.png"
+        },
+        {
+          "id": "kgc-8",
+          "name": "Kids Trench Coat",
+          "category": "Kid's Girls Casual Wear",
+          "attributes": {
+            "Fabric": "Cotton Blend",
+            "Fit": "Regular Fit",
+            "Color": "Beige, Pink, Navy",
+            "Size": "4-12 Years",
+            "Care": "Machine Wash",
+            "Price": "$39.99 - $64.99",
+            "Brand": "Girls Fun",
+            "Collection": "Outerwear"
+          },
+          "image": "/images/kids-girls-trench.png"
+        },
+        {
+          "id": "kgc-9",
+          "name": "Kids Shacket",
+          "category": "Kid's Girls Casual Wear",
+          "attributes": {
+            "Fabric": "Brushed Cotton",
+            "Fit": "Overshirt Style",
+            "Color": "Various Colors",
+            "Size": "4-12 Years",
+            "Care": "Machine Wash",
+            "Price": "$34.99 - $54.99",
+            "Brand": "Girls Fun",
+            "Collection": "Layering"
+          },
+          "image": "/images/kids-girls-shacket.png"
+        }
+      ]
+    },
+    {
+      "id": "mini-me",
+      "name": "Mini Me Concept",
+      "products": [
+        {
+          "id": "mm-1",
+          "name": "Western Tops and Bottom",
+          "category": "Mini Me Concept",
+          "attributes": {
+            "Fabric": "Denim & Cotton",
+            "Fit": "Coordinated Set",
+            "Color": "Western Theme",
+            "Size": "Adult & Kids Sizes",
+            "Care": "Machine Wash",
+            "Price": "$79.99 - $129.99",
+            "Brand": "Family Match",
+            "Collection": "Western Collection"
+          },
+          "image": "/images/mini-me-western.png"
+        },
+        {
+          "id": "mm-2",
+          "name": "Long Dress",
+          "category": "Mini Me Concept",
+          "attributes": {
+            "Fabric": "Flowey Fabric",
+            "Fit": "Matching Dresses",
+            "Color": "Various Colors",
+            "Size": "Adult & Kids Sizes",
+            "Care": "Machine Wash",
+            "Price": "$89.99 - $159.99",
+            "Brand": "Family Match",
+            "Collection": "Formal Wear"
+          },
+          "image": "/images/mini-me-dress.png"
+        },
+        {
+          "id": "mm-3",
+          "name": "Formal Wear",
+          "category": "Mini Me Concept",
+          "attributes": {
+            "Fabric": "Formal Fabrics",
+            "Fit": "Matching Sets",
+            "Color": "Formal Colors",
+            "Size": "Adult & Kids Sizes",
+            "Care": "Dry Clean",
+            "Price": "$149.99 - $299.99",
+            "Brand": "Family Match",
+            "Collection": "Special Occasions"
+          },
+          "image": "/images/mini-me-formal.png"
+        },
+        {
+          "id": "mm-4",
+          "name": "Traditional Coat and Pant Tops and Skirt",
+          "category": "Mini Me Concept",
+          "attributes": {
+            "Fabric": "Traditional Fabrics",
+            "Fit": "Cultural Styles",
+            "Color": "Traditional Colors",
+            "Size": "Adult & Kids Sizes",
+            "Care": "Special Care",
+            "Price": "$129.99 - $249.99",
+            "Brand": "Family Match",
+            "Collection": "Cultural Wear"
+          },
+          "image": "/images/mini-me-traditional.png"
+        },
+        {
+          "id": "mm-5",
+          "name": "Resort Wear Set Dress and Shirt",
+          "category": "Mini Me Concept",
+          "attributes": {
+            "Fabric": "Lightweight Fabrics",
+            "Fit": "Resort Style",
+            "Color": "Vacation Colors",
+            "Size": "Adult & Kids Sizes",
+            "Care": "Machine Wash",
+            "Price": "$69.99 - $119.99",
+            "Brand": "Family Match",
+            "Collection": "Vacation Wear"
+          },
+          "image": "/images/mini-me-resort.png"
+        }
+      ]
+    }
+  ]
+}
