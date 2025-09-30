@@ -654,13 +654,13 @@ const CategoryProducts = () => {
                   animate={{ opacity: 1, height: 'auto', scale: 1 }}
                   exit={{ opacity: 0, height: 0, scale: 0.95 }}
                   transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="bg-white/80 backdrop-blur-sm rounded-lg border border-slate-300 shadow-2xl overflow-hidden"
+                  className="bg-white/80 backdrop-blur-sm rounded-lg border border-slate-300 shadow-2xl overflow-visible"
                 >
                   <div className="p-3">
                     {/* Modern Filter Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
                       <div>
-                        <label className="block text-xs font-semibold text-slate-700 mb-1">Category</label>
+                        <label className="block text-xs font-semibold text-slate-700 mb-1 ">Category</label>
                         <FilterDropdown
                           label="category"
                           options={availableFilters.categories}

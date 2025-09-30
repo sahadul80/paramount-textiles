@@ -54,10 +54,8 @@ const TrailModel = ({ product, isOpen, onClose }: TrailModelProps) => {
 
     const rect = modelRef.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
     
     const deltaX = e.clientX - centerX;
-    const deltaY = e.clientY - centerY;
     
     // Calculate rotation based on mouse position
     const newRotationY = (deltaX / rect.width) * 180;
@@ -79,36 +77,45 @@ const TrailModel = ({ product, isOpen, onClose }: TrailModelProps) => {
 
   return (
     <motion.div
-      className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+      className="z-[102] fixed inset-0 bg-black/70 backdrop-blur-xl z-50 flex items-center justify-center p-2 sm:p-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
+      onClick={onClose}
     >
       <motion.div
-        className="bg-white rounded-2xl shadow-2xl w-full max-w-6xl max-h-[90vh] overflow-hidden"
+        className="bg-white rounded-2xl shadow-2xl w-full max-w-6xl max-h-[80vh] flex flex-col overflow-auto"
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.8, opacity: 0 }}
         transition={{ type: "spring", damping: 25 }}
+        onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex flex-col lg:flex-row h-full">
-          {/* 3D Model Section */}
-          <div className="lg:w-2/3 p-6 flex flex-col">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-bold text-gray-800">
-                Virtual Try-On: {product.name}
-              </h2>
-              <button
-                onClick={onClose}
-                className="text-gray-500 hover:text-gray-700 transition-colors"
-              >
-                <FiX size={24} />
-              </button>
-            </div>
+        {/* Header */}
+        <div className="flex justify-between items-center p-2 sm:p-6 border-b border-slate-200 bg-white sticky top-0 z-10">
+          <div>
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-800">
+              Virtual Try-On
+            </h2>
+          </div>
+            <p className="text-sm sm:text-base text-gray-600 mt-1">
+                {product.name}
+            </p>
+          <button
+            onClick={onClose}
+            className="p-2 hover:bg-slate-100 rounded-lg transition-all duration-300 text-gray-500 hover:text-gray-700"
+          >
+            <FiX size={24} />
+          </button>
+        </div>
 
+        {/* Main Content */}
+        <div className="flex-1 flex flex-col lg:flex-row overflow-auto">
+          {/* 3D Model Section */}
+          <div className="w-full sm:w-2/3 p-2 sm:p-6 flex flex-col min-h-[500px]">
             <div 
               ref={modelRef}
-              className="flex-1 relative bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg overflow-hidden flex items-center justify-center"
+              className="flex-1 relative bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl border-2 border-slate-200 overflow-hidden flex items-center justify-center min-h-[400px]"
               onMouseMove={handleMouseMove}
               onMouseEnter={() => setIsRotating(false)}
               onMouseLeave={() => setIsRotating(true)}
@@ -130,27 +137,27 @@ const TrailModel = ({ product, isOpen, onClose }: TrailModelProps) => {
                       backgroundColor: 
                         customizations.skinTone === 'light' ? '#f8d3b8' :
                         customizations.skinTone === 'medium' ? '#d2a679' :
-                        '#8d5524', // dark
+                        '#8d5524',
                       transform: `
                         scale(${
                           customizations.bodyShape === 'slim' ? 0.9 :
                           customizations.bodyShape === 'average' ? 1 :
-                          1.1 // athletic
+                          1.1
                         })
                         scaleY(${
                           customizations.height === 'short' ? 0.9 :
                           customizations.height === 'medium' ? 1 :
-                          1.1 // tall
+                          1.1
                         })
                       `
                     }}
                   />
                   
                   {/* Product Overlay */}
-                  <div className="absolute w-40 h-72 bg-blue-200 bg-opacity-50 rounded-lg border-2 border-blue-300 flex items-center justify-center">
-                    <div className="text-blue-800 text-center">
-                      <div className="font-bold">{product.name}</div>
-                      <div className="text-sm mt-2">Wearing the product</div>
+                  <div className="absolute w-40 h-72 bg-blue-200/60 rounded-lg border-2 border-blue-300/70 flex items-center justify-center backdrop-blur-sm">
+                    <div className="text-blue-800 text-center p-4">
+                      <div className="font-bold text-lg mb-2">{product.name}</div>
+                      <div className="text-sm">Virtual Try-On Preview</div>
                     </div>
                   </div>
 
@@ -162,152 +169,170 @@ const TrailModel = ({ product, isOpen, onClose }: TrailModelProps) => {
                       clipPath: 
                         customizations.hairStyle === 'straight' ? 
                           'polygon(0% 0%, 100% 0%, 100% 60%, 0% 60%)' :
-                          'path("M0,0 Q20,10 40,5 Q60,0 80,8 Q100,5 120,0 Q140,10 160,0 L160,60 L0,60 Z")' // curly
+                          'path("M0,0 Q20,10 40,5 Q60,0 80,8 Q100,5 120,0 Q140,10 160,0 L160,60 L0,60 Z")'
                     }}
                   />
                 </div>
               </div>
 
-              {/* Rotation Controls */}
-              <div className="absolute bottom-4 left-4 flex gap-2">
+              {/* Controls */}
+              <div className="absolute bottom-4 left-4 flex flex-col sm:flex-row gap-2">
                 <button
                   onClick={() => setIsRotating(!isRotating)}
-                  className="bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                  className="bg-blue-600 text-white p-3 rounded-xl shadow-lg hover:bg-blue-700 transition-all duration-300 flex items-center gap-2 min-w-[120px] justify-center"
                 >
                   {isRotating ? <FiPause size={20} /> : <FiPlay size={20} />}
-                  <span className="text-sm">{isRotating ? 'Pause' : 'Play'}</span>
+                  <span className="text-sm font-medium">
+                    {isRotating ? 'Pause' : 'Rotate'}
+                  </span>
                 </button>
                 <button
                   onClick={() => setRotation(0)}
-                  className="bg-gray-600 text-white p-3 rounded-full shadow-lg hover:bg-gray-700 transition-colors"
+                  className="bg-slate-600 text-white p-3 rounded-xl shadow-lg hover:bg-slate-700 transition-all duration-300 flex items-center gap-2 min-w-[120px] justify-center"
                 >
                   <FiRotateCw size={20} />
+                  <span className="text-sm font-medium">Reset View</span>
                 </button>
               </div>
 
               {/* Rotation Indicator */}
-              <div className="absolute top-4 right-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm">
-                {Math.round(rotation)}°
+              <div className="absolute top-4 right-4 bg-black/70 text-white px-3 py-2 rounded-full text-sm font-medium backdrop-blur-sm">
+                {Math.round(rotation)}° Rotation
               </div>
             </div>
           </div>
 
           {/* Customization Panel */}
-          <div className="lg:w-1/3 p-6 bg-gray-50 overflow-y-auto">
-            <h3 className="text-xl font-semibold text-gray-800 mb-6">
-              Customize Model
-            </h3>
-
+          <div className="w-full lg:w-1/3 bg-slate-50 border-t lg:border-t-0 lg:border-l border-slate-200 p-4 sm:p-6 overflow-auto">
             <div className="space-y-6">
-              {/* Skin Tone */}
+              {/* Customization Header */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Skin Tone
-                </label>
-                <div className="grid grid-cols-3 gap-2">
-                  {(['light', 'medium', 'dark'] as const).map(tone => (
-                    <button
-                      key={tone}
-                      onClick={() => handleCustomizationChange('skinTone', tone)}
-                      className={`p-3 rounded-lg border-2 text-sm capitalize ${
-                        customizations.skinTone === tone
-                          ? 'border-blue-500 bg-blue-50 text-blue-700'
-                          : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'
-                      }`}
-                    >
-                      {tone}
-                    </button>
-                  ))}
-                </div>
+                <h3 className="text-xl font-bold text-gray-800 mb-2">
+                  Customize Model
+                </h3>
+                <p className="text-sm text-gray-600">
+                  Adjust the model to match your preferences
+                </p>
               </div>
 
-              {/* Hair Style */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Hair Style
-                </label>
-                <div className="grid grid-cols-2 gap-2">
-                  {(['straight', 'curly'] as const).map(style => (
-                    <button
-                      key={style}
-                      onClick={() => handleCustomizationChange('hairStyle', style)}
-                      className={`p-3 rounded-lg border-2 text-sm capitalize ${
-                        customizations.hairStyle === style
-                          ? 'border-blue-500 bg-blue-50 text-blue-700'
-                          : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'
-                      }`}
-                    >
-                      {style}
-                    </button>
-                  ))}
+              {/* Customization Options */}
+              <div className="space-y-6">
+                {/* Skin Tone */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-3">
+                    Skin Tone
+                  </label>
+                  <div className="grid grid-cols-3 gap-3">
+                    {(['light', 'medium', 'dark'] as const).map(tone => (
+                      <button
+                        key={tone}
+                        onClick={() => handleCustomizationChange('skinTone', tone)}
+                        className={`p-3 rounded-lg border-2 transition-all duration-300 text-sm font-medium capitalize ${
+                          customizations.skinTone === tone
+                            ? 'border-blue-500 bg-blue-50 text-blue-700 shadow-sm'
+                            : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400 hover:bg-gray-50'
+                        }`}
+                      >
+                        {tone}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
 
-              {/* Body Shape */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Body Shape
-                </label>
-                <div className="grid grid-cols-3 gap-2">
-                  {(['slim', 'average', 'athletic'] as const).map(shape => (
-                    <button
-                      key={shape}
-                      onClick={() => handleCustomizationChange('bodyShape', shape)}
-                      className={`p-3 rounded-lg border-2 text-sm capitalize ${
-                        customizations.bodyShape === shape
-                          ? 'border-blue-500 bg-blue-50 text-blue-700'
-                          : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'
-                      }`}
-                    >
-                      {shape}
-                    </button>
-                  ))}
+                {/* Hair Style */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-3">
+                    Hair Style
+                  </label>
+                  <div className="grid grid-cols-2 gap-3">
+                    {(['straight', 'curly'] as const).map(style => (
+                      <button
+                        key={style}
+                        onClick={() => handleCustomizationChange('hairStyle', style)}
+                        className={`p-3 rounded-lg border-2 transition-all duration-300 text-sm font-medium capitalize ${
+                          customizations.hairStyle === style
+                            ? 'border-blue-500 bg-blue-50 text-blue-700 shadow-sm'
+                            : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400 hover:bg-gray-50'
+                        }`}
+                      >
+                        {style}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
 
-              {/* Height */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Height
-                </label>
-                <div className="grid grid-cols-3 gap-2">
-                  {(['short', 'medium', 'tall'] as const).map(height => (
-                    <button
-                      key={height}
-                      onClick={() => handleCustomizationChange('height', height)}
-                      className={`p-3 rounded-lg border-2 text-sm capitalize ${
-                        customizations.height === height
-                          ? 'border-blue-500 bg-blue-50 text-blue-700'
-                          : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'
-                      }`}
-                    >
-                      {height}
-                    </button>
-                  ))}
+                {/* Body Shape */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-3">
+                    Body Shape
+                  </label>
+                  <div className="grid grid-cols-3 gap-3">
+                    {(['slim', 'average', 'athletic'] as const).map(shape => (
+                      <button
+                        key={shape}
+                        onClick={() => handleCustomizationChange('bodyShape', shape)}
+                        className={`p-3 rounded-lg border-2 transition-all duration-300 text-sm font-medium capitalize ${
+                          customizations.bodyShape === shape
+                            ? 'border-blue-500 bg-blue-50 text-blue-700 shadow-sm'
+                            : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400 hover:bg-gray-50'
+                        }`}
+                      >
+                        {shape}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Height */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-3">
+                    Height
+                  </label>
+                  <div className="grid grid-cols-3 gap-3">
+                    {(['short', 'medium', 'tall'] as const).map(height => (
+                      <button
+                        key={height}
+                        onClick={() => handleCustomizationChange('height', height)}
+                        className={`p-3 rounded-lg border-2 transition-all duration-300 text-sm font-medium capitalize ${
+                          customizations.height === height
+                            ? 'border-blue-500 bg-blue-50 text-blue-700 shadow-sm'
+                            : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400 hover:bg-gray-50'
+                        }`}
+                      >
+                        {height}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
 
               {/* Product Info */}
-              <div className="pt-6 border-t border-gray-200">
-                <h4 className="font-semibold text-gray-800 mb-3">Product Details</h4>
-                <div className="space-y-2 text-sm text-gray-600">
+              <div className="pt-4 border-t border-slate-200">
+                <h4 className="font-semibold text-gray-800 mb-4 text-lg">Product Details</h4>
+                <div className="space-y-3 bg-white rounded-lg p-4 border border-slate-200">
                   {Object.entries(product.attributes).map(([key, value]) => (
-                    <div key={key} className="flex justify-between">
-                      <span className="capitalize">{key}:</span>
-                      <span>{value}</span>
+                    <div key={key} className="flex justify-between items-center py-2 border-b border-slate-100 last:border-b-0">
+                      <span className="capitalize font-medium text-gray-700 text-sm">
+                        {key}:
+                      </span>
+                      <span className="text-gray-900 font-semibold text-sm text-right">
+                        {value}
+                      </span>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* Action Buttons */}
-              <div className="pt-6 border-t border-gray-200 space-y-3">
-                <button className="w-full bg-green-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-green-700 transition-colors">
-                  Order This Outfit
-                </button>
-                <button className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
-                  Save Customization
-                </button>
+              <div className="pt-4 border-t border-slate-200">
+                <div className="grid grid-cols-2 gap-3">
+                  <button className="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white py-3 px-4 rounded-xl font-semibold hover:from-green-600 hover:to-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
+                    Order Now
+                  </button>
+                  <button className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-3 px-4 rounded-xl font-semibold hover:from-blue-600 hover:to-purple-600 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
+                    Save Model
+                  </button>
+                </div>
               </div>
             </div>
           </div>
