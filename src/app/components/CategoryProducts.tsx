@@ -573,20 +573,20 @@ const CategoryProducts = () => {
   }
 
   return (
-    <div className="max-h-[80vh] bg-gradient-to-br from-slate-50 to-blue-50/30">
+    <div className="max-h-[83vh] bg-gradient-to-br from-slate-50 to-blue-50/30">
       {/* Enhanced Sticky Header */}
       <div className="sticky top-0 z-40 bg-white/90 backdrop-blur-xl border-b border-slate-200/80 shadow-sm">
-        <div className="container mx-auto px-3 py-2">
+        <div className="container mx-auto p-2">
           {/* Enhanced Search and Filter Section */}
           <div className="space-y-2">
             {/* Top Row - 5 Column Grid */}
             <div className="grid grid-cols-5 gap-2 items-center">
               {/* Search Input - 2 columns */}
-              <div className="col-span-2 relative">
-                <FiSearch className="absolute left-2 top-1/2 transform -translate-y-1/2 text-slate-400 text-sm" />
+              <div className="col-span-3 sm:col-span-2 relative">
+                <FiSearch className="absolute inset-0 left-2 top-1/2 transform -translate-y-1/2 text-slate-400 text-sm z-10" />
                 <input
                   type="text"
-                  placeholder="Search products..."
+                  placeholder="Search..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="w-full pl-8 pr-2 py-2 text-sm border border-slate-300 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 bg-white/80 backdrop-blur-sm transition-all duration-300 text-slate-700 placeholder-slate-400"
@@ -594,7 +594,7 @@ const CategoryProducts = () => {
               </div>
 
               {/* View Toggle - 1 column */}
-              <div className="flex bg-white/80 backdrop-blur-sm rounded-lg border border-slate-300">
+              <div className="hidden sm:flex flex bg-white/80 backdrop-blur-sm rounded-lg border border-slate-300">
                 <button
                   onClick={() => setViewMode('grid')}
                   className={`p-2 w-1/2 rounded-md transition-all duration-300 flex items-center justify-center gap-1 font-semibold text-sm ${

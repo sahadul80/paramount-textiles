@@ -193,7 +193,7 @@ export default function DesignStudio() {
       </div>
 
       {/* Sub Tabs and Content */}
-      <div className="container mx-auto p-2">
+      <div className="container mx-auto">
         {/* Studio Sub Tabs */}
         <AnimatePresence mode="wait">
           {activeTab === 'studio' && (
@@ -203,7 +203,7 @@ export default function DesignStudio() {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
             >
-              <div className="flex space-x-1 mb-4 bg-white/60 backdrop-blur-sm rounded-md p-1 border border-slate-200">
+              <div className="flex space-x-1 bg-white/60 backdrop-blur-sm rounded-md p-1 border border-slate-200">
                 {studioSubTabs.map((tab) => (
                   <button
                     key={tab.id}
@@ -278,7 +278,7 @@ export default function DesignStudio() {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
             >
-              <div className="flex space-x-1 mb-4 bg-white/60 backdrop-blur-sm rounded-md p-1 border border-slate-200">
+              <div className="flex space-x-1 bg-white/60 backdrop-blur-sm rounded-md p-1 border border-slate-200">
                 {fabricSubTabs.map((tab) => (
                   <button
                     key={tab.id}
@@ -300,7 +300,7 @@ export default function DesignStudio() {
                 {fabricSubTab === 'patterns' && (
                   <div className="text-center py-6">
                     <div className="text-4xl mb-3">🧵</div>
-                    <h3 className="text-lg font-bold text-slate-800 mb-3">Pattern Types</h3>
+                    <h3 className="text-lg font-bold text-slate-800">Pattern Types</h3>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-2 max-w-2xl mx-auto">
                       {['Plain', 'Twill', 'Satin', 'Jacquard', 'Dobby', 'Leno', 'Pile', 'Double'].map((pattern) => (
                         <div key={pattern} className="p-2 bg-slate-100 rounded-md text-center">
@@ -314,7 +314,7 @@ export default function DesignStudio() {
 
                 {fabricSubTab === 'weaving' && (
                   <div className="text-center py-6">
-                    <div className="text-4xl mb-3">🏭</div>
+                    <div className="text-4xl">🏭</div>
                     <h3 className="text-lg font-bold text-slate-800 mb-3">Weaving Process</h3>
                     <div className="max-w-2xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-3">
                       <div className="p-3 bg-blue-50 rounded-md">
@@ -338,7 +338,7 @@ export default function DesignStudio() {
 
                 {fabricSubTab === 'stock' && (
                   <div>
-                    <h3 className="text-lg font-bold text-slate-800 mb-4">Fabric Stock</h3>
+                    <h3 className="text-lg font-bold text-slate-800">Fabric Stock</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       {fabricData.map((fabric) => (
                         <motion.div
@@ -385,7 +385,7 @@ export default function DesignStudio() {
               transition={{ duration: 0.2 }}
               className="relative"
             >
-              <div className="flex space-x-1 mb-4 bg-white/60 backdrop-blur-sm rounded-md p-1 border border-slate-200">
+              <div className="flex space-x-1 bg-white/60 backdrop-blur-sm rounded-md p-1 border border-slate-200">
                 {rmgSubTabs.map((tab) => (
                   <button
                     key={tab.id}
