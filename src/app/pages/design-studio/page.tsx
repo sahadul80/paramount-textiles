@@ -5,8 +5,42 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FiX } from 'react-icons/fi';
 import CategoryProducts from "../../components/CategoryProducts";
 
+// Define proper TypeScript interfaces
+interface Fabric {
+  id: number;
+  name: string;
+  pattern: string;
+  weight: string;
+  color: string;
+  stock: string;
+  image: string;
+  description: string;
+  composition: string;
+  width: string;
+  care: string;
+}
+
+interface Collection {
+  id: number;
+  name: string;
+  items: number;
+  launch: string;
+}
+
+interface SeasonalData {
+  current: Collection[];
+  seasonal: Collection[];
+  upcoming: Collection[];
+}
+
+// Define tab types
+type MainTab = 'studio' | 'fabric' | 'rmg';
+type StudioSubTab = 'portfolio' | 'banner' | 'design-tools';
+type FabricSubTab = 'patterns' | 'weaving' | 'stock';
+type RmgSubTab = 'current' | 'seasonal' | 'upcoming';
+
 // Mock data for fabric cards
-const fabricData = [
+const fabricData: Fabric[] = [
   {
     id: 1,
     name: "Cotton Twill",
@@ -62,7 +96,7 @@ const fabricData = [
 ];
 
 // Mock data for RMG seasonal collections
-const seasonalData = {
+const seasonalData: SeasonalData = {
   current: [
     { id: 1, name: "Spring Collection 2024", items: 45, launch: "Active" },
     { id: 2, name: "Workwear Essentials", items: 32, launch: "Active" }
@@ -77,15 +111,40 @@ const seasonalData = {
   ]
 };
 
+// Tab configuration arrays with proper typing
+const mainTabs = [
+  { id: 'studio' as MainTab, label: 'Studio', icon: '🎨' },
+  { id: 'fabric' as MainTab, label: 'Fabric', icon: '🧵' },
+  { id: 'rmg' as MainTab, label: 'RMG', icon: '👕' }
+];
+
+const studioSubTabs = [
+  { id: 'portfolio' as StudioSubTab, label: 'Portfolio', icon: '📁' },
+  { id: 'banner' as StudioSubTab, label: 'Banner', icon: '🖼️' },
+  { id: 'design-tools' as StudioSubTab, label: 'Tools', icon: '⚡' }
+];
+
+const fabricSubTabs = [
+  { id: 'patterns' as FabricSubTab, label: 'Patterns', icon: '🔸' },
+  { id: 'weaving' as FabricSubTab, label: 'Weaving', icon: '🏭' },
+  { id: 'stock' as FabricSubTab, label: 'Stock', icon: '📦' }
+];
+
+const rmgSubTabs = [
+  { id: 'current' as RmgSubTab, label: 'Current', icon: '🔄' },
+  { id: 'seasonal' as RmgSubTab, label: 'Seasonal', icon: '🌞' },
+  { id: 'upcoming' as RmgSubTab, label: 'Upcoming', icon: '🚀' }
+];
+
 export default function DesignStudio() {
-  const [activeTab, setActiveTab] = useState<'studio' | 'fabric' | 'rmg'>('rmg');
-  const [studioSubTab, setStudioSubTab] = useState<'portfolio' | 'banner' | 'design-tools'>('portfolio');
-  const [fabricSubTab, setFabricSubTab] = useState<'patterns' | 'weaving' | 'stock'>('stock');
-  const [rmgSubTab, setRmgSubTab] = useState<'current' | 'seasonal' | 'upcoming'>('current');
-  const [selectedFabric, setSelectedFabric] = useState<any>(null);
+  const [activeTab, setActiveTab] = useState<MainTab>('rmg');
+  const [studioSubTab, setStudioSubTab] = useState<StudioSubTab>('portfolio');
+  const [fabricSubTab, setFabricSubTab] = useState<FabricSubTab>('stock');
+  const [rmgSubTab, setRmgSubTab] = useState<RmgSubTab>('current');
+  const [selectedFabric, setSelectedFabric] = useState<Fabric | null>(null);
   const [isFabricModalOpen, setIsFabricModalOpen] = useState(false);
 
-  const handleFabricClick = (fabric: any) => {
+  const handleFabricClick = (fabric: Fabric) => {
     setSelectedFabric(fabric);
     setIsFabricModalOpen(true);
   };
@@ -115,14 +174,10 @@ export default function DesignStudio() {
       <div className="bg-white/80 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-40">
         <div className="container mx-auto px-3">
           <div className="flex space-x-1">
-            {[
-              { id: 'studio', label: 'Studio', icon: '🎨' },
-              { id: 'fabric', label: 'Fabric', icon: '🧵' },
-              { id: 'rmg', label: 'RMG', icon: '👕' }
-            ].map((tab) => (
+            {mainTabs.map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
+                onClick={() => setActiveTab(tab.id)}
                 className={`flex-1 py-2 px-3 text-xs font-semibold transition-all duration-200 border-b-2 flex items-center justify-center gap-1 ${
                   activeTab === tab.id
                     ? 'border-blue-500 text-blue-600 bg-blue-50'
@@ -149,14 +204,10 @@ export default function DesignStudio() {
               transition={{ duration: 0.2 }}
             >
               <div className="flex space-x-1 mb-4 bg-white/60 backdrop-blur-sm rounded-md p-1 border border-slate-200">
-                {[
-                  { id: 'portfolio', label: 'Portfolio', icon: '📁' },
-                  { id: 'banner', label: 'Banner', icon: '🖼️' },
-                  { id: 'design-tools', label: 'Tools', icon: '⚡' }
-                ].map((tab) => (
+                {studioSubTabs.map((tab) => (
                   <button
                     key={tab.id}
-                    onClick={() => setStudioSubTab(tab.id as any)}
+                    onClick={() => setStudioSubTab(tab.id)}
                     className={`flex-1 py-2 px-2 text-xs font-medium rounded-sm transition-all duration-200 flex items-center justify-center gap-1 ${
                       studioSubTab === tab.id
                         ? 'bg-white text-blue-600 shadow-xs'
@@ -228,14 +279,10 @@ export default function DesignStudio() {
               transition={{ duration: 0.2 }}
             >
               <div className="flex space-x-1 mb-4 bg-white/60 backdrop-blur-sm rounded-md p-1 border border-slate-200">
-                {[
-                  { id: 'patterns', label: 'Patterns', icon: '🔸' },
-                  { id: 'weaving', label: 'Weaving', icon: '🏭' },
-                  { id: 'stock', label: 'Stock', icon: '📦' }
-                ].map((tab) => (
+                {fabricSubTabs.map((tab) => (
                   <button
                     key={tab.id}
-                    onClick={() => setFabricSubTab(tab.id as any)}
+                    onClick={() => setFabricSubTab(tab.id)}
                     className={`flex-1 py-2 px-2 text-xs font-medium rounded-sm transition-all duration-200 flex items-center justify-center gap-1 ${
                       fabricSubTab === tab.id
                         ? 'bg-white text-blue-600 shadow-xs'
@@ -339,14 +386,10 @@ export default function DesignStudio() {
               className="relative"
             >
               <div className="flex space-x-1 mb-4 bg-white/60 backdrop-blur-sm rounded-md p-1 border border-slate-200">
-                {[
-                  { id: 'current', label: 'Current', icon: '🔄' },
-                  { id: 'seasonal', label: 'Seasonal', icon: '🌞' },
-                  { id: 'upcoming', label: 'Upcoming', icon: '🚀' }
-                ].map((tab) => (
+                {rmgSubTabs.map((tab) => (
                   <button
                     key={tab.id}
-                    onClick={() => setRmgSubTab(tab.id as any)}
+                    onClick={() => setRmgSubTab(tab.id)}
                     className={`flex-1 py-2 px-2 text-xs font-medium rounded-sm transition-all duration-200 flex items-center justify-center gap-1 ${
                       rmgSubTab === tab.id
                         ? 'bg-white text-blue-600 shadow-xs'
