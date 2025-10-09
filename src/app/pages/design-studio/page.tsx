@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Dispatch, SetStateAction } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiX } from 'react-icons/fi';
 import CategoryProducts from "../../components/CategoryProducts";
-import StudioBanner from '@/app/components/StudioBanner';
-import StudioVideoBanner from '@/app/components/StudioVideoBanner';
+import StudioVideoBanner from '../../components/StudioVideoBanner';
+import StudioBanner from '../../components/StudioBanner';
 
 // TypeScript interfaces
 interface Fabric {
@@ -41,6 +41,12 @@ type StudioSubTab = 'portfolio' | 'banner' | 'design-tools';
 type FabricSubTab = 'patterns' | 'weaving' | 'stock';
 type RmgSubTab = 'current' | 'seasonal' | 'upcoming';
 
+interface Tab<T extends string> {
+  id: T;
+  label: string;
+  icon: string;
+}
+
 // Mock data
 const fabricData: Fabric[] = [
   { id: 1, name: "Cotton Twill", pattern: "Diagonal Weave", weight: "Medium", color: "Natural", stock: "1500m", image: "/fabrics/cotton-twill.jpg", description: "Soft and durable cotton twill fabric.", composition: "100% Cotton", width: "58 inches", care: "Machine wash cold" },
@@ -56,25 +62,24 @@ const seasonalData: SeasonalData = {
 };
 
 // Tabs arrays
-const mainTabs = [
-  { id: 'studio' as MainTab, label: 'Studio', icon: '🎨' },
-  { id: 'fabric' as MainTab, label: 'Fabric', icon: '🧵' },
-  { id: 'rmg' as MainTab, label: 'RMG', icon: '👕' }
+const mainTabs: Tab<MainTab>[] = [
+  { id: 'studio', label: 'Studio', icon: '🎨' },
+  { id: 'fabric', label: 'Fabric', icon: '🧵' },
+  { id: 'rmg', label: 'RMG', icon: '👕' }
 ];
-const fabricSubTabs = [
-  { id: 'patterns' as FabricSubTab, label: 'Patterns', icon: '🔸' },
-  { id: 'weaving' as FabricSubTab, label: 'Weaving', icon: '🏭' },
-  { id: 'stock' as FabricSubTab, label: 'Stock', icon: '📦' }
+const fabricSubTabs: Tab<FabricSubTab>[] = [
+  { id: 'patterns', label: 'Patterns', icon: '🔸' },
+  { id: 'weaving', label: 'Weaving', icon: '🏭' },
+  { id: 'stock', label: 'Stock', icon: '📦' }
 ];
-const rmgSubTabs = [
-  { id: 'current' as RmgSubTab, label: 'Current', icon: '🔄' },
-  { id: 'seasonal' as RmgSubTab, label: 'Seasonal', icon: '🌞' },
-  { id: 'upcoming' as RmgSubTab, label: 'Upcoming', icon: '🚀' }
+const rmgSubTabs: Tab<RmgSubTab>[] = [
+  { id: 'current', label: 'Current', icon: '🔄' },
+  { id: 'seasonal', label: 'Seasonal', icon: '🌞' },
+  { id: 'upcoming', label: 'Upcoming', icon: '🚀' }
 ];
 
 export default function DesignStudio() {
-  const [activeTab, setActiveTab] = useState<MainTab>('rmg');
-  const [studioSubTab, setStudioSubTab] = useState<StudioSubTab>('portfolio');
+  const [activeTab, setActiveTab] = useState<MainTab>('studio');
   const [fabricSubTab, setFabricSubTab] = useState<FabricSubTab>('stock');
   const [rmgSubTab, setRmgSubTab] = useState<RmgSubTab>('current');
   const [selectedFabric, setSelectedFabric] = useState<Fabric | null>(null);
@@ -89,7 +94,11 @@ export default function DesignStudio() {
     setSelectedFabric(null);
   };
 
-  const renderSubTabs = (tabs: any[], active: string, setActive: Function) => (
+  const renderSubTabs = <T extends string>(
+    tabs: Tab<T>[], 
+    active: T, 
+    setActive: Dispatch<SetStateAction<T>>
+  ) => (
     <div className="flex flex-wrap gap-2 bg-white/70 backdrop-blur-md rounded-md p-1 border border-slate-200 relative perspective-1000">
       {tabs.map(tab => (
         <button

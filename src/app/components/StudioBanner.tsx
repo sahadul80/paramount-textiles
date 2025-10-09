@@ -98,11 +98,24 @@ export default function StudioBanner({
         stiffness: 220,
         damping: 22,
       };
-      return { y: 0, opacity: 1, rotateX: 0, transition } as any;
+      return { 
+        y: 0, 
+        opacity: 1, 
+        rotateX: 0, 
+        transition 
+      };
     },
     exit: (i: number = 0) => {
-      const transition: Transition = { delay: i * 0.01, duration: 0.18 };
-      return { y: -20, opacity: 0, rotateX: -20, transition } as any;
+      const transition: Transition = { 
+        delay: i * 0.01, 
+        duration: 0.18 
+      };
+      return { 
+        y: -20, 
+        opacity: 0, 
+        rotateX: -20, 
+        transition 
+      };
     },
   };
 
