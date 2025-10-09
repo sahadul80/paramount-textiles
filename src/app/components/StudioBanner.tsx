@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence, Variants, Transition } from "framer-motion";
 
-type PatternKey =
+export type PatternKey =
   | "plain"
   | "twill"
   | "satin"
@@ -138,7 +138,7 @@ export default function StudioBanner({
       </div>
 
       {/* SVG weaving text */}
-      <div className="relative z-10 flex items-center h-full mt-4">
+      <div className="relative z-10 flex items-center h-full">
         <svg
           className="w-full h-full"
           viewBox="0 0 1600 300"
