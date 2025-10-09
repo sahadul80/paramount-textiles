@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 export default function ParamountLoader() {
   return (
-    <div className="flex items-center justify-center w-screen h-screen bg-primary">
+    <div className="flex items-center justify-center w-screen h-screen bg-black/50 backdrop-blur-2xl">
       <motion.div
         initial={{ scale: 1 }}
         animate={{ scale: [1, 0.8, 0.6, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.4, 1.2, 1] }}

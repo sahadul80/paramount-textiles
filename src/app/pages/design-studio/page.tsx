@@ -100,13 +100,13 @@ export default function DesignStudio() {
         active: T,
         setActive: Dispatch<SetStateAction<T>>
     ) => (
-        <div className="flex flex-wrap gap-2 bg-white/70 backdrop-blur-md rounded-md p-1 border border-slate-200 relative perspective-1000">
+        <div className="flex flex-wrap gap-2 bg-white/70 backdrop-blur-md rounded-md border-2 border-slate-200 relative perspective-1000">
             {tabs.map(tab => (
                 <button
                     key={tab.id}
                     onClick={() => setActive(tab.id)}
-                    className={`relative flex-1 py-2 px-2 text-xs font-medium rounded-md flex items-center justify-center gap-1 transition-all duration-300 transform hover:-translate-y-0.5 ${active === tab.id
-                            ? 'text-blue-600 font-semibold z-10'
+                    className={`relative flex-1 p-2 text-xs font-medium rounded-md flex items-center justify-center gap-1 transition-all duration-300 transform hover:-translate-y-0.5 ${active === tab.id
+                            ? 'text-blue-600 font-semibold z-10 border border-slate-200'
                             : 'text-slate-600 hover:text-slate-800'
                         }`}
                 >
@@ -123,21 +123,21 @@ export default function DesignStudio() {
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50/30 perspective-1000">
             <div className="container">
-                <Suspense fallback={<ParamountLoader />}>
-                    <StudioBanner heightClass="h-20" patternCycleMs={5000} showControls={false} />
+                <Suspense fallback={<div className="h-20 bg-slate-200 animate-pulse rounded-lg" />}>
+                    <StudioBanner heightClass="h-12 sm:h-20" patternCycleMs={3000} showControls={false} />
                 </Suspense>
             </div>
 
             {/* Main Tabs */}
-            <div className="border-b border-slate-200 sticky top-0 z-50">
-                <div className="container flex justify-between flex gap-2 flex-wrap">
+            <div className="sticky top-0 z-50">
+                <div className="container flex justify-between flex gap-2 flex-wrap p-2">
                     {mainTabs.map(tab => (
                         <button
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id)}
                             className={`p-2 w-full flex-1 items-center justify-center gap-1 text-sm font-semibold transition-all duration-300 transform hover:-translate-y-0.5 ${activeTab === tab.id
-                                    ? 'text-blue-600 bg-blue-50 shadow-md'
-                                    : 'text-slate-600 hover:bg-slate-50'
+                                    ? 'text-stale-800 shadow-xl rounded-lg bg-gradient-to-r from-blue-400 to-purple-400'
+                                    : 'text-slate-600 rounded-lg hover:bg-slate-200'
                                 }`}
                         >
                             <span className="text-base">{tab.icon}</span>
@@ -158,12 +158,11 @@ export default function DesignStudio() {
                             exit={{ opacity: 0, y: -10 }}
                             transition={{ duration: 0.2 }}
                         >
-                            <Suspense fallback={<ParamountLoader />}>
-                                <StudioVideoBanner
-                                    videoSrc="/videos/design-studio.mp4"
-                                    heightClass="h-[75vh]"
-                                    overlayClass=""
-                                />
+                            <Suspense fallback={ <ParamountLoader/> }>
+                              <StudioVideoBanner
+                                heightClass="h-[75vh]"
+                                overlayClass=""
+                              />
                             </Suspense>
                         </motion.div>
                     )}
@@ -179,9 +178,9 @@ export default function DesignStudio() {
                             transition={{ duration: 0.2 }}
                         >
                             {renderSubTabs(fabricSubTabs, fabricSubTab, setFabricSubTab)}
-                            <div className="bg-white/80 backdrop-blur-sm rounded-lg border border-slate-200 p-2">
+                            <div className="bg-white/80 backdrop-blur-sm">
                                 {fabricSubTab === 'stock' && (
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    <div className="grid grid-cols-2 gap-2">
                                         {fabricData.map(fabric => (
                                             <motion.div
                                                 key={fabric.id}
@@ -204,7 +203,6 @@ export default function DesignStudio() {
                         </motion.div>
                     )}
                 </AnimatePresence>
-
                 {/* RMG */}
                 <AnimatePresence mode="wait">
                     {activeTab === 'rmg' && (
@@ -215,7 +213,7 @@ export default function DesignStudio() {
                             transition={{ duration: 0.2 }}
                         >
                             {renderSubTabs(rmgSubTabs, rmgSubTab, setRmgSubTab)}
-                            <div className="bg-white/80 backdrop-blur-sm rounded-lg border border-slate-200 p-2">
+                            <div className="bg-white/80 backdrop-blur-sm rounded-lg flex overflow-hidden">
                                 {rmgSubTab === 'current' && (
                                     <Suspense fallback={<ParamountLoader />}>
                                         <CategoryProducts />

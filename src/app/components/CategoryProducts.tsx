@@ -25,7 +25,7 @@ interface FilterState {
   priceRange: string[];
 }
 
-// Fixed Lazy Image Component
+// Lazy Image Component with loading/error handling
 const LazyImage = ({ 
   src, 
   alt, 
@@ -250,6 +250,7 @@ const CategoryProducts = () => {
   const [currentProductIndex, setCurrentProductIndex] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTrailModalOpen, setIsTrailModalOpen] = useState(false);
+  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [showFilters, setShowFilters] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -265,7 +266,7 @@ const CategoryProducts = () => {
     priceRange: []
   });
 
-  // Enhanced fetch with error handling
+  // Fetch products with error handling
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -288,7 +289,7 @@ const CategoryProducts = () => {
     fetchProducts();
   }, []);
 
-  // Get available filter options based on current selections
+  // Compute available filter options based on selections
   const getAvailableFilterOptions = useCallback(() => {
     let filtered = allProducts;
 
@@ -374,11 +375,10 @@ const CategoryProducts = () => {
 
   const availableFilters = getAvailableFilterOptions();
 
-  // Enhanced filter products function with multiple selection support
+  // Filter products based on search and selected filters
   const getFilteredProducts = useCallback(() => {
     let filtered = allProducts;
 
-    // Search filter
     if (searchTerm) {
       filtered = filtered.filter(product =>
         product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -389,14 +389,12 @@ const CategoryProducts = () => {
       );
     }
 
-    // Category filter (multiple selection - OR logic)
     if (filters.category.length > 0) {
       filtered = filtered.filter(product => 
         filters.category.includes(product.category)
       );
     }
 
-    // Fabric filter (multiple selection - OR logic)
     if (filters.fabric.length > 0) {
       filtered = filtered.filter(product => 
         filters.fabric.some(fabric => 
@@ -405,7 +403,6 @@ const CategoryProducts = () => {
       );
     }
 
-    // Size filter (multiple selection - OR logic)
     if (filters.size.length > 0) {
       filtered = filtered.filter(product => 
         filters.size.some(size => 
@@ -414,7 +411,6 @@ const CategoryProducts = () => {
       );
     }
 
-    // Price range filter (multiple selection - OR logic)
     if (filters.priceRange.length > 0) {
       filtered = filtered.filter(product => {
         const priceMatch = product.attributes.Price?.match(/\$([\d.]+)/);
@@ -434,7 +430,7 @@ const CategoryProducts = () => {
     return filtered;
   }, [allProducts, searchTerm, filters]);
 
-  // Group filtered products by category
+  // Group the filtered products by category
   const groupedProducts = useMemo(() => {
     const filtered = getFilteredProducts();
     const groups: { [key: string]: Product[] } = {};
@@ -449,7 +445,7 @@ const CategoryProducts = () => {
     return groups;
   }, [getFilteredProducts]);
 
-  // Enhanced filter handlers
+  // Handler for filter changes
   const handleFilterChange = useCallback((filterType: keyof FilterState, values: string[]) => {
     setFilters(prev => {
       const newFilters = { ...prev, [filterType]: values };
@@ -474,22 +470,21 @@ const CategoryProducts = () => {
     filters.priceRange.length > 0 || 
     searchTerm;
 
-  // Enhanced product handlers with navigation
+  // Handle clicking on a product to open the modal
   const handleProductClick = useCallback((product: Product) => {
     setSelectedProduct(product);
     setImageLoading(true);
     
-    // Find all products in the same category for navigation
     const categoryProducts = groupedProducts[product.category] || [];
     setCurrentCategoryProducts(categoryProducts);
     
-    // Find current product index
     const currentIndex = categoryProducts.findIndex(p => p.id === product.id);
     setCurrentProductIndex(currentIndex);
     
     setIsModalOpen(true);
   }, [groupedProducts]);
 
+  // Navigate to next/previous product in the category
   const navigateToProduct = useCallback((direction: 'prev' | 'next') => {
     if (currentCategoryProducts.length === 0) return;
     
@@ -505,7 +500,7 @@ const CategoryProducts = () => {
     setImageLoading(true);
   }, [currentCategoryProducts, currentProductIndex]);
 
-  // Swipe handlers for mobile
+  // Swipe handlers for mobile navigation
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchEnd(null);
     setTouchStart(e.targetTouches[0].clientX);
@@ -539,10 +534,10 @@ const CategoryProducts = () => {
     }, 300);
   }, []);
 
+  // Action for Get Quote or Virtual Trial
   const handleAction = useCallback((action: 'order' | 'trial') => {
     if (action === 'order') {
-      console.log('Order now:', selectedProduct);
-      closeModal();
+      setIsQuoteModalOpen(true);
     } else if (action === 'trial') {
       setIsTrailModalOpen(true);
     }
@@ -555,6 +550,34 @@ const CategoryProducts = () => {
   const handleImageLoad = useCallback(() => {
     setImageLoading(false);
   }, []);
+
+  // Contact Form State for Quote
+  const [contactName, setContactName] = useState('');
+  const [contactPhone, setContactPhone] = useState('');
+  const [contactEmail, setContactEmail] = useState('');
+  const [contactAddress, setContactAddress] = useState('');
+  const [contactMessage, setContactMessage] = useState('');
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+  const handleQuoteSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const newErrors: { [key: string]: string } = {};
+    if (!contactName.trim()) newErrors.name = 'Name is required';
+    if (!contactPhone.trim()) newErrors.phone = 'Phone is required';
+    if (!contactEmail.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(contactEmail)) {
+      newErrors.email = 'Email is invalid';
+    }
+    if (!contactMessage.trim()) newErrors.message = 'Quotation message is required';
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length === 0) {
+      // Submit quote (e.g., send to server or email)
+      console.log('Quote submitted:', { contactName, contactPhone, contactEmail, contactAddress, contactMessage, product: selectedProduct });
+      alert('Quotation submitted!');
+      setIsQuoteModalOpen(false);
+    }
+  };
 
   // Loading state
   if (isLoading) {
@@ -573,28 +596,26 @@ const CategoryProducts = () => {
   }
 
   return (
-    <div className="max-h-[83vh] bg-gradient-to-br from-slate-50 to-blue-50/30">
-      {/* Enhanced Sticky Header */}
+    <div className="bg-gradient-to-br from-slate-200 to-blue-200/30 h-[80vh] overflow-auto">
+      {/* Sticky Header with Search/Filters */}
       <div className="sticky top-0 z-40 bg-white/90 backdrop-blur-xl border-b border-slate-200/80 shadow-sm">
-        <div className="container mx-auto p-2">
-          {/* Enhanced Search and Filter Section */}
-          <div className="space-y-2">
-            {/* Top Row - 5 Column Grid */}
-            <div className="grid grid-cols-5 gap-2 items-center">
-              {/* Search Input - 2 columns */}
-              <div className="col-span-3 sm:col-span-2 relative">
+        <div className="container p-1 sm:p-2">
+          <div className="space-y-1 sm:space-y-2">
+            <div className="grid grid-cols-5 gap-1 items-center">
+              {/* Search Input */}
+              <div className="col-span-2 relative">
                 <FiSearch className="absolute inset-0 left-2 top-1/2 transform -translate-y-1/2 text-slate-400 text-sm z-10" />
                 <input
                   type="text"
                   placeholder="Search..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-8 pr-2 py-2 text-sm border border-slate-300 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 bg-white/80 backdrop-blur-sm transition-all duration-300 text-slate-700 placeholder-slate-400"
+                  className="w-full pl-8 pr-2 py-1 sm:py-2 text-sm border border-slate-300 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 bg-white/80 backdrop-blur-sm transition-all duration-300 text-slate-700 placeholder-slate-400"
                 />
               </div>
 
-              {/* View Toggle - 1 column */}
-              <div className="hidden sm:flex flex bg-white/80 backdrop-blur-sm rounded-lg border border-slate-300">
+              {/* View Toggle */}
+              <div className="flex bg-white/80 backdrop-blur-sm rounded-lg border border-slate-300">
                 <button
                   onClick={() => setViewMode('grid')}
                   className={`p-2 w-1/2 rounded-md transition-all duration-300 flex items-center justify-center gap-1 font-semibold text-sm ${
@@ -619,7 +640,7 @@ const CategoryProducts = () => {
                 </button>
               </div>
 
-              {/* Filter Button - 1 column */}
+              {/* Filter Button */}
               <button
                 onClick={() => setShowFilters(!showFilters)}
                 className={`p-2 rounded-lg transition-all duration-300 shadow-sm flex items-center justify-center gap-1 font-semibold text-sm ${
@@ -632,7 +653,7 @@ const CategoryProducts = () => {
                 <span className="hidden sm:inline">Filters</span>
               </button>
 
-              {/* Clear Button - 1 column - Always visible but disabled when no filters */}
+              {/* Clear Button */}
               <button
                 onClick={clearAllFilters}
                 disabled={!hasActiveFilters}
@@ -646,7 +667,7 @@ const CategoryProducts = () => {
               </button>
             </div>
 
-            {/* Enhanced Filter Options */}
+            {/* Filter Options */}
             <AnimatePresence>
               {showFilters && (
                 <motion.div
@@ -657,10 +678,9 @@ const CategoryProducts = () => {
                   className="bg-white/80 backdrop-blur-sm rounded-lg border border-slate-300 shadow-2xl overflow-visible"
                 >
                   <div className="p-3">
-                    {/* Modern Filter Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
                       <div>
-                        <label className="block text-xs font-semibold text-slate-700 mb-1 ">Category</label>
+                        <label className="block text-xs font-semibold text-slate-700 ">Category</label>
                         <FilterDropdown
                           label="category"
                           options={availableFilters.categories}
@@ -670,7 +690,7 @@ const CategoryProducts = () => {
                       </div>
 
                       <div>
-                        <label className="block text-xs font-semibold text-slate-700 mb-1">Fabric</label>
+                        <label className="block text-xs font-semibold text-slate-700">Fabric</label>
                         <FilterDropdown
                           label="fabric"
                           options={availableFilters.fabrics}
@@ -681,7 +701,7 @@ const CategoryProducts = () => {
                       </div>
 
                       <div>
-                        <label className="block text-xs font-semibold text-slate-700 mb-1">Size</label>
+                        <label className="block text-xs font-semibold text-slate-700">Size</label>
                         <FilterDropdown
                           label="size"
                           options={availableFilters.sizes}
@@ -692,7 +712,7 @@ const CategoryProducts = () => {
                       </div>
 
                       <div>
-                        <label className="block text-xs font-semibold text-slate-700 mb-1">Price Range</label>
+                        <label className="block text-xs font-semibold text-slate-700">Price Range</label>
                         <FilterDropdown
                           label="price"
                           options={availableFilters.priceRanges.map(range => {
@@ -733,72 +753,126 @@ const CategoryProducts = () => {
         </div>
       </div>
 
-      {/* Products Grid */}
-      <div className="container mx-auto px-2 py-3 max-h-[80vh] flex flex-col overflow-auto">
-        {Object.entries(groupedProducts).map(([category, products], categoryIndex) => (
-          <motion.section
-            key={category}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: categoryIndex * 0.1, ease: "easeOut" }}
-            className="mb-6"
-          >
-            <div className="flex items-center justify-between mb-3 px-2">
-              <h2 className="text-base sm:text-lg lg:text-xl font-bold text-slate-800">{category}</h2>
-              <span className="text-slate-500 font-medium text-xs sm:text-sm">{products.length} items</span>
-            </div>
+      {/* Products: Grid or List View */}
+      <div className="container">
+        {viewMode === 'grid' ? (
+          Object.entries(groupedProducts).map(([category, products], categoryIndex) => (
+            <motion.section
+              key={category}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: categoryIndex * 0.1, ease: "easeOut" }}
+              className="m-1 mb-3 mt-2"
+            >
+              <div className='flex flex-col'>
+                <div className="flex items-center justify-between p-2">
+                  <h2 className="text-base sm:text-lg lg:text-xl font-bold text-slate-800">{category}</h2>
+                  <span className="text-slate-500 font-medium text-xs sm:text-sm">{products.length} items</span>
+                </div>
 
-            <div className={`gap-2 ${
-              viewMode === 'grid' 
-                ? 'grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5' 
-                : 'flex flex-col'
-            }`}>
-              {products.map((product, index) => (
-                <motion.div
-                  key={product.id}
-                  className={`bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-500 ease-in-out cursor-pointer group overflow-hidden ${
-                    viewMode === 'list' ? 'flex flex-col sm:flex-row' : 'flex flex-col h-64 sm:h-72 lg:h-80'
-                  }`}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.4, delay: index * 0.05, ease: "easeOut" }}
-                  whileHover={{ y: -2, transition: { duration: 0.2 } }}
-                  onClick={() => handleProductClick(product)}
-                >
-                  <div className={`relative overflow-hidden ${
-                    viewMode === 'list' 
-                      ? 'sm:w-40 flex-shrink-0 h-40' 
-                      : 'h-[70%] flex-grow-0'
-                  }`}>
-                    <LazyImage
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-full"
-                      onLoad={handleImageLoad}
-                    />
-                  </div>
-                  
-                  <div className={`p-2 ${
-                    viewMode === 'list' ? 'flex-1 flex flex-col justify-center' : 'h-[30%] flex flex-col justify-center'
-                  }`}>
-                    <h3 className="text-sm lg:text-base font-semibold text-slate-800 mb-1 group-hover:text-blue-600 transition-colors duration-300 line-clamp-1">
-                      {product.name}
-                    </h3>
-                    <div className="flex items-center justify-between">
-                      <span className="text-slate-600 text-xs lg:text-sm capitalize line-clamp-1">
-                        {product.attributes.Fabric}
-                      </span>
-                      <span className="text-blue-500 text-xs font-medium bg-blue-50 px-1.5 py-0.5 rounded-full transition-colors duration-300 group-hover:bg-blue-100">
-                        View
-                      </span>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.section>
-        ))}
+                <div className={`sm:gap-2 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5`}>
+                  {products.map((product, index) => (
+                    <motion.div
+                      key={product.id}
+                      className="bg-transparent rounded-lg shadow-sm hover:shadow-2xl transition-all ease-in-out cursor-pointer group overflow-hidden flex flex-col h-64 sm:h-80"
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.4, delay: index * 0.05, ease: "easeOut" }}
+                      whileHover={{ y: -4, scale: 1.02, transition: { duration: 0.2 } }}
+                      onClick={() => handleProductClick(product)}
+                    >
+                      <div className="relative overflow-hidden h-[100%] flex-grow-0">
+                        <LazyImage
+                          src={product.image}
+                          alt={product.name}
+                          className="w-full h-full"
+                          onLoad={handleImageLoad}
+                        />
+                      </div>
+                      
+                      <div className="p-2 h-[30%] flex flex-col justify-center">
+                        <h3 className="text-sm lg:text-base font-semibold text-slate-800 mb-1 group-hover:text-blue-600 transition-colors duration-300 line-clamp-1">
+                          {product.name}
+                        </h3>
+                        <div className="flex items-center justify-between">
+                          <span className="text-slate-600 text-xs lg:text-sm capitalize line-clamp-1">
+                            {product.attributes.Fabric}
+                          </span>
+                          <span className="text-blue-500 text-xs font-medium bg-blue-50 px-1.5 py-0.5 rounded-full transition-colors duration-300 group-hover:bg-blue-100">
+                            View
+                          </span>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </motion.section>
+          ))
+        ) : (
+          // List view mode
+          Object.entries(groupedProducts).map(([category, products], categoryIndex) => (
+            <motion.section
+              key={category}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: categoryIndex * 0.1, ease: "easeOut" }}
+              className="m-1 mb-3 mt-2"
+            >
+              <div className="flex flex-row min-h-[200px] max-h-[240px] bg-transparent rounded-lg shadow-md hover:shadow-2xl transition-all">
+                {/* Category Heading - Rotated 90 degrees */}
+                <div className="w-10 sm:w-12 flex items-center justify-center bg-gradient-to-b from-blue-50 to-purple-50 rounded-l-lg">
+                  <h2 className="transform -rotate-90 whitespace-nowrap text-base font-bold text-slate-800 tracking-wide">
+                    {category}
+                  </h2>
+                </div>
 
+                {/* Products List - Horizontal Scroll */}
+                <div className="flex-1 overflow-x-auto">
+                  <div className="flex space-x-1 p-1 min-w-max">
+                    {products.map((product, index) => (
+                      <motion.div
+                        key={product.id}
+                        className="flex-shrink-0 w-48 bg-white rounded-lg shadow-xs hover:shadow-lg transition-all duration-500 ease-in-out cursor-pointer group overflow-hidden flex flex-col h-48"
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.4, delay: index * 0.05, ease: "easeOut" }}
+                        whileHover={{ 
+                          y: -4, 
+                          scale: 1.03,
+                          transition: { duration: 0.3, ease: "easeOut" }
+                        }}
+                        onClick={() => handleProductClick(product)}
+                      >
+                        <div className="h-36 relative overflow-hidden">
+                          <LazyImage
+                            src={product.image}
+                            alt={product.name}
+                            className="w-full h-full"
+                            onLoad={handleImageLoad}
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                          <div className="absolute top-2 right-2 bg-black/60 text-white px-2 py-1 rounded-full text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            View
+                          </div>
+                        </div>
+                        
+                        <div className="flex-1 p-2 flex flex-col justify-center">
+                          <h3 className="text-sm font-semibold text-slate-800 mb-1 group-hover:text-blue-600 transition-colors duration-300 line-clamp-1">
+                            {product.name}
+                          </h3>
+                          <span className="text-slate-600 text-xs capitalize line-clamp-1">
+                            {product.attributes.Fabric}
+                          </span>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.section>
+          ))
+        )}
         {Object.keys(groupedProducts).length === 0 && (
           <motion.div 
             className="text-center py-8 px-2"
@@ -807,21 +881,21 @@ const CategoryProducts = () => {
             transition={{ duration: 0.6 }}
           >
             <div className="text-3xl sm:text-4xl mb-3">🔍</div>
-            <h3 className="text-base sm:text-lg lg:text-xl font-bold text-slate-700 mb-1">No designs found</h3>
-            <p className="text-slate-500 text-xs sm:text-sm lg:text-base mb-3">Try adjusting your search or filters</p>
-            {hasActiveFilters && (
-              <button
-                onClick={clearAllFilters}
-                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 font-medium text-sm"
-              >
-                Clear all filters
-              </button>
-            )}
+              <h3 className="text-base sm:text-lg lg:text-xl font-bold text-slate-700 mb-1">No designs found</h3>
+              <p className="text-slate-500 text-xs sm:text-sm lg:text-base mb-3">Try adjusting your search or filters</p>
+              {hasActiveFilters && (
+                <button
+                  onClick={clearAllFilters}
+                  className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 font-medium text-sm"
+                >
+                  Clear all filters
+                </button>
+              )}
           </motion.div>
         )}
       </div>
 
-      {/* Fixed Enhanced Responsive Modal */}
+      {/* Main Product Modal */}
       <AnimatePresence>
         {isModalOpen && selectedProduct && (
           <>
@@ -838,7 +912,7 @@ const CategoryProducts = () => {
             {/* Modal Content */}
             <div className="fixed inset-0 z-[101] flex items-center justify-center p-2 sm:p-4">
               <motion.div
-                className="bg-white w-full h-full sm:w-full sm:max-h-[90vh] sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+                className="bg-white w-full h-full shadow-2xl flex flex-col overflow-hidden"
                 initial={{ scale: 0.9, opacity: 0, y: 20 }}
                 animate={{ scale: 1, opacity: 1, y: 0 }}
                 exit={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -867,7 +941,7 @@ const CategoryProducts = () => {
                     onTouchMove={handleTouchMove}
                     onTouchEnd={handleTouchEnd}
                   >
-                    {/* Navigation Arrows - Desktop Only */}
+                    {/* Desktop Navigation Arrows */}
                     <div className="hidden sm:flex absolute top-1/2 left-2 right-2 transform -translate-y-1/2 z-10 justify-between">
                       <button
                         onClick={(e) => {
@@ -965,24 +1039,113 @@ const CategoryProducts = () => {
 
                     {/* Action Buttons */}
                     <div className="p-4 border-t border-slate-200/60 bg-gradient-to-b from-blue-50 to-purple-50 sm:bg-transparent">
-                      <div className="space-y-2">
+                      <div className="flex space-x-2">
                         <button 
                           onClick={() => handleAction('order')}
-                          className="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white py-3 px-4 rounded-lg font-bold hover:from-green-600 hover:to-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 text-sm lg:text-base"
+                          className="w-1/2 bg-gradient-to-r from-green-500 to-emerald-600 text-white py-3 px-4 rounded-lg font-bold hover:from-green-600 hover:to-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 text-sm lg:text-base"
                         >
-                          Order Now
-                          <FiArrowRight size={16} />
+                          Get Quote
                         </button>
                         <button 
                           onClick={() => handleAction('trial')}
-                          className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-3 px-4 rounded-lg font-bold hover:from-blue-600 hover:to-purple-600 transition-all duration-300 shadow-lg hover:shadow-xl text-sm lg:text-base"
+                          className="w-1/2 bg-gradient-to-r from-blue-500 to-purple-500 text-white py-3 px-4 rounded-lg font-bold hover:from-blue-600 hover:to-purple-600 transition-all duration-300 shadow-lg hover:shadow-xl text-sm lg:text-base"
                         >
-                          Try in Virtual Model
+                          Try On
                         </button>
                       </div>
                     </div>
                   </div>
                 </div>
+              </motion.div>
+            </div>
+          </>
+        )}
+        {/* Quote Contact Form Modal */}
+        {isQuoteModalOpen && selectedProduct && (
+          <>
+            <motion.div
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[150]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              onClick={() => setIsQuoteModalOpen(false)}
+            />
+            <div className="fixed inset-0 z-[151] flex items-center justify-center p-4">
+              <motion.div
+                className="bg-white rounded-xl p-6 shadow-2xl w-full max-w-md"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.3 }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <h3 className="text-lg font-bold mb-4">Request a Quote</h3>
+                <p className="text-sm mb-4">{`Product: ${selectedProduct.name}`}</p>
+                <form onSubmit={handleQuoteSubmit} className="space-y-3">
+                  <div>
+                    <label className="block text-xs font-medium text-slate-700">Name <span className="text-red-500">*</span></label>
+                    <input
+                      type="text"
+                      value={contactName}
+                      onChange={(e) => setContactName(e.target.value)}
+                      className="w-full mt-1 px-3 py-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-400"
+                    />
+                    {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-slate-700">Phone <span className="text-red-500">*</span></label>
+                    <input
+                      type="text"
+                      value={contactPhone}
+                      onChange={(e) => setContactPhone(e.target.value)}
+                      className="w-full mt-1 px-3 py-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-400"
+                    />
+                    {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-slate-700">Email <span className="text-red-500">*</span></label>
+                    <input
+                      type="email"
+                      value={contactEmail}
+                      onChange={(e) => setContactEmail(e.target.value)}
+                      className="w-full mt-1 px-3 py-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-400"
+                    />
+                    {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-slate-700">Address</label>
+                    <input
+                      type="text"
+                      value={contactAddress}
+                      onChange={(e) => setContactAddress(e.target.value)}
+                      className="w-full mt-1 px-3 py-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-400"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-slate-700">Quotation <span className="text-red-500">*</span></label>
+                    <textarea
+                      value={contactMessage}
+                      onChange={(e) => setContactMessage(e.target.value)}
+                      className="w-full mt-1 px-3 py-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-400"
+                      rows={3}
+                    />
+                    {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
+                  </div>
+                  <div className="flex items-center justify-between mt-4">
+                    <button type="submit" className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 transition-colors duration-200">
+                      Submit Quotation
+                    </button>
+                    <a 
+                      href="https://wa.me/8801991000269"
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center bg-green-400 hover:bg-green-500 text-white py-2 px-4 rounded-md transition-colors duration-200"
+                    >
+                      Connect via WhatsApp
+                    </a>
+                  </div>
+                </form>
               </motion.div>
             </div>
           </>
