@@ -1,7 +1,9 @@
+import TextileAchievements3D from "./components/TextileAchievements";
+
 export default function Home() {
   return (
     <div className="">
-      Updating Design Studio
+      <TextileAchievements3D />
     </div>
   );
 }

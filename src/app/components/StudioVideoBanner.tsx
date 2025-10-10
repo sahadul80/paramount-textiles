@@ -129,7 +129,7 @@ export default function StudioVideoBanner({
                     <motion.img
                         src={gifSrc}
                         alt="Design Studio Text"
-                        className="w-full h-auto max-h-[30vh] object-contain"
+                        className="w-full h-auto max-h-[400vh] object-contain"
                         initial={{ opacity: 0, y: 20, scale: 0.95 }}
                         animate={{ 
                             opacity: isVideoLoaded ? 1 : 0, 

@@ -130,14 +130,14 @@ export default function DesignStudio() {
 
             {/* Main Tabs */}
             <div className="sticky top-0 z-50">
-                <div className="container flex justify-between flex gap-2 flex-wrap p-2">
+                <div className="container flex justify-between bg-white/50 backdrop-blur-2xl flex gap-2 flex-wrap p-1">
                     {mainTabs.map(tab => (
                         <button
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id)}
-                            className={`p-2 w-full flex-1 items-center justify-center gap-1 text-sm font-semibold transition-all duration-300 transform hover:-translate-y-0.5 ${activeTab === tab.id
-                                    ? 'text-stale-800 shadow-xl rounded-lg bg-gradient-to-r from-blue-400 to-purple-400'
-                                    : 'text-slate-600 rounded-lg hover:bg-slate-200'
+                            className={`p-2 w-full flex-1 items-center justify-center gap-1 text-md font-bold rounded-lg transition-all duration-300 transform hover:-translate-y-0.5 ${activeTab === tab.id
+                                    ? 'bg-primary text-white shadow-sm'
+                                    : 'rounded-lg hover:bg-slate-200'
                                 }`}
                         >
                             <span className="text-base">{tab.icon}</span>
@@ -160,7 +160,7 @@ export default function DesignStudio() {
                         >
                             <Suspense fallback={ <ParamountLoader/> }>
                               <StudioVideoBanner
-                                heightClass="h-[75vh]"
+                                heightClass="h-[85vh]"
                                 overlayClass=""
                               />
                             </Suspense>

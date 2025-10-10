@@ -103,9 +103,9 @@ export default function StudioBanner({
     hidden: { y: 20, opacity: 0, rotateX: -45 },
     visible: (i: number = 0) => {
       const transition: Transition = {
-        delay: i * 0.03,
+        delay: i * 0.1,
         type: "spring",
-        stiffness: 300,
+        stiffness: 200,
         damping: 20,
       };
       return { 
@@ -128,9 +128,9 @@ export default function StudioBanner({
         duration: 0.15 
       };
       return { 
-        y: -15, 
+        y: -10, 
         opacity: 0, 
-        rotateX: 45, 
+        rotateX: 40, 
         transition 
       };
     },
@@ -144,9 +144,9 @@ export default function StudioBanner({
           <motion.div
             key={active}
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            animate={{ opacity: [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1] }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1.1 }}
+            transition={{ duration: 1.25 }}
             style={{ background: getBgGradient(active) }}
             className="absolute inset-0"
           />
@@ -158,15 +158,15 @@ export default function StudioBanner({
       <div className="relative z-10 h-full top-0 sm:top-2">
         <svg
           className="w-full h-full"
-          viewBox="0 0 1600 300"
+          viewBox="0 0 1600 400"
           preserveAspectRatio="xMidYMid slice"
         >
           <defs>
             {/* Enhanced 3D text effect */}
             <filter id="text-3d" x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="2" dy="2" stdDeviation="3" floodColor="#000000" floodOpacity="0.3"/>
-              <feDropShadow dx="4" dy="4" stdDeviation="5" floodColor="#000000" floodOpacity="0.2"/>
-              <feDropShadow dx="6" dy="6" stdDeviation="7" floodColor="#000000" floodOpacity="0.1"/>
+              <feDropShadow dx="4" dy="4" stdDeviation="6" floodColor="#000000" floodOpacity="0.3"/>
+              <feDropShadow dx="6" dy="6" stdDeviation="8" floodColor="#000000" floodOpacity="0.2"/>
+              <feDropShadow dx="8" dy="8" stdDeviation="10" floodColor="#000000" floodOpacity="0.1"/>
             </filter>
 
             {/* Text outline for better visibility */}
