@@ -182,9 +182,9 @@ export default function DesignStudio() {
                             className="space-y-6"
                         >
                             {renderSubTabs(fabricSubTabs, fabricSubTab, setFabricSubTab)}
-                            <div className="glass rounded-2xl p-6">
+                            <div className="glass flex justify-center overflow-auto rounded-2xl p-6">
                                 {fabricSubTab === 'stock' && (
-                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                                         {fabricData.map(fabric => (
                                             <motion.div
                                                 key={fabric.id}
@@ -257,7 +257,7 @@ export default function DesignStudio() {
                             exit={{ scale: 0.9, opacity: 0 }}
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <div className="p-8 space-y-6">
+                            <div className="p-2 space-y-2">
                                 <div className="flex justify-between items-start">
                                     <div>
                                         <h3 className="text-2xl font-bold text-card-foreground">{selectedFabric.name}</h3>

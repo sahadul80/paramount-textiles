@@ -106,7 +106,7 @@ const ContactFormModal: React.FC<ContactFormModalProps> = ({
                     </div>
 
                     {/* Content */}
-                        <div className="bg-foreground w-full h-full flex flex-row overflow-auto shadow-2xl p-2 gap-2">
+                        <div className="bg-foreground w-full h-full flex flex-col sm:flex-row overflow-auto shadow-2xl p-2 gap-2">
                             <div className="flex flex-col items-center justify-center bg-primary backdrop-blur-3xl">
                                 <h1 className='font-bold'>Selected Item</h1>
                                 <div className="relative w-48 h-96 m-4 rounded-lg overflow-hidden border border-slate-200">

@@ -5,7 +5,6 @@ import LazyImage from './LazyImage';
 import type { Product } from './types';
 import { useState } from 'react';
 import ParamountLoader from './Loader';
-import TextileBanner from './TextileBanner';
 
 interface ProductModalProps {
   isOpen: boolean;
@@ -82,9 +81,6 @@ const ProductModal: React.FC<ProductModalProps> = ({
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex justify-center p-1 sm:p-2 flex-shrink-0 shadow-lg overflow-y-auto">
-                <TextileBanner/>
-              </div>
               {/* Header */}
               <div className="flex justify-between items-center p-2 border-b border-slate-200 flex-shrink-0 shadow-lg border-1">
                 <h2 className="text-xl font-bold truncate text-base text-center">
