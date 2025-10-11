@@ -73,7 +73,7 @@ const ContactFormModal: React.FC<ContactFormModalProps> = ({
   return (
     <AnimatePresence>
         {isOpen && (
-        <div className='w-auto h-auto'>
+        <div className='w-full h-full'>
             {/* Backdrop */}
             <motion.div
                 className="fixed inset-0 bg-primary/50 backdrop-blur-3xl z-[200] rounded-lg"
@@ -106,10 +106,10 @@ const ContactFormModal: React.FC<ContactFormModalProps> = ({
                     </div>
 
                     {/* Content */}
-                        <div className="bg-foreground w-full h-full flex flex-col sm:flex-row overflow-auto shadow-2xl p-2 gap-2">
-                            <div className="flex flex-col items-center justify-center bg-primary backdrop-blur-3xl">
+                        <div className="bg-foreground w-full h-full flex flex-row overflow-auto shadow-2xl gap-2">
+                            <div className="w-1/3 flex flex-col items-center justify-center bg-primary backdrop-blur-3xl">
                                 <h1 className='font-bold'>Selected Item</h1>
-                                <div className="relative w-48 h-96 m-4 rounded-lg overflow-hidden border border-slate-200">
+                                <div className="relative w-48 h-96 m-4 rounded-lg overflow-hidden">
                                     <Image
                                         src={product.image}
                                         alt={product.name}
@@ -124,7 +124,7 @@ const ContactFormModal: React.FC<ContactFormModalProps> = ({
                                 </div>
                             </div>
                             {/* Contact Form */}
-                            <form onSubmit={handleSubmit} className="w-full h-full bg-secondary backdrop-blur-3xl flex flex-col justify-between border-1 rounded-lg p-2">
+                            <form onSubmit={handleSubmit} className="w-2/3 h-full bg-secondary backdrop-blur-3xl flex flex-col justify-between border-1 rounded-lg p-2">
                                 <h1 className='flex justify-center font-bold'>PROVIDE YOUR QUOTEATION</h1>
                                 <div className="grid grid-rows-1 sm:grid-rows-2 gap-2">
                                     <div>

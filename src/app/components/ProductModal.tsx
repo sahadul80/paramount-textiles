@@ -95,7 +95,7 @@ const ProductModal: React.FC<ProductModalProps> = ({
               </div>
 
               {/* Content */}
-              <div className="flex flex-col sm:flex-row overflow-auto">
+              <div className="flex flex-row overflow-auto">
                 {/* Image Section */}
                 <div 
                   className="w-full h-full flex flex-col relative"
@@ -133,7 +133,7 @@ const ProductModal: React.FC<ProductModalProps> = ({
                     </div>
                   )}
 
-                  <div className="max-h-screen min-h-[54vh] flex-1 bg-primary backdrop-blur-3xl overflow-auto p-1">
+                  <div className="max-h-screen min-h-[56vh] flex-1 bg-primary backdrop-blur-3xl overflow-auto p-1">
                     {imageLoading && (
                       <ParamountLoader />
                     )}
@@ -191,7 +191,9 @@ const ProductModal: React.FC<ProductModalProps> = ({
                         </motion.div>
                       ))}
                     </div>
-                    {/* Action Buttons */}
+                </div>
+              </div>
+              {/* Action Buttons */}
                     <div className="p-2 border-1 rounded-lg shadow-lg backdrop-blur-3xl flex-shrink-0">
                         <div className="flex space-x-2 backdrop-blur-3xl">
                             <button 
@@ -210,8 +212,6 @@ const ProductModal: React.FC<ProductModalProps> = ({
                             </button>
                         </div>
                     </div>
-                </div>
-              </div>
             </motion.div>
           </div>
         </div>
