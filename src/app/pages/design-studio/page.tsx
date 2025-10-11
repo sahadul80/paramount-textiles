@@ -100,20 +100,21 @@ export default function DesignStudio() {
         active: T,
         setActive: Dispatch<SetStateAction<T>>
     ) => (
-        <div className="flex flex-wrap gap-2 bg-white/70 backdrop-blur-md rounded-md border-2 border-slate-200 relative perspective-1000">
+        <div className="flex flex-wrap gap-1 glass rounded-lg border border-border/20 perspective-1000">
             {tabs.map(tab => (
                 <button
                     key={tab.id}
                     onClick={() => setActive(tab.id)}
-                    className={`relative flex-1 p-2 text-xs font-medium rounded-md flex items-center justify-center gap-1 transition-all duration-300 transform hover:-translate-y-0.5 ${active === tab.id
-                            ? 'text-blue-600 font-semibold z-10 border border-slate-200'
-                            : 'text-slate-600 hover:text-slate-800'
-                        }`}
+                    className={`relative flex-1 p-2 text-sm font-medium rounded-md flex items-center justify-center gap-1 transition-all duration-300 hover-lift focus-ring ${
+                        active === tab.id
+                            ? 'text-primary font-semibold bg-background/80 shadow-sm'
+                            : 'text-muted-foreground hover:text-foreground'
+                    }`}
                 >
-                    <span className="text-sm">{tab.icon}</span>
-                    <span className="text-sm">{tab.label}</span>
+                    <span className="text-base">{tab.icon}</span>
+                    <span>{tab.label}</span>
                     {active === tab.id && (
-                        <span className="absolute -bottom-1 left-1/4 w-1/2 h-[3px] bg-blue-500 rounded-full shadow-md"></span>
+                        <span className="absolute -bottom-1 left-1/4 w-1/2 h-1 bg-primary rounded-full shadow-sm"></span>
                     )}
                 </button>
             ))}
@@ -121,26 +122,28 @@ export default function DesignStudio() {
     );
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50/30 perspective-1000">
+      <div className="container mx-auto max-h-screen overflow-hidden">
+        <div className="bg-gradient-modern perspective-1000">
             <div className="container">
-                <Suspense fallback={<div className="h-20 bg-slate-200 animate-pulse rounded-lg" />}>
-                    <StudioBanner heightClass="h-12 sm:h-20" patternCycleMs={3000} showControls={false} />
+                <Suspense fallback={<div className="animate-shimmer rounded-lg h-16 sm:h-20 bg-muted" />}>
+                    <StudioBanner heightClass="h-16 sm:h-20" patternCycleMs={3000} showControls={false} />
                 </Suspense>
             </div>
 
             {/* Main Tabs */}
             <div className="sticky top-0 z-50">
-                <div className="container flex justify-between bg-white/50 backdrop-blur-2xl flex gap-2 flex-wrap p-1">
+                <div className="container flex justify-between glass-intense gap-1">
                     {mainTabs.map(tab => (
                         <button
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id)}
-                            className={`p-2 w-full flex-1 items-center justify-center gap-1 text-md font-bold rounded-lg transition-all duration-300 transform hover:-translate-y-0.5 ${activeTab === tab.id
-                                    ? 'bg-primary text-white shadow-sm'
-                                    : 'rounded-lg hover:bg-slate-200'
-                                }`}
+                            className={`p-2 w-full flex-1 items-center justify-center gap-2 text-lg font-bold rounded-xl transition-all duration-300 hover-lift focus-ring ${
+                                activeTab === tab.id
+                                    ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/25'
+                                    : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
+                            }`}
                         >
-                            <span className="text-base">{tab.icon}</span>
+                            <span className="text-xl">{tab.icon}</span>
                             <span>{tab.label}</span>
                         </button>
                     ))}
@@ -158,11 +161,11 @@ export default function DesignStudio() {
                             exit={{ opacity: 0, y: -10 }}
                             transition={{ duration: 0.2 }}
                         >
-                            <Suspense fallback={ <ParamountLoader/> }>
-                              <StudioVideoBanner
-                                heightClass="h-[85vh]"
-                                overlayClass=""
-                              />
+                            <Suspense fallback={<ParamountLoader />}>
+                                <StudioVideoBanner
+                                    heightClass="h-[85vh]"
+                                    overlayClass=""
+                                />
                             </Suspense>
                         </motion.div>
                     )}
@@ -176,23 +179,33 @@ export default function DesignStudio() {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -10 }}
                             transition={{ duration: 0.2 }}
+                            className="space-y-6"
                         >
                             {renderSubTabs(fabricSubTabs, fabricSubTab, setFabricSubTab)}
-                            <div className="bg-white/80 backdrop-blur-sm">
+                            <div className="glass rounded-2xl p-6">
                                 {fabricSubTab === 'stock' && (
-                                    <div className="grid grid-cols-2 gap-2">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                                         {fabricData.map(fabric => (
                                             <motion.div
                                                 key={fabric.id}
-                                                className="bg-white rounded-md shadow-xs border border-slate-200 overflow-hidden hover:shadow-sm cursor-pointer"
-                                                whileHover={{ y: -2 }}
+                                                className="bg-card rounded-xl shadow-lg border border-border/50 overflow-hidden hover-lift cursor-pointer group"
+                                                whileHover={{ y: -4 }}
                                                 onClick={() => handleFabricClick(fabric)}
                                             >
-                                                <div className="h-32 bg-slate-200 flex items-center justify-center">🧵</div>
-                                                <div className="p-3">
-                                                    <h4 className="font-bold text-slate-800 text-sm mb-1">{fabric.name}</h4>
-                                                    <div className="flex justify-between text-xs text-slate-600">
-                                                        <span>Pattern:</span><span>{fabric.pattern}</span>
+                                                <div className="h-48 bg-gradient-subtle flex items-center justify-center group-hover:bg-accent/50 transition-colors duration-300">
+                                                    <span className="text-6xl">🧵</span>
+                                                </div>
+                                                <div className="p-4">
+                                                    <h4 className="font-bold text-card-foreground text-lg mb-2 group-hover:text-primary transition-colors duration-300">
+                                                        {fabric.name}
+                                                    </h4>
+                                                    <div className="flex justify-between text-sm text-muted-foreground">
+                                                        <span>Pattern:</span>
+                                                        <span className="font-medium">{fabric.pattern}</span>
+                                                    </div>
+                                                    <div className="flex justify-between text-sm text-muted-foreground mt-1">
+                                                        <span>Stock:</span>
+                                                        <span className="font-semibold text-green-600">{fabric.stock}</span>
                                                     </div>
                                                 </div>
                                             </motion.div>
@@ -203,6 +216,7 @@ export default function DesignStudio() {
                         </motion.div>
                     )}
                 </AnimatePresence>
+
                 {/* RMG */}
                 <AnimatePresence mode="wait">
                     {activeTab === 'rmg' && (
@@ -211,9 +225,10 @@ export default function DesignStudio() {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -10 }}
                             transition={{ duration: 0.2 }}
+                            className="space-y-1"
                         >
                             {renderSubTabs(rmgSubTabs, rmgSubTab, setRmgSubTab)}
-                            <div className="bg-white/80 backdrop-blur-sm rounded-lg flex overflow-hidden">
+                            <div className="glass rounded-lg overflow-hidden scrollbar-hide">
                                 {rmgSubTab === 'current' && (
                                     <Suspense fallback={<ParamountLoader />}>
                                         <CategoryProducts />
@@ -229,59 +244,80 @@ export default function DesignStudio() {
             <AnimatePresence>
                 {isFabricModalOpen && selectedFabric && (
                     <motion.div
-                        className="fixed inset-0 bg-black/60 backdrop-blur-lg z-50 flex items-center justify-center p-2"
+                        className="fixed inset-0 bg-black/60 backdrop-blur-lg z-50 flex items-center justify-center p-4"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={closeFabricModal}
                     >
                         <motion.div
-                            className="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[85vh] overflow-y-auto"
+                            className="bg-card rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto modal-content border border-border/50"
                             initial={{ scale: 0.9, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.9, opacity: 0 }}
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <div className="p-4 space-y-4">
+                            <div className="p-8 space-y-6">
                                 <div className="flex justify-between items-start">
-                                    <h3 className="text-lg font-bold text-slate-800">{selectedFabric.name}</h3>
-                                    <button onClick={closeFabricModal} className="p-1 hover:bg-slate-100 rounded transition-colors duration-200">
-                                        <FiX size={18} />
+                                    <div>
+                                        <h3 className="text-2xl font-bold text-card-foreground">{selectedFabric.name}</h3>
+                                        <p className="text-muted-foreground mt-1">{selectedFabric.pattern}</p>
+                                    </div>
+                                    <button 
+                                        onClick={closeFabricModal} 
+                                        className="p-2 hover:bg-muted rounded-lg transition-colors duration-200 focus-ring"
+                                    >
+                                        <FiX size={24} />
                                     </button>
                                 </div>
-                                <div className="bg-slate-100 rounded-md h-40 flex items-center justify-center">🧵</div>
+                                
+                                <div className="bg-gradient-subtle rounded-xl h-64 flex items-center justify-center">
+                                    <span className="text-8xl">🧵</span>
+                                </div>
+                                
                                 <div>
-                                    <h4 className="font-semibold text-slate-700 mb-1 text-sm">Description</h4>
-                                    <p className="text-slate-600 text-sm">{selectedFabric.description}</p>
+                                    <h4 className="font-semibold text-card-foreground text-lg mb-2">Description</h4>
+                                    <p className="text-muted-foreground leading-relaxed">{selectedFabric.description}</p>
                                 </div>
-                                <div className="grid grid-cols-2 gap-3">
-                                    <div>
-                                        <h4 className="font-semibold text-slate-700 mb-1 text-sm">Composition</h4>
-                                        <p className="text-slate-600 text-sm">{selectedFabric.composition}</p>
+                                
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="space-y-4">
+                                        <div>
+                                            <h4 className="font-semibold text-card-foreground mb-1">Composition</h4>
+                                            <p className="text-muted-foreground">{selectedFabric.composition}</p>
+                                        </div>
+                                        <div>
+                                            <h4 className="font-semibold text-card-foreground mb-1">Width</h4>
+                                            <p className="text-muted-foreground">{selectedFabric.width}</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h4 className="font-semibold text-slate-700 mb-1 text-sm">Width</h4>
-                                        <p className="text-slate-600 text-sm">{selectedFabric.width}</p>
-                                    </div>
-                                    <div>
-                                        <h4 className="font-semibold text-slate-700 mb-1 text-sm">Weight</h4>
-                                        <p className="text-slate-600 text-sm">{selectedFabric.weight}</p>
-                                    </div>
-                                    <div>
-                                        <h4 className="font-semibold text-slate-700 mb-1 text-sm">Stock</h4>
-                                        <p className="text-green-600 font-medium text-sm">{selectedFabric.stock}</p>
+                                    <div className="space-y-4">
+                                        <div>
+                                            <h4 className="font-semibold text-card-foreground mb-1">Weight</h4>
+                                            <p className="text-muted-foreground">{selectedFabric.weight}</p>
+                                        </div>
+                                        <div>
+                                            <h4 className="font-semibold text-card-foreground mb-1">Stock</h4>
+                                            <p className="text-green-600 font-semibold text-lg">{selectedFabric.stock}</p>
+                                        </div>
                                     </div>
                                 </div>
+                                
                                 <div>
-                                    <h4 className="font-semibold text-slate-700 mb-1 text-sm">Care Instructions</h4>
-                                    <p className="text-slate-600 text-sm">{selectedFabric.care}</p>
+                                    <h4 className="font-semibold text-card-foreground text-lg mb-2">Care Instructions</h4>
+                                    <p className="text-muted-foreground">{selectedFabric.care}</p>
                                 </div>
-                                <button className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors duration-200 text-sm font-medium">Request Sample</button>
+                                
+                                <button className="w-full bg-primary text-primary-foreground py-4 rounded-xl font-semibold text-lg hover:bg-primary/90 transition-colors duration-200 focus-ring shadow-lg shadow-primary/25">
+                                    Request Sample
+                                </button>
                             </div>
                         </motion.div>
                     </motion.div>
                 )}
             </AnimatePresence>
         </div>
+      </div>
+        
     );
 }

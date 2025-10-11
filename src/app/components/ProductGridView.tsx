@@ -24,22 +24,24 @@ const ProductGridView: React.FC<ProductGridViewProps> = ({
           transition={{ duration: 0.6, delay: categoryIndex * 0.1, ease: "easeOut" }}
           className="m-1 mb-3 mt-2"
         >
-          <div className='flex flex-col'>
-            <div className="flex items-center justify-between p-2">
-              <h2 className="text-base sm:text-lg lg:text-xl font-bold text-slate-800">{category}</h2>
-              <span className="text-slate-500 font-medium text-xs sm:text-sm">{products.length} items</span>
+          <div className='flex flex-col justify-center border-1 rounded-lg overflow-hidden'>
+            <div className="flex items-center justify-between p-2 mx-10">
+              <h2 className="text-base sm:text-lg lg:text-xl font-bold text-primary">{category}</h2>
+              <span className="text-secondary font-medium text-xs sm:text-sm">{products.length} items</span>
             </div>
 
-            <div className={`sm:gap-2 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5`}>
+            <div className={`gap-2 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5`}>
               {products.map((product, index) => (
-                <ProductCard
-                  key={`${product.id}-${index}`}
-                  product={product}
-                  index={index}
-                  onProductClick={onProductClick}
-                  onImageLoad={onImageLoad}
-                  layout="grid"
-                />
+                <div className='flex justify-center' key={`${product.id}-${index}`}>
+                  <ProductCard
+                    key={`${product.id}-${index}`}
+                    product={product}
+                    index={index}
+                    onProductClick={onProductClick}
+                    onImageLoad={onImageLoad}
+                    layout="grid"
+                  />
+                </div>
               ))}
             </div>
           </div>

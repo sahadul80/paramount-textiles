@@ -109,7 +109,7 @@ const CategoryProducts = () => {
   }
 
   return (
-    <div className="category-products bg-page h-[80vh] w-[100vw] overflow-auto">
+    <div className="relative flex flex-col h-screen">
       <SearchAndFilterHeader
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
@@ -124,7 +124,7 @@ const CategoryProducts = () => {
         availableFilters={availableFilters}
       />
 
-      <div className="container">
+      <div className="container flex-1 overflow-y-auto scrollbar-hide">
         {viewMode === 'grid' ? (
           <ProductGridView
             groupedProducts={groupedProducts}
@@ -172,14 +172,14 @@ const CategoryProducts = () => {
       </Suspense>
 
       <Suspense fallback={
-        <div className="fixed inset-0 bg-backdrop backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-background backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-white rounded-xl p-4 sm:p-6 shadow-2xl text-center"
+            className="bg-foreground rounded-xl p-4 sm:p-6 shadow-2xl text-center"
           >
             <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary mx-auto mb-3"></div>
-            <p className="text-slate-600 text-sm">Loading virtual try-on...</p>
+            <p className="text-primary text-sm">Loading virtual try-on...</p>
           </motion.div>
         </div>
       }>

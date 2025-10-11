@@ -67,34 +67,36 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
 
   return (
     <div className="relative" ref={dropdownRef}>
-      <div
+      <button
+        type="button"
+        disabled={isDisabled}
         onClick={() => !isDisabled && setIsOpen(!isOpen)}
-        className={`w-full p-2 border-2 rounded-lg transition-all duration-300 flex items-center justify-between group cursor-pointer ${
+        className={`w-full p-1 border-2 rounded-xl transition-all duration-300 flex items-center justify-between group focus-ring ${
           isDisabled
-            ? 'border-slate-200 bg-slate-50 text-slate-400 cursor-not-allowed'
+            ? 'border-border/50 bg-muted/50 text-foreground cursor-not-allowed'
             : selectedValues.length > 0
-            ? 'border-primary bg-blue-50 text-blue-700'
-            : 'border-slate-300 bg-white text-slate-700 hover:border-slate-400'
+            ? 'border-primary bg-primary/10 text-primary hover:border-primary/80'
+            : 'border-border bg-card text-secondary hover:border-border/80 hover:bg-foreground'
         }`}
       >
-        <span className="text-sm font-medium truncate">{displayText}</span>
+        <span className="text-md font-medium truncate">{displayText}</span>
         <div className="flex items-center gap-1">
           {selectedValues.length > 0 && (
             <span
               onClick={clearSelection}
-              className="p-0.5 hover:bg-white/50 rounded transition-colors cursor-pointer"
+              className="p-1 hover:bg-background/50 rounded-lg transition-colors cursor-pointer"
             >
-              <FiX size={12} />
+              <FiX size={14} />
             </span>
           )}
           <FiChevronDown 
-            size={14} 
+            size={16} 
             className={`transition-transform duration-300 ${
               isOpen ? 'rotate-180' : ''
-            } ${selectedValues.length > 0 ? 'text-primary' : 'text-slate-400'}`}
+            } ${selectedValues.length > 0 ? 'text-primary' : 'text-secondary'}`}
           />
         </div>
-      </div>
+      </button>
 
       <AnimatePresence>
         {isOpen && !isDisabled && (
@@ -103,55 +105,83 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="absolute top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-2xl z-[100] max-h-60 overflow-y-auto"
+            className="absolute glass rounded-xl shadow-lg z-[100] overflow-hidden border border-border/20"
           >
-            <div className="p-2 border-b border-slate-200">
-              <div className="relative">
-                <FiSearch className="absolute left-2 top-1/2 transform -translate-y-1/2 text-slate-400 text-sm" />
-                <input
-                  type="text"
-                  placeholder={`Search ${label}...`}
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-8 pr-2 py-1.5 text-sm border border-slate-300 rounded-md focus:ring-1 focus:ring-primary focus:border-primary"
-                  onClick={(e) => e.stopPropagation()}
-                />
-              </div>
-            </div>
-
-            <div className="p-1 space-y-0.5 max-h-44 overflow-y-auto">
-              {filteredOptions.map((option) => (
-                <label
-                  key={`${label}-${option}`}
-                  className="flex items-center gap-2 p-2 rounded-md hover:bg-slate-50 cursor-pointer transition-colors duration-150"
-                >
-                  <div className="relative">
+                {/* Search Input */}
+                <div className="p-2 border-b border-border/20">
+                <div className="relative">
+                    <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground text-sm" />
                     <input
-                      type={isMultiple ? "checkbox" : "radio"}
-                      checked={selectedValues.includes(option)}
-                      onChange={() => handleOptionToggle(option)}
-                      className="sr-only"
+                    type="text"
+                    placeholder={`Search ${label}...`}
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full pl-10 pr-4 py-2.5 text-sm bg-background/50 border border-border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary focus-ring transition-all duration-200"
+                    onClick={(e) => e.stopPropagation()}
                     />
-                    <div className={`w-4 h-4 border-2 rounded flex items-center justify-center transition-all duration-200 ${
-                      selectedValues.includes(option)
-                        ? 'bg-primary border-primary'
-                        : 'border-slate-300 bg-white'
-                    }`}>
-                      {selectedValues.includes(option) && (
-                        <FiCheck size={12} className="text-white" />
-                      )}
-                    </div>
-                  </div>
-                  <span className="text-sm text-slate-700 flex-1 truncate">{option}</span>
-                </label>
-              ))}
-              
-              {filteredOptions.length === 0 && (
-                <div className="p-2 text-center text-slate-500 text-sm">
-                  No options found
                 </div>
-              )}
-            </div>
+                </div>
+
+                {/* Options List */}
+                <div className="p-1 space-y-2 max-h-75 overflow-y-auto">
+                {filteredOptions.map((option) => (
+                    <label
+                    key={`${label}-${option}`}
+                    className="flex items-center gap-1 p-1 rounded-lg hover:bg-foreground cursor-pointer transition-all duration-200 group"
+                    >
+                    <div className="relative flex items-center justify-center">
+                        <input
+                        type={isMultiple ? "checkbox" : "radio"}
+                        checked={selectedValues.includes(option)}
+                        onChange={() => handleOptionToggle(option)}
+                        className="sr-only"
+                        />
+                        <div className={`w-5 h-5 border-2 rounded flex items-center justify-center transition-all duration-200 ${
+                        selectedValues.includes(option)
+                            ? 'bg-primary border-primary shadow-lg shadow-primary/25'
+                            : 'border-border bg-background group-hover:border-primary/50'
+                        }`}>
+                        {selectedValues.includes(option) && (
+                            <motion.div
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                            >
+                            <FiCheck size={14} className="text-foreground border-1" />
+                            </motion.div>
+                        )}
+                        </div>
+                    </div>
+                    <span className="text-md text-card-foreground flex-1 truncate font-medium">
+                        {option}
+                    </span>
+                    </label>
+                ))}
+                
+                {filteredOptions.length === 0 && (
+                    <div className="p-4 text-center text-muted-foreground text-sm">
+                    No {label.toLowerCase()} found
+                    </div>
+                )}
+                </div>
+
+                {/* Selected Count */}
+                {isMultiple && selectedValues.length > 0 && (
+                <div className="p-3 border-t border-border/20 bg-primary/5">
+                    <div className="flex justify-between items-center text-sm">
+                    <span className="text-muted-foreground">
+                        {selectedValues.length} selected
+                    </span>
+                    <button
+                        onClick={clearSelection}
+                        className="text-primary hover:text-primary/80 font-medium transition-colors duration-200 focus-ring rounded px-2 py-1"
+                    >
+                        Clear all
+                    </button>
+                    </div>
+                </div>
+                )}
+            
           </motion.div>
         )}
       </AnimatePresence>

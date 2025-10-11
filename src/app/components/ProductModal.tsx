@@ -4,6 +4,8 @@ import { FiX, FiChevronLeft, FiChevronRight, FiSend, FiMessageCircle } from 'rea
 import LazyImage from './LazyImage';
 import type { Product } from './types';
 import { useState } from 'react';
+import ParamountLoader from './Loader';
+import TextileBanner from './TextileBanner';
 
 interface ProductModalProps {
   isOpen: boolean;
@@ -59,10 +61,10 @@ const ProductModal: React.FC<ProductModalProps> = ({
   return (
     <AnimatePresence>
       {isOpen && selectedProduct && (
-        <>
+        <div className='w-auto h-auto'>
           {/* Backdrop */}
           <motion.div
-            className="fixed inset-0 bg-backdrop backdrop-blur-lg z-[100] rounded-lg"
+            className="fixed inset-0 bg-primary/10 backdrop-blur-3xl z-[100] rounded-lg"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -71,9 +73,9 @@ const ProductModal: React.FC<ProductModalProps> = ({
           />
           
           {/* Modal Content */}
-          <div className="fixed inset-0 z-[101] flex items-center justify-center p-2 sm:p-4">
+          <div className="fixed inset-0 h-[80vh] z-[101] flex items-center justify-center p-2 sm:p-4 backdrop-blur-3xl">
             <motion.div
-              className="bg-white w-full h-full shadow-2xl flex flex-col overflow-hidden"
+              className="bg-foreground w-full h-full flex flex-col overflow-auto shadow-2xl rounded-lg border-1"
               initial={{ scale: 0.9, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -81,20 +83,20 @@ const ProductModal: React.FC<ProductModalProps> = ({
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
-              <div className="flex justify-between items-center p-2 border-b border-slate-200 flex-shrink-0">
-                <h2 className="text-lg sm:text-xl font-bold text-slate-800 truncate text-center">
+              <div className="flex justify-between items-center p-2 border-b border-slate-200 flex-shrink-0 shadow-lg">
+                <h2 className="text-xl font-bold truncate text-base text-center">
                   {selectedProduct.name}
                 </h2>
                 <button
                   onClick={onClose}
-                  className="p-2 hover:bg-slate-100 rounded-lg transition-all duration-300 text-slate-600 hover:text-slate-800 flex-shrink-0"
+                  className="p-1 rounded-lg transition-all duration-300 text-base shadow-lg border-1 hover:text-primary hover:bg-secondary hover:scale-110"
                 >
                   <FiX size={20} />
                 </button>
               </div>
 
               {/* Content */}
-              <div className="h-[100vh] flex flex-row overflow-hidden">
+              <div className="flex flex-row overflow-auto">
                 {/* Image Section */}
                 <div 
                   className="w-full h-full flex flex-col relative"
@@ -102,123 +104,121 @@ const ProductModal: React.FC<ProductModalProps> = ({
                   onTouchMove={handleTouchMove}
                   onTouchEnd={handleTouchEnd}
                 >
+                  <div className="flex justify-center p-1 sm:p-2 flex-shrink-0 shadow-lg">
+                    <TextileBanner/>
+                  </div>
+                  
                   {/* Desktop Navigation Arrows */}
-                  <div className="hidden sm:flex absolute top-1/2 left-2 right-2 transform -translate-y-1/2 z-10 justify-between">
+                  <div className="hidden sm:flex absolute top-1/2 left-1 right-1 transform -translate-y-1/2 z-10 justify-between">
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         onNavigate('prev');
                       }}
-                      className="p-2 bg-white/80 backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition-all duration-300 hover:scale-110"
+                      className="p-1 bg-primary backdrop-blur-3xl rounded-lg shadow-lg border-1 hover:bg-secondary transition-all duration-300 hover:scale-110"
                     >
-                      <FiChevronLeft size={20} className="text-slate-700" />
+                      <FiChevronLeft size={24} />
                     </button>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         onNavigate('next');
                       }}
-                      className="p-2 bg-white/80 backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition-all duration-300 hover:scale-110"
+                      className="p-1 bg-primary backdrop-blur-3xl rounded-lg shadow-lg border-1 hover:bg-secondary transition-all duration-300 hover:scale-110"
                     >
-                      <FiChevronRight size={20} className="text-slate-700" />
+                      <FiChevronRight size={24} />
                     </button>
                   </div>
 
                   {/* Navigation Indicator */}
                   {currentCategoryProducts.length > 1 && (
-                    <div className="absolute top-2 right-2 bg-black/60 text-white px-2 py-1 rounded-full text-xs z-10">
+                    <div className="absolute top-1 right-1 bg-primary/50 backdrop-blur-3xl text-xs p-1 shadow-lg border-1 rounded-lg shadow-lg z-10">
                       {currentProductIndex + 1} / {currentCategoryProducts.length}
                     </div>
                   )}
 
-                  <div className="flex-1 relative bg-slate-50 overflow-hidden flex items-center justify-center">
+                  <div className="max-h-screen min-h-[60vh] flex-1 bg-primary backdrop-blur-3xl overflow-auto">
                     {imageLoading && (
-                      <div className="absolute inset-0 bg-gradient-to-r from-slate-200 to-slate-300 animate-pulse flex items-center justify-center z-10">
-                        <div className="text-slate-400 text-sm">Loading image...</div>
-                      </div>
+                      <ParamountLoader />
                     )}
                     <LazyImage
                       src={selectedProduct.image}
                       alt={selectedProduct.name}
-                      className="w-full h-full"
+                      className="w-auto h-auto shadow-lg border-r"
                       onLoad={onImageLoad}
                       objectFit="contain"
                     />
                   </div>
 
-                  {/* Mobile Navigation Dots */}
-                  {currentCategoryProducts.length > 1 && (
-                    <div className="flex justify-center mb-4 sm:hidden">
-                      <div className="flex space-x-2">
+                    {/* Mobile Navigation Dots */}
+                    {currentCategoryProducts.length > 1 && (
+                    <div className="flex justify-center sm:hidden space-x-3 p-2 bg-primary/50 backdrop-blur-3xl">
                         {currentCategoryProducts.map((_, index) => (
-                          <button
-                            key={`dot-${index}`}
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                onNavigate(index < currentProductIndex ? 'prev' : 'next');
-                            }}
-                            className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                              index === currentProductIndex 
-                                ? 'bg-primary scale-125' 
-                                : 'bg-slate-300'
-                            }`}
-                          />
+                        <button
+                        key={`dot-${index}`}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onNavigate(index < currentProductIndex ? 'prev' : 'next');
+                        }}
+                        className={`w-3 h-3 rounded-full border-1 transition-all duration-300 ${
+                            index === currentProductIndex 
+                            ? 'bg-primary scale-200 shadow-lg border-2' 
+                            : 'bg-secondary backdrop-blur-3xl opacity-100'
+                        }`}
+                        />
                         ))}
-                      </div>
                     </div>
-                  )}
+                    )}
                 </div>
 
                 {/* Product Details Section */}
-                <div className="w-full h-full bg-card-gradient flex flex-col overflow-hidden">
-                  <div className="flex-1 overflow-y-auto p-2">
-                    <h3 className="text-lg text-center font-bold text-slate-800 mb-3">
+                <div className="w-full h-full bg-secondary backdrop-blur-3xl flex flex-col justify-between p-1 sm:p-2">
+                    <h3 className="text-xl text-center font-bold text-base p-2 border-1 rounded-lg shadow-lg">
                       Product Details
                     </h3>
                     
-                    <div className="space-y-2">
+                    <div className="bg-secondary backdrop-blur-3xl">
                       {Object.entries(selectedProduct.attributes).map(([key, value], index) => (
                         <motion.div 
                           key={`${key}-${index}`}
-                          className="flex justify-between items-start py-2 border-b border-slate-200/60"
+                          className="flex justify-between items-start bg-secondary p-2 border-b hover:bg-primary rounded-lg transition-colors duration-300"
                           initial={{ opacity: 0, x: 10 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: 0.1 }}
                         >
-                          <span className="font-semibold text-slate-700 capitalize flex-shrink-0 mr-3 text-sm lg:text-base">
+                          <span className="font-bold text-base flex-shrink-0 text-md">
                             {key}:
                           </span>
-                          <span className="text-slate-600 text-right text-xs lg:text-sm leading-relaxed flex-1 break-words">
+                          <span className="font-normal text-base text-right text-sm flex-1 break-words">
                             {value}
                           </span>
                         </motion.div>
                       ))}
                     </div>
-                  </div>
-                </div>
-              </div>
-                {/* Action Buttons */}
-                <div className="p-2 border-t border-slate-200/60 bg-card-gradient sm:bg-transparent">
-                    <div className="flex space-x-2">
-                        <button 
-                        onClick={() => onAction('quote')}
-                        className="w-1/2 bg-gradient-to-r from-green-500 to-emerald-600 text-white p-2 rounded-lg font-bold hover:from-green-600 hover:to-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 text-sm lg:text-base"
-                        >
-                        <FiSend size={16} />
-                        Get Quote
-                        </button>
-                        <button 
-                        onClick={() => onAction('trial')}
-                        className="w-1/2 bg-primary text-white p-2 rounded-lg font-bold bg-primary-gradient-hover transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 text-sm lg:text-base"
-                        >
-                        <FiMessageCircle size={16} />
-                        Try On
-                        </button>
+                    {/* Action Buttons */}
+                    <div className="p-2 border-1 rounded-lg shadow-lg backdrop-blur-3xl flex-shrink-0">
+                        <div className="flex space-x-2 backdrop-blur-3xl">
+                            <button 
+                            onClick={() => onAction('quote')}
+                            className="w-1/2 bg-gradient-to-r from-green-400 to-emerald-500 text-base p-2 rounded-lg font-bold hover:from-emerald-500 hover:to-green-600 transition-all duration-300 shadow-lg hover:shadow-2xl flex items-center justify-center gap-2 hover:scale-102"
+                            >
+                            <FiSend size={16} />
+                            Get Quote
+                            </button>
+                            <button 
+                            onClick={() => onAction('trial')}
+                            className="w-1/2 bg-gradient-to-r from-sky-400 to-indigo-500 text-base p-2 rounded-lg font-bold hover:from-indigo-500 hover:to-sky-600 transition-all duration-300 shadow-lg hover:shadow-2xl flex items-center justify-center gap-2 hover:scale-102"
+                            >
+                            <FiMessageCircle size={16} />
+                            Try On
+                            </button>
+                        </div>
                     </div>
                 </div>
+              </div>
             </motion.div>
           </div>
-        </>
+        </div>
       )}
     </AnimatePresence>
   );

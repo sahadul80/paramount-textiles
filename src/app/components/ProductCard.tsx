@@ -19,23 +19,23 @@ const ProductCard: React.FC<ProductCardProps> = ({
   layout
 }) => {
   const cardClasses = {
-    grid: "bg-transparent rounded-lg shadow-sm hover:shadow-2xl transition-all ease-in-out cursor-pointer group overflow-hidden flex flex-col h-64 sm:h-80",
+    grid: "bg-transparent rounded-lg shadow-sm hover:shadow-2xl transition-all ease-in-out cursor-pointer group overflow-hidden flex flex-col h-72 w-48",
     list: "flex-shrink-0 w-84 rounded-lg shadow-xs hover:shadow-lg transition-all duration-500 ease-in-out cursor-pointer group overflow-hidden flex flex-row h-48 p-2"
   };
 
   const imageContainerClasses = {
-    grid: "relative overflow-hidden h-[100%] flex-grow-0",
-    list: "h-48 w-36 relative overflow-hidden"
+    grid: "relative overflow-hidden h-96 w-48 flex-grow-full",
+    list: "h-72 w-36 relative overflow-hidden"
   };
 
   const contentClasses = {
-    grid: "p-2 h-[30%] flex flex-col justify-center",
+    grid: "p-2 flex flex-col justify-center",
     list: "p-1 gap-2 flex flex-col justify-center"
   };
 
   return (
     <motion.div
-      className={`${cardClasses[layout]} ${layout === 'list' ? 'flex items-center min-h-[220] justify-between' : ''} border border-slate-200`}
+      className={`${cardClasses[layout]} ${layout === 'list' ? 'flex items-center min-h-[220] justify-between' : ''} border-1`}
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.2, delay: index * 0.05, ease: "easeOut" }}
@@ -50,37 +50,37 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <LazyImage
           src={product.image}
           alt={product.name}
-          className="w-full h-full"
+          className="w-48 h-96"
           onLoad={onImageLoad}
         />
       </div>
       
       <div className={contentClasses[layout]}>
-        <h3 className={`text-sm lg:text-base font-semibold text-slate-800 mb-1 group-hover:text-primary transition-colors duration-300 line-clamp-1 ${layout === 'list' ? 'flex text-wrap' : ''}`}>
+        <h3 className={`text-sm text-base font-semibold mb-1 group-hover:text-primary transition-colors duration-300 line-clamp-1 ${layout === 'list' ? 'flex text-wrap' : ''}`}>
           {product.name}
         </h3>
         <div className={`flex items-center justify-between ${layout === 'list' ? 'flex-col items-end' : ''}`}>
-          <span className="text-slate-600 text-xs lg:text-sm capitalize line-clamp-1">
+          <span className="text-base text-xs lg:text-sm capitalize line-clamp-1">
             {product.attributes.Fabric}
           </span>
           {layout === 'list' && (
           <div className="w-full flex flex-col items-end justify-between">
-            <span className="text-slate-600 text-xs lg:text-sm capitalize line-clamp-1">
+            <span className="text-base text-xs lg:text-sm capitalize line-clamp-1">
                 {product.attributes.Fit}
             </span>
-                <span className="text-slate-600 text-xs lg:text-sm capitalize line-clamp-1">
+                <span className="text-base text-xs lg:text-sm capitalize line-clamp-1">
                 {product.attributes.Brand}
             </span>
-                <span className="text-slate-600 text-xs lg:text-sm capitalize line-clamp-1">
+                <span className="text-base text-xs lg:text-sm capitalize line-clamp-1">
                 {product.attributes.Care}
             </span>
-                <span className="text-slate-600 text-xs lg:text-sm capitalize line-clamp-1">
+                <span className="text-base text-xs lg:text-sm capitalize line-clamp-1">
                 {product.attributes.Collection}
             </span>
           </div>
         )}
           {layout === 'grid' ? (
-            <span className="text-primary text-xs font-medium bg-blue-50 px-1.5 py-0.5 rounded-full transition-colors duration-300 group-hover:bg-blue-100">
+            <span className="text-primary text-xs font-medium bg-secondary px-1.5 py-0.5 rounded-full border-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
               View
             </span>
           ) : (

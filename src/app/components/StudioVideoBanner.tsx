@@ -100,7 +100,7 @@ export default function StudioVideoBanner({
                     preload="auto"
                 >
                     {/* Fallback content if video fails to load */}
-                    <div className="w-full h-full bg-gradient-to-br from-blue-400 to-purple-600 flex items-center justify-center">
+                    <div className="w-full h-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center">
                         <span className="text-white text-lg">Video not supported</span>
                     </div>
                 </video>
@@ -109,7 +109,7 @@ export default function StudioVideoBanner({
             {/* Loading placeholder */}
             {!isVideoLoaded && (
                 <motion.div
-                    className="absolute inset-0 bg-gradient-to-br from-slate-100 to-slate-400 flex items-center justify-center"
+                    className="absolute inset-0 bg-gradient-to-br from-secondary-100 to-secondary-400 flex items-center justify-center"
                     initial={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.5 }}
