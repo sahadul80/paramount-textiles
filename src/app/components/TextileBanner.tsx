@@ -273,9 +273,10 @@ export default function TextileBanner({ onModeChange }: BannerProps) {
                     scale: [0.9, 1.05, 0.9],
                   }}
                   transition={isChangingLetter ? {
-                    duration: 1.5,
+                    duration: 4,
+                    repeat: Infinity,
                     ease: "easeInOut",
-                    times: [0, 0.3, 0.6, 0.8, 1]
+                    times: [0.2, 0.3, 0.6, 0.8, 1, 0.8, 0.6, 0.3, 0.2]
                   } : {
                     duration: 4,
                     repeat: Infinity,

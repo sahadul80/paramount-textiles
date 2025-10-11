@@ -82,8 +82,11 @@ const ProductModal: React.FC<ProductModalProps> = ({
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
               onClick={(e) => e.stopPropagation()}
             >
+              <div className="flex justify-center p-1 sm:p-2 flex-shrink-0 shadow-lg overflow-y-auto">
+                <TextileBanner/>
+              </div>
               {/* Header */}
-              <div className="flex justify-between items-center p-2 border-b border-slate-200 flex-shrink-0 shadow-lg">
+              <div className="flex justify-between items-center p-2 border-b border-slate-200 flex-shrink-0 shadow-lg border-1">
                 <h2 className="text-xl font-bold truncate text-base text-center">
                   {selectedProduct.name}
                 </h2>
@@ -96,7 +99,7 @@ const ProductModal: React.FC<ProductModalProps> = ({
               </div>
 
               {/* Content */}
-              <div className="flex flex-row overflow-auto">
+              <div className="flex flex-col sm:flex-row overflow-auto">
                 {/* Image Section */}
                 <div 
                   className="w-full h-full flex flex-col relative"
@@ -104,9 +107,6 @@ const ProductModal: React.FC<ProductModalProps> = ({
                   onTouchMove={handleTouchMove}
                   onTouchEnd={handleTouchEnd}
                 >
-                  <div className="flex justify-center p-1 sm:p-2 flex-shrink-0 shadow-lg">
-                    <TextileBanner/>
-                  </div>
                   
                   {/* Desktop Navigation Arrows */}
                   <div className="hidden sm:flex absolute top-1/2 left-1 right-1 transform -translate-y-1/2 z-10 justify-between">
@@ -137,7 +137,7 @@ const ProductModal: React.FC<ProductModalProps> = ({
                     </div>
                   )}
 
-                  <div className="max-h-screen min-h-[60vh] flex-1 bg-primary backdrop-blur-3xl overflow-auto">
+                  <div className="max-h-screen min-h-[54vh] flex-1 bg-primary backdrop-blur-3xl overflow-auto p-1">
                     {imageLoading && (
                       <ParamountLoader />
                     )}
