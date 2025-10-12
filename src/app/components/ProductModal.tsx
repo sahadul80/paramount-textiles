@@ -168,12 +168,12 @@ const ProductModal: React.FC<ProductModalProps> = ({
                 </div>
 
                 {/* Product Details Section */}
-                <div className="w-full h-full bg-secondary backdrop-blur-3xl flex flex-col justify-between p-1 sm:p-2">
-                    <h3 className="text-xl text-center font-bold text-base p-2 border-1 rounded-lg shadow-lg">
+                <div className="w-full h-full bg-secondary backdrop-blur-3xl flex flex-col justify-center p-1 sm:p-2">
+                    <h3 className="text-lg sm:text-xl text-center font-bold text-base p-2 border-1 rounded-lg shadow-lg">
                       Product Details
                     </h3>
                     
-                    <div className="bg-secondary backdrop-blur-3xl">
+                    <div className="bg-secondary backdrop-blur-3xl sm:p-2">
                       {Object.entries(selectedProduct.attributes).map(([key, value], index) => (
                         <motion.div 
                           key={`${key}-${index}`}
@@ -194,18 +194,18 @@ const ProductModal: React.FC<ProductModalProps> = ({
                 </div>
               </div>
               {/* Action Buttons */}
-                    <div className="p-2 border-1 rounded-lg shadow-lg backdrop-blur-3xl flex-shrink-0">
-                        <div className="flex space-x-2 backdrop-blur-3xl">
+                    <div className="p-2 border-t bg-foreground w-compact">
+                        <div className="flex flex-row justify-center gap-2">
                             <button 
                             onClick={() => onAction('quote')}
-                            className="w-1/2 bg-gradient-to-r from-green-400 to-emerald-500 text-base p-2 rounded-lg font-bold hover:from-emerald-500 hover:to-green-600 transition-all duration-300 shadow-lg hover:shadow-2xl flex items-center justify-center gap-2 hover:scale-102"
+                            className="w-1/3 bg-gradient-to-r from-green-400 to-emerald-500 text-base p-2 rounded-lg font-bold hover:from-emerald-500 hover:to-green-600 transition-all duration-300 shadow-lg hover:shadow-2xl flex items-center justify-center gap-2 hover:scale-102"
                             >
                             <FiSend size={16} />
                             Get Quote
                             </button>
                             <button 
                             onClick={() => onAction('trial')}
-                            className="w-1/2 bg-gradient-to-r from-sky-400 to-indigo-500 text-base p-2 rounded-lg font-bold hover:from-indigo-500 hover:to-sky-600 transition-all duration-300 shadow-lg hover:shadow-2xl flex items-center justify-center gap-2 hover:scale-102"
+                            className="w-1/3 bg-gradient-to-r from-sky-400 to-indigo-500 text-base p-2 rounded-lg font-bold hover:from-indigo-500 hover:to-sky-600 transition-all duration-300 shadow-lg hover:shadow-2xl flex items-center justify-center gap-2 hover:scale-102"
                             >
                             <FiMessageCircle size={16} />
                             Try On
