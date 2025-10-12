@@ -43,7 +43,7 @@ const CategoryProducts = () => {
   const [isTrailModalOpen, setIsTrailModalOpen] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
   const [imageLoading, setImageLoading] = useState(true);
 
   const handleProductClick = useCallback((product: Product) => {

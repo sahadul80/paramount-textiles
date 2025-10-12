@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiSearch, FiFilter, FiGrid, FiList } from 'react-icons/fi';
+import { FiSearch, FiFilter, FiGrid, FiList, FiX } from 'react-icons/fi';
 import FilterDropdown from './FilterDropdown';
 import type { FilterState, AvailableFilters } from './types';
 
@@ -51,10 +51,10 @@ const SearchAndFilterHeader: React.FC<SearchAndFilterHeaderProps> = ({
             <div className="flex bg-background backdrop-blur-xl rounded-lg border border-slate-300">
               <button
                 onClick={() => setViewMode('grid')}
-                className={`p-2 w-1/2 rounded-md transition-all duration-300 flex items-center justify-center gap-1 font-semibold text-sm ${
+                className={`p-1 w-1/2 rounded-md transition-all duration-300 flex items-center justify-center gap-1 font-semibold text-sm ${
                   viewMode === 'grid' 
-                    ? 'bg-primary text-base shadow-sm' 
-                    : 'text-secondary hover:text-primary hover:bg-background'
+                    ? 'text-orange-700 bg-orange-200 shadow-sm' 
+                    : 'text-base hover:text-primary hover:bg-background'
                 }`}
               >
                 <FiGrid />
@@ -62,10 +62,10 @@ const SearchAndFilterHeader: React.FC<SearchAndFilterHeaderProps> = ({
               </button>
               <button
                 onClick={() => setViewMode('list')}
-                className={`p-2 w-1/2 rounded-md transition-all duration-300 flex items-center justify-center gap-1 font-semibold text-sm ${
+                className={`p-1 w-1/2 rounded-md transition-all duration-300 flex items-center justify-center gap-1 font-semibold text-sm ${
                   viewMode === 'list' 
-                    ? 'bg-primary text-base shadow-sm' 
-                    : 'text-secondary hover:text-primary hover:bg-background'
+                    ? 'text-orange-700 bg-orange-200 shadow-sm' 
+                    : 'text-base hover:text-primary hover:bg-background'
                 }`}
               >
                 <FiList />
@@ -76,10 +76,10 @@ const SearchAndFilterHeader: React.FC<SearchAndFilterHeaderProps> = ({
             {/* Filter Button */}
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className={`p-2 rounded-lg transition-all duration-300 shadow-sm flex items-center justify-center gap-1 font-semibold text-sm ${
+              className={`p-1 rounded-lg transition-all duration-300 shadow-sm flex items-center justify-center gap-1 font-semibold text-sm ${
                 showFilters 
-                  ? 'bg-primary text-base shadow-sm' 
-                  : 'bg-background text-secondary hover:bg-foreground'
+                    ? 'text-orange-700 bg-orange-200 shadow-sm' 
+                    : 'text-base hover:text-primary hover:bg-background'
               }`}
             >
               <FiFilter className="w-3 h-3" />
@@ -90,13 +90,14 @@ const SearchAndFilterHeader: React.FC<SearchAndFilterHeaderProps> = ({
             <button
               onClick={clearAllFilters}
               disabled={!hasActiveFilters}
-              className={`p-2 rounded-lg transition-all duration-300 flex items-center justify-center text-xs font-medium ${
+              className={`p-1 rounded-lg transition-all duration-300 shadow-sm flex items-center justify-center gap-1 font-semibold text-sm ${
                 hasActiveFilters
-                  ? 'bg-red-100 text-red-600 hover:bg-red-200 cursor-pointer'
+                  ? 'bg-red-100 text-red-700 hover:bg-red-200 cursor-pointer'
                   : 'bg-background text-base cursor-not-allowed'
               }`}
             >
-              Clear
+              <FiX className="w-3 h-3" />
+              <span className="hidden sm:inline">Clear</span>
             </button>
           </div>
 

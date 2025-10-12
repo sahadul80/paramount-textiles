@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FiX, FiMessageCircle, FiSend } from 'react-icons/fi';
 import Image from 'next/image';
 import type { Product } from './types';
-import TextileBanner from './TextileBanner';
 
 interface ContactFormModalProps {
   product: Product;

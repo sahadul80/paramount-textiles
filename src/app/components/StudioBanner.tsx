@@ -164,7 +164,7 @@ export default function StudioBanner({
       <div className="relative z-10 h-full w-full">
         <svg
           className="w-full h-full"
-          viewBox="0 -20 1600 100"
+          viewBox="0 -20 1600 50"
           preserveAspectRatio="xMidYMid meet"
         >
           <defs>

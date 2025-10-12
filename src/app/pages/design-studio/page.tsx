@@ -105,16 +105,16 @@ export default function DesignStudio() {
                 <button
                     key={tab.id}
                     onClick={() => setActive(tab.id)}
-                    className={`relative flex-1 p-2 text-sm font-medium rounded-md flex items-center justify-center gap-1 transition-all duration-300 hover-lift focus-ring ${
+                    className={`relative flex-1 p-1 text-sm font-medium rounded-lg flex items-center justify-center gap-1 transition-all duration-300 hover-lift focus-ring ${
                         active === tab.id
-                            ? 'text-primary font-semibold bg-background/80 shadow-sm'
-                            : 'text-muted-foreground hover:text-foreground'
+                            ? 'text-orange-700 bg-orange-200 shadow-sm' 
+                            : 'text-base hover:text-primary hover:bg-background'
                     }`}
                 >
                     <span className="text-base">{tab.icon}</span>
                     <span>{tab.label}</span>
                     {active === tab.id && (
-                        <span className="absolute -bottom-1 left-1/4 w-1/2 h-1 bg-primary rounded-full shadow-sm"></span>
+                        <span className="absolute bottom-1 left-1/4 w-1/2 h-1 bg-primary rounded-lg shadow-lg"></span>
                     )}
                 </button>
             ))}
@@ -131,19 +131,19 @@ export default function DesignStudio() {
             </div>
 
             {/* Main Tabs */}
-            <div className="sticky top-0 z-50">
+            <div className="sticky top-0 z-50 p-1">
                 <div className="container flex justify-between glass-intense gap-1">
                     {mainTabs.map(tab => (
                         <button
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id)}
-                            className={`p-2 w-full flex-1 items-center justify-center gap-2 text-lg font-bold rounded-xl transition-all duration-300 hover-lift focus-ring ${
+                            className={`p-1 w-full flex-1 items-center justify-center gap-2 text-md font-bold rounded-lg transition-all duration-300 hover-lift focus-ring ${
                                 activeTab === tab.id
-                                    ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/25'
-                                    : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
+                                    ? 'text-orange-700 bg-orange-200 shadow-sm' 
+                                    : 'text-base hover:text-primary hover:bg-background'
                             }`}
                         >
-                            <span className="text-xl">{tab.icon}</span>
+                            <span className="text-lg">{tab.icon}</span>
                             <span>{tab.label}</span>
                         </button>
                     ))}
@@ -164,7 +164,7 @@ export default function DesignStudio() {
                             <Suspense fallback={<ParamountLoader />}>
                                 <StudioVideoBanner
                                     heightClass="h-[85vh]"
-                                    overlayClass=""
+                                    overlayClass="none"
                                 />
                             </Suspense>
                         </motion.div>
@@ -182,13 +182,13 @@ export default function DesignStudio() {
                             className="space-y-6"
                         >
                             {renderSubTabs(fabricSubTabs, fabricSubTab, setFabricSubTab)}
-                            <div className="glass flex justify-center overflow-auto rounded-2xl p-6">
+                            <div className="glass flex justify-center overflow-auto rounded-lg p-6">
                                 {fabricSubTab === 'stock' && (
                                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                                         {fabricData.map(fabric => (
                                             <motion.div
                                                 key={fabric.id}
-                                                className="bg-card rounded-xl shadow-lg border border-border/50 overflow-hidden hover-lift cursor-pointer group"
+                                                className="bg-card rounded-lg shadow-lg border border-border/50 overflow-hidden hover-lift cursor-pointer group"
                                                 whileHover={{ y: -4 }}
                                                 onClick={() => handleFabricClick(fabric)}
                                             >
@@ -251,7 +251,7 @@ export default function DesignStudio() {
                         onClick={closeFabricModal}
                     >
                         <motion.div
-                            className="bg-card rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto modal-content border border-border/50"
+                            className="bg-card rounded-lg shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto modal-content border border-border/50"
                             initial={{ scale: 0.9, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.9, opacity: 0 }}
@@ -271,7 +271,7 @@ export default function DesignStudio() {
                                     </button>
                                 </div>
                                 
-                                <div className="bg-gradient-subtle rounded-xl h-64 flex items-center justify-center">
+                                <div className="bg-gradient-subtle rounded-lg h-64 flex items-center justify-center">
                                     <span className="text-8xl">🧵</span>
                                 </div>
                                 
@@ -308,7 +308,7 @@ export default function DesignStudio() {
                                     <p className="text-muted-foreground">{selectedFabric.care}</p>
                                 </div>
                                 
-                                <button className="w-full bg-primary text-primary-foreground py-4 rounded-xl font-semibold text-lg hover:bg-primary/90 transition-colors duration-200 focus-ring shadow-lg shadow-primary/25">
+                                <button className="w-full bg-primary text-primary-foreground py-4 rounded-lg font-semibold text-lg hover:bg-primary/90 transition-colors duration-200 focus-ring shadow-lg shadow-primary/25">
                                     Request Sample
                                 </button>
                             </div>
