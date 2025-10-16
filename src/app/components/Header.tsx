@@ -16,7 +16,7 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-lg">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-foreground/25 backdrop-blur-2xl shadow-lg">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20" >
           {/* Logo */}
@@ -61,7 +61,7 @@ export default function Header() {
               <a
                 key={item.label}
                 href={item.href}
-                className="text-gray-700 hover:text-[#a8761a] font-medium transition-colors duration-300"
+                className="p-2 text-primary hover:text-secondary font-medium transition-colors duration-300"
               >
                 {item.label}
               </a>
@@ -88,14 +88,14 @@ export default function Header() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="md:hidden bg-white border-t"
+              className="md:hidden bg-background border-t"
             >
               <div className="py-4 space-y-4">
                 {navigation.map((item) => (
                   <a
                     key={item.label}
                     href={item.href}
-                    className="block px-4 py-2 text-gray-700 hover:text-[#a8761a] font-medium"
+                    className="block p-2 text-primary hover:text-secondary font-medium"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {item.label}

@@ -52,7 +52,7 @@ export default function ContactSection() {
   }
 
   return (
-    <section ref={ref} className="py-20 bg-gray-900 text-white">
+    <section ref={ref} className="py-20 bg-background text-base">
       <div className="container mx-auto px-4">
         <motion.div
           variants={containerVariants}
@@ -67,7 +67,7 @@ export default function ContactSection() {
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
               Ready to discuss your fabric requirements? Contact us today.
             </p>
-            <div className="w-20 h-1 bg-[#a8761a] mx-auto mt-4"></div>
+            <div className="w-20 h-1 bg-foreground mx-auto mt-4"></div>
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-12">
@@ -105,7 +105,7 @@ export default function ContactSection() {
                 </div>
               </div>
 
-              <div className="mt-8 p-6 bg-gray-800 rounded-lg">
+              <div className="mt-8 p-6 bg-foreground rounded-lg">
                 <h4 className="font-semibold mb-4">Business Hours</h4>
                 <div className="space-y-2 text-gray-300">
                   <div className="flex justify-between">
@@ -137,7 +137,7 @@ export default function ContactSection() {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-[#a8761a] transition-colors duration-300"
+                    className="w-full px-4 py-3 bg-foreground border border-gray-700 rounded-lg focus:outline-none focus:border-[#a8761a] transition-colors duration-300"
                     required
                   />
                 </div>
@@ -152,7 +152,7 @@ export default function ContactSection() {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-[#a8761a] transition-colors duration-300"
+                    className="w-full px-4 py-3 bg-foreground border border-gray-700 rounded-lg focus:outline-none focus:border-[#a8761a] transition-colors duration-300"
                     required
                   />
                 </div>
@@ -167,14 +167,14 @@ export default function ContactSection() {
                     rows={5}
                     value={formData.message}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-[#a8761a] transition-colors duration-300 resize-none"
+                    className="w-full px-4 py-3 bg-background border border-gray-700 rounded-lg focus:outline-none focus:border-[#a8761a] transition-colors duration-300 resize-none"
                     required
                   ></textarea>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full bg-[#a8761a] text-white py-4 rounded-lg font-semibold hover:bg-[#8a5800] transition-colors duration-300"
+                  className="w-full bg-foreground text-base py-4 rounded-lg font-semibold hover:bg-[#8a5800] transition-colors duration-300"
                 >
                   Send Message
                 </button>

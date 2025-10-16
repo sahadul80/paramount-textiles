@@ -217,7 +217,7 @@ export default function Home() {
       <main className="page-main relative overflow-hidden">
 
         {/* Hero Banner - Load immediately */}
-        <section className="relative z-10">
+        <section className="relative">
           {heroData ? (
             <HeroBanner data={heroData} />
           ) : (
@@ -233,7 +233,7 @@ export default function Home() {
         <section 
           ref={setSectionRef('about-section')}
           id="about-section" 
-          className="relative z-20 bg-white mobile-section"
+          className="relative bg-background mobile-section"
         >
           {visibleSections.about ? (
             <AboutSection />
@@ -242,26 +242,11 @@ export default function Home() {
           )}
         </section>
 
-        {/* Textile Banner */}
-        <section 
-          ref={setSectionRef('textile-banner')}
-          id="textile-banner" 
-          className="relative z-30 bg-background mobile-section"
-        >
-          {visibleSections.textileBanner ? (
-            <div className="w-full h-auto min-h-[15vh] sm:min-h-[20vh] flex items-center justify-center bg-background">
-              <TextileBanner />
-            </div>
-          ) : (
-            <SectionLoader height="20vh" />
-          )}
-        </section>
-
         {/* Supima Section */}
         <section 
           ref={setSectionRef('supima-section')}
           id="supima-section" 
-          className="relative z-40 bg-white mobile-section"
+          className="relative bg-background mobile-section"
         >
           {visibleSections.supima ? (
             <SupimaSection />
@@ -274,7 +259,7 @@ export default function Home() {
         <section 
           ref={setSectionRef('stats-section')}
           id="stats-section" 
-          className="relative z-50 bg-gray-900 mobile-section"
+          className="relative bg-foreground mobile-section"
         >
           {visibleSections.stats ? (
             <TextileStatsSection />
@@ -287,7 +272,7 @@ export default function Home() {
         <section 
           ref={setSectionRef('quality-section')}
           id="quality-section" 
-          className="relative z-60 bg-white mobile-section"
+          className="relative bg-background mobile-section"
         >
           {visibleSections.quality ? (
             <QualitySection />
@@ -300,7 +285,7 @@ export default function Home() {
         <section 
           ref={setSectionRef('contact-section')}
           id="contact-section" 
-          className="relative z-70 bg-gray-50 mobile-section"
+          className="relative bg-foreground mobile-section"
         >
           {visibleSections.contact ? (
             <ContactSection />
@@ -309,65 +294,6 @@ export default function Home() {
           )}
         </section>
       </main>
-
-      {/* Mobile optimization styles */}
-      <style jsx global>{`
-        /* Mobile overlap prevention */
-        @media (max-width: 768px) {
-          .mobile-section {
-            position: relative;
-            overflow: hidden;
-            transform: translateZ(0);
-            will-change: transform;
-          }
-          
-          /* Ensure proper stacking and spacing */
-          .page-main > section {
-            margin-bottom: 0;
-            border-bottom: 1px solid transparent;
-          }
-          
-          /* Prevent horizontal overflow */
-          .page-root {
-            overflow-x: hidden;
-            width: 100%;
-          }
-          
-          /* Fix for any absolute positioned elements */
-          .page-main .absolute {
-            z-index: 1;
-          }
-        }
-        
-        /* Smooth scrolling for better UX */
-        @media (prefers-reduced-motion: no-preference) {
-          html {
-            scroll-behavior: smooth;
-          }
-        }
-        
-        /* Loading states */
-        .page-root {
-          opacity: 1;
-          transition: opacity 0.3s ease-in-out;
-        }
-        
-        /* Section entrance animations */
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        .section-loaded {
-          animation: fadeInUp 0.6s ease-out;
-        }
-      `}</style>
     </div>
   )
 }

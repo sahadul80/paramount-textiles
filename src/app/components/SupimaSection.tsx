@@ -59,7 +59,7 @@ const SupimaSection = () => {
   }
 
   return (
-    <section className="relative flex flex-col items-center justify-center max-h-screen overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 text-gray-900">
+    <section className="relative flex flex-col items-center justify-center max-h-screen overflow-hidden bg-background text-secondary">
         <div>
         <motion.h4
             className="text-indigo-600 font-semibold tracking-wide uppercase text-sm"
@@ -68,17 +68,11 @@ const SupimaSection = () => {
         </motion.h4>
 
         <motion.h2
-            className="text-xl md:text-2xl lg:text-3xl font-bold leading-tight text-gray-900"
+            className="text-xl md:text-2xl lg:text-3xl font-bold leading-tight text-primary"
         >
             What sets <span className="text-purple-600">SUPIMA</span> apart from all other cottons?
         </motion.h2>
         </div>
-      {/* Simplified Background - Remove heavy effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-purple-50/30"></div>
-      
-      {/* Reduced floating elements - only one for performance */}
-      <div className="absolute w-64 h-64 bg-blue-200 rounded-full opacity-20 blur-xl top-10 left-10 animate-float-slow"></div>
-      <div className="absolute w-48 h-48 bg-purple-200 rounded-full opacity-20 blur-xl bottom-20 right-20 animate-float-slow animation-delay-2s"></div>
 
       <div className="relative z-10 flex flex-col sm:flex-row gap-6 max-w-7xl w-full items-center justify-center min-h-[80vh]">
         
@@ -92,7 +86,7 @@ const SupimaSection = () => {
         >
 
           <motion.p
-            className="text-gray-600 text-sm lg:text-base leading-relaxed p-4 rounded-xl bg-white/80 border border-gray-200 shadow-sm"
+            className="text-secondary text-sm lg:text-base leading-relaxed p-4 rounded-xl bg-foreground border shadow-sm"
           >
             The Supima trademark guarantees that your product is made from the world&apos;s finest cotton.
             An extra-long staple (ELS) cotton that is often referred to as the &apos;cashmere of cottons,&apos; 
@@ -107,15 +101,15 @@ const SupimaSection = () => {
             {features.map((feature, index) => (
               <motion.li
                 key={index}
-                className="flex items-start gap-2 p-2 rounded-lg bg-white/80 border border-gray-200 shadow-sm hover:bg-indigo-50 transition-colors duration-200 cursor-pointer"
+                className="flex items-start gap-2 p-2 rounded-lg bg-background shadow-sm hover:bg-indigo-50 transition-colors duration-200 cursor-pointer"
                 whileHover={{ x: 4 }} // Simplified hover
               >
                 <motion.div
-                  className="flex items-center justify-center w-6 h-6 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 text-white flex-shrink-0 mt-0.5"
+                  className="flex items-center justify-center w-6 h-6 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 text-base flex-shrink-0 mt-0.5"
                 >
                   <FaCheck className="text-xs" />
                 </motion.div>
-                <span className="text-gray-800 font-medium text-sm flex-1">
+                <span className="text-primary font-medium text-sm flex-1">
                   {feature}
                 </span>
               </motion.li>
@@ -128,7 +122,7 @@ const SupimaSection = () => {
           >
             <Link
               href="/pages/fabric"
-              className="inline-flex items-center gap-2 p-4 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold text-sm shadow-lg hover:shadow-xl transition-shadow duration-200"
+              className="inline-flex items-center gap-2 p-4 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-primary font-semibold text-sm shadow-lg hover:shadow-xl transition-shadow duration-200"
             >
               <span>Explore SUPIMA</span>
               <motion.span
@@ -149,9 +143,9 @@ const SupimaSection = () => {
           transition={{ duration: 0.6, ease: "easeOut" }} // Faster transition
           viewport={{ once: true, margin: "100px" }}
         >
-          <div className="w-full h-full rounded-2xl overflow-hidden bg-gray-100 border border-gray-300 shadow-lg">
+          <div className="w-full h-full rounded-2xl overflow-hidden bg-foreground shadow-lg">
             {isLoading && (
-              <div className="absolute inset-0 flex items-center justify-center bg-white/80 z-10 rounded-2xl">
+              <div className="absolute inset-0 flex items-center justify-center bg-background z-10 rounded-2xl">
                 <ParamountLoader />
               </div>
             )}
@@ -196,7 +190,7 @@ const SupimaSection = () => {
 
       {/* Simplified Scroll Indicator */}
       <motion.div
-        className="absolute bottom-4 left-1/2 -translate-x-1/2 text-gray-500 text-xs opacity-70"
+        className="absolute bottom-4 left-1/2 -translate-x-1/2 text-base text-xs opacity-70"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5 }}

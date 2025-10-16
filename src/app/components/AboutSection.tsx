@@ -120,13 +120,7 @@ const AboutSection = () => {
   }
 
   return (
-    <section className="about-section relative overflow-hidden bg-gradient-to-br from-slate-50 to-blue-50 p-4 min-h-screen flex items-center">
-      
-      {/* Background Blobs */}
-      <div className="absolute top-10 left-10 w-64 h-64 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
-      <div className="absolute top-10 right-10 w-64 h-64 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
-      <div className="absolute bottom-10 left-20 w-64 h-64 bg-orange-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
-
+    <section className="about-section relative overflow-hidden bg-background p-4 min-h-screen flex items-center">
       <div className="container mx-auto relative z-10">
         <motion.div 
           className="flex flex-col sm:flex-row gap-8"
@@ -140,7 +134,7 @@ const AboutSection = () => {
             className="w-full h-full sm:w-5/12"
           >
             <motion.div 
-              className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-1"
+              className="bg-background backdrop-blur-sm rounded-2xl p-4 shadow-lg"
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
@@ -317,7 +311,6 @@ const AboutSection = () => {
           left: -100%;
           width: 100%;
           height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
           transition: left 0.5s;
         }
 

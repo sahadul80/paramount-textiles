@@ -58,74 +58,62 @@ export default function QualitySection() {
   }
 
   return (
-    <section ref={ref} className="py-20 bg-white">
-      <div className="container mx-auto px-4">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-        >
-          <motion.div variants={itemVariants} className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Uncompromising Quality
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Our commitment to excellence ensures every fabric meets the highest standards
+    
+    <section ref={ref} className="quality-section">
+    <div className="quality-section__container">
+        <motion.div variants={containerVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
+        <motion.div variants={itemVariants} className="quality-section__header">
+            <h2 className="quality-section__title">Uncompromising Quality</h2>
+            <p className="quality-section__description">
+            Our commitment to excellence ensures every fabric meets the highest standards
             </p>
-            <div className="w-20 h-1 bg-[#a8761a] mx-auto mt-4"></div>
-          </motion.div>
-
-          {/* Quality Metrics */}
-          <motion.div variants={itemVariants} className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
-            {qualityMetrics.map((metric, index) => (
-              <div key={index} className="text-center">
-                <div className="bg-[#a8761a] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <metric.icon className="w-8 h-8 text-white" />
-                </div>
-                <div className="text-2xl font-bold text-gray-900 mb-2">
-                  {metric.value}
-                </div>
-                <div className="text-gray-600">
-                  {metric.label}
-                </div>
-              </div>
-            ))}
-          </motion.div>
-
-          {/* Quality Process */}
-          <div className="grid md:grid-cols-3 gap-8">
-            <motion.div variants={itemVariants} className="text-center">
-              <div className="bg-gray-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <span className="text-2xl font-bold text-[#a8761a]">01</span>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Raw Material Selection</h3>
-              <p className="text-gray-600">
-                We source only the finest raw materials from trusted suppliers worldwide
-              </p>
-            </motion.div>
-
-            <motion.div variants={itemVariants} className="text-center">
-              <div className="bg-gray-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <span className="text-2xl font-bold text-[#a8761a]">02</span>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Precision Manufacturing</h3>
-              <p className="text-gray-600">
-                Advanced manufacturing processes ensure consistent quality and perfection
-              </p>
-            </motion.div>
-
-            <motion.div variants={itemVariants} className="text-center">
-              <div className="bg-gray-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <span className="text-2xl font-bold text-[#a8761a]">03</span>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Quality Control</h3>
-              <p className="text-gray-600">
-                Rigorous testing and inspection at every stage guarantee exceptional quality
-              </p>
-            </motion.div>
-          </div>
+            <div className="quality-section__divider"></div>
         </motion.div>
-      </div>
+
+        <motion.div variants={itemVariants} className="quality-section__metrics">
+            {qualityMetrics.map((metric, index) => (
+            <div key={index} className="quality-section__metric">
+                <div className="quality-section__metric-icon">
+                <metric.icon className="quality-section__metric-icon-svg" />
+                </div>
+                <div className="quality-section__metric-value">{metric.value}</div>
+                <div className="quality-section__metric-label">{metric.label}</div>
+            </div>
+            ))}
+        </motion.div>
+
+        <div className="quality-section__process">
+            <motion.div variants={itemVariants} className="quality-section__process-step">
+            <div className="quality-section__step-number">01</div>
+            <h3 className="quality-section__step-title">Raw Material Selection</h3>
+            <p className="quality-section__step-description">
+                We source only the finest raw materials from trusted suppliers worldwide
+            </p>
+            </motion.div>
+
+                <motion.div variants={itemVariants} className="text-center">
+                <div className="bg-gray-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <span className="text-2xl font-bold text-[#a8761a]">02</span>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Precision Manufacturing</h3>
+                <p className="text-gray-600">
+                    Advanced manufacturing processes ensure consistent quality and perfection
+                </p>
+                </motion.div>
+
+                <motion.div variants={itemVariants} className="text-center">
+                <div className="bg-gray-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <span className="text-2xl font-bold text-[#a8761a]">03</span>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Quality Control</h3>
+                <p className="text-gray-600">
+                    Rigorous testing and inspection at every stage guarantee exceptional quality
+                </p>
+                </motion.div>
+            
+        </div>
+        </motion.div>
+    </div>
     </section>
   )
 }
