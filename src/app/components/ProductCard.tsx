@@ -29,13 +29,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   const contentClasses = {
-    grid: "p-2 flex flex-col justify-center",
+    grid: "p-1 flex flex-col justify-center",
     list: "p-1 gap-2 flex flex-col justify-center"
   };
 
   return (
     <motion.div
-      className={`${cardClasses[layout]} ${layout === 'list' ? 'flex items-center min-h-[220] justify-between' : ''} border-1`}
+      className={`${cardClasses[layout]} ${layout === 'list' ? 'flex items-center justify-between' : 'w-24 h-48 sm:w-48 sm:h-96'} border-1`}
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.2, delay: index * 0.05, ease: "easeOut" }}

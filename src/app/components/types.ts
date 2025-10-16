@@ -21,3 +21,15 @@ export interface AvailableFilters {
   sizes: string[];
   priceRanges: string[];
 }
+
+export interface NavItem {
+  label: string;
+  href: string;
+  submenu?: NavItem[];
+}
+
+export interface QualityMetric {
+  icon: string;
+  value: string;
+  label: string;
+}

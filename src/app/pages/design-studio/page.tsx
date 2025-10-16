@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FiX } from 'react-icons/fi';
 import ParamountLoader from '../../components/Loader';
 
-// Lazy loaded components
 const CategoryProducts = lazy(() => import("../../components/CategoryProducts"));
 const StudioVideoBanner = lazy(() => import('../../components/StudioVideoBanner'));
 const StudioBanner = lazy(() => import('../../components/StudioBanner'));

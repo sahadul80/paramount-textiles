@@ -1,0 +1,36 @@
+{
+  "backgroundImages": [
+    "/hero-bg-1.png",
+    "/hero-bg-2.png",
+    "/hero-bg-3.png"
+  ],
+  "backgroundVideos": [
+    "/videos/design-studio.mp4"
+  ],
+  "slides": [
+    {
+      "title": "Paramount Textile",
+      "subtitle": "Worlds No.1 Fabric",
+      "buttons": []
+    },
+    {
+      "title": "The Possibilities Are Endless",
+      "subtitle": "WELCOME TO Paramount Textile",
+      "description": "Since more than 40 years, Paramount Textile is operating in the textile market manufacture and trader. As years go by, the range of produced.",
+      "buttons": [
+        { "text": "More Details", "link": "/pages/about", "primary": true },
+        { "text": "Get Quote", "link": "/pages/contact", "primary": false }
+      ]
+    },
+    {
+      "title": "Wear Your Best Moments",
+      "subtitle": "-YOU CAN TRUST US-",
+      "description": "Since more than 40 years, Luthai India is operating in the textile market manufacture and trader. As years go by, the range of produced.",
+      "buttons": [
+        { "text": "More Details", "link": "/pages/about", "primary": true }
+      ]
+    }
+  ],
+  "autoPlayInterval": 5000,
+  "showScrollIndicator": true
+}
