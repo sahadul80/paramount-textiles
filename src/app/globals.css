@@ -1303,3 +1303,55 @@ body {
     border: 1px solid #000 !important;
   }
 }
+
+/* Mobile Optimization Styles */
+@media (max-width: 768px) {
+  /* Prevent section overlap */
+  .page-main > section {
+    position: relative;
+    min-height: auto !important;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    margin-top: -1px;
+  }
+
+  /* Ensure proper z-index stacking */
+  .page-main > section:nth-child(1) { z-index: 10; }
+  .page-main > section:nth-child(2) { z-index: 20; }
+  .page-main > section:nth-child(3) { z-index: 30; }
+  .page-main > section:nth-child(4) { z-index: 40; }
+  .page-main > section:nth-child(5) { z-index: 50; }
+  .page-main > section:nth-child(6) { z-index: 60; }
+  .page-main > section:nth-child(7) { z-index: 70; }
+
+  /* Fix for transform layers */
+  .page-main section {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000;
+  }
+
+  /* Prevent horizontal scroll */
+  body, html {
+    overflow-x: hidden;
+    position: relative;
+    width: 100%;
+  }
+
+  /* Ensure content stays within bounds */
+  .container, .mx-auto {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Performance optimizations */
+.page-main section {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 5000px;
+}
+
+/* Reduce layout shifts */
+.section-loader {
+  min-height: var(--loader-height, 50vh);
+}
